@@ -1,19 +1,21 @@
+const {actionNames} = require('./constants')
+
 // todo: immutablejs
 
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
-    case 'LEFT_DOWN':
-      newState.leftPlayerDown = true
+    case actionNames.leftHide:
+      newState.leftHiding = true
       break
-    case 'LEFT_UP':
-      newState.leftPlayerDown = false
+    case actionNames.leftUnhide:
+      newState.leftHiding = false
       break
-    case 'RIGHT_DOWN':
-      newState.rightPlayerDown = true
+    case actionNames.rightHide:
+      newState.rightHiding = true
       break
-    case 'RIGHT_UP':
-      newState.rightPlayerDown = false
+    case actionNames.rightUnhide:
+      newState.rightHiding = false
       break
   }
   return newState

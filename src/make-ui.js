@@ -20,9 +20,9 @@ const makeUI = (state) => {
   return div(
     {style: {fontFamily: 'monospace', textAdlign: 'center'}},
     [
-      leftPlayer(state.leftPlayerDown),
+      leftPlayer(state.leftHiding),
       barrier,
-      rightPlayer(state.rightPlayerDown)
+      rightPlayer(state.rightHiding)
     ]
   )
 }

@@ -1,45 +1,46 @@
 const assert = require('assert')
 const stateMachine = require('./state-machine')
+const {actionNames} = require('./constants')
 
 const actionTests = {
-  'LEFT_DOWN': [
+  'LEFT_HIDE': [
     {
-      currentState: { leftPlayerDown: false },
-      expectedState: { leftPlayerDown: true }
+      currentState: { leftHiding: false },
+      expectedState: { leftHiding: true }
     },
     {
-      currentState: { leftPlayerDown: true },
-      expectedState: { leftPlayerDown: true }
+      currentState: { leftHiding: true },
+      expectedState: { leftHiding: true }
     }
   ],
-  'LEFT_UP': [
+  'LEFT_UNHIDE': [
     {
-      currentState: { leftPlayerDown: false },
-      expectedState: { leftPlayerDown: false }
+      currentState: { leftHiding: false },
+      expectedState: { leftHiding: false }
     },
     {
-      currentState: { leftPlayerDown: true },
-      expectedState: { leftPlayerDown: false }
+      currentState: { leftHiding: true },
+      expectedState: { leftHiding: false }
     }
   ],
-  'RIGHT_DOWN': [
+  'RIGHT_HIDE': [
     {
-      currentState: { rightPlayerDown: false },
-      expectedState: { rightPlayerDown: true }
+      currentState: { rightHiding: false },
+      expectedState: { rightHiding: true }
     },
     {
-      currentState: { rightPlayerDown: true },
-      expectedState: { rightPlayerDown: true }
+      currentState: { rightHiding: true },
+      expectedState: { rightHiding: true }
     }
   ],
-  'RIGHT_UP': [
+  'RIGHT_UNHIDE': [
     {
-      currentState: { rightPlayerDown: false },
-      expectedState: { rightPlayerDown: false }
+      currentState: { rightHiding: false },
+      expectedState: { rightHiding: false }
     },
     {
-      currentState: { rightPlayerDown: true },
-      expectedState: { rightPlayerDown: false }
+      currentState: { rightHiding: true },
+      expectedState: { rightHiding: false }
     }
   ]
 }

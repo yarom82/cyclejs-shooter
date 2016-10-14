@@ -1,13 +1,13 @@
 
 const initialState = {
-  leftPlayerDown: true,
-  rightPlayerDown: true
+  leftHiding: true,
+  rightHiding: true
   /* game: {
     leftPlayer: {
-      down = true
+      hiding = true
     },
     rightPlayer: {
-      down = true
+      hiding = true
     }
   } */
 }
