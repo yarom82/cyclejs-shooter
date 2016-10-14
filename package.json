@@ -1,5 +1,5 @@
 {
-  "name": "shooter",
+  "name": "cyclejs-shooter",
   "version": "1.0.0",
   "description": "Hide and shoot game",
   "main": "src/index.js",
