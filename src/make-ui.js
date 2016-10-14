@@ -11,14 +11,14 @@ const player = (side, hiding) => {
   )
 }
 
-const curriedMkPlayer = R.curry(player)
-const leftPlayer = curriedMkPlayer('left')
-const rightPlayer = curriedMkPlayer('right')
+const curriedPlayer = R.curry(player)
+const leftPlayer = curriedPlayer('left')
+const rightPlayer = curriedPlayer('right')
 const barrier = '='
 
 const makeUI = (state) => {
   return div(
-    {style: {fontFamily: 'monospace', textAlign: 'center'}},
+    {style: {fontFamily: 'monospace', textAdlign: 'center'}},
     [
       leftPlayer(state.leftPlayerDown),
       barrier,
