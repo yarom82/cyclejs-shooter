@@ -1,7 +1,5 @@
 const {actionNames} = require('./constants')
 
-// todo: immutablejs
-
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
