@@ -1,14 +1,14 @@
 {
   "name": "cyclejs-shooter",
   "version": "1.0.0",
-  "description": "Hide and shoot game",
+  "description": "Cycle.js-based hide-and-shoot game",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "shooter",
-    "gmae",
+    "game",
     "cycle.js"
   ],
   "author": "Yarom Shoval <yarom.adi@gmail.com> (yarom82)",
