@@ -42,7 +42,6 @@ const main = ({DOM}) => {
   const state$ = xs
     .merge(leftShoot$, rightShoot$, leftDown$, rightDown$, leftUp$, rightUp$)
     .fold(stateMachine, initialState)
-    .debug()
 
   const vtree$ = state$.map(makeUI)
   return {DOM: vtree$}
