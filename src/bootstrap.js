@@ -2,8 +2,9 @@ const {run} = require('@cycle/xstream-run')
 const {makeDOMDriver} = require('@cycle/dom')
 const shooter = require('.')
 
+const containerId = 'shooter'
 const containerElement = document.createElement('div')
-containerElement.id = 'shooter'
+containerElement.id = containerId
 document.body.appendChild(containerElement)
 
-run(shooter, {DOM: makeDOMDriver('#shooter')})
+run(shooter, {DOM: makeDOMDriver(`#${containerId}`)})
