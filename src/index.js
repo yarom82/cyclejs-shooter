@@ -40,14 +40,7 @@ const main = ({DOM}) => {
     .mapTo('RIGHT_UP')
 
   const state$ = xs
-    .merge(
-      leftShoot$,
-      rightShoot$,
-      leftDown$,
-      rightDown$,
-      leftUp$,
-      rightUp$
-    )
+    .merge(leftShoot$, rightShoot$, leftDown$, rightDown$, leftUp$, rightUp$)
     .fold(stateMachine, initialState)
     .debug()
 
