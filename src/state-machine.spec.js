@@ -1,6 +1,5 @@
 const assert = require('assert')
 const stateMachine = require('./state-machine')
-const {actionNames} = require('./constants')
 
 const actionTests = {
   'LEFT_HIDE': [
