@@ -8,7 +8,7 @@ const getKeyFromEvent = e => e.key
 
 const main = ({DOM}) => {
   const keypress$ = DOM
-    .select('document')
+    .select(':root')
     .events('keypress')
     .map(getKeyFromEvent)
   const leftShoot$ = keypress$
@@ -19,7 +19,7 @@ const main = ({DOM}) => {
     .mapTo(actionNames.rightShoot)
 
   const keydown$ = DOM
-    .select('document')
+    .select(':root')
     .events('keydown')
     .map(getKeyFromEvent)
   const leftHide$ = keydown$
@@ -30,7 +30,7 @@ const main = ({DOM}) => {
     .mapTo(actionNames.rightHide)
 
   const keyup$ = DOM
-    .select('document')
+    .select(':root')
     .events('keyup')
     .map(getKeyFromEvent)
   const leftUnhide$ = keyup$
