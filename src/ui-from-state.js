@@ -16,7 +16,7 @@ const leftPlayer = curriedPlayer('left')
 const rightPlayer = curriedPlayer('right')
 const barrier = '='
 
-const makeUI = (state) => {
+const uiFromState = (state) => {
   return div(
     {style: {fontFamily: 'monospace', textAdlign: 'center'}},
     [
@@ -27,4 +27,4 @@ const makeUI = (state) => {
   )
 }
 
-module.exports = makeUI
+module.exports = uiFromState

@@ -1,4 +1,4 @@
-const makeUI = require('./make-ui')
+const uiFromState = require('./ui-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
@@ -44,7 +44,7 @@ const main = ({DOM}) => {
     .merge(leftShoot$, rightShoot$, leftHide$, rightHide$, leftUnhide$, rightUnhide$)
     .fold(stateMachine, initialState)
 
-  const vtree$ = state$.map(makeUI)
+  const vtree$ = state$.map(uiFromState)
   return {DOM: vtree$}
 }
 
