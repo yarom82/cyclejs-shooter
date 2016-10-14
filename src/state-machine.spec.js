@@ -45,7 +45,8 @@ const actionTests = {
 }
 
 for (const action in actionTests) {
-  actionTests[action].forEach((test, index) => {
+  const tests = actionTests[action]
+  tests.forEach((test, index) => {
     const actual = stateMachine(test.currentState, action)
     assert.deepStrictEqual(
       actual,
