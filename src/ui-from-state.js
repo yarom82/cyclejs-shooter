@@ -18,7 +18,10 @@ const barrier = '='
 
 const uiFromState = (state) => {
   return div(
-    {style: {fontFamily: 'monospace', textAdlign: 'center'}},
+    {
+      attrs: {tabindex: 0},
+      style: {fontFamily: 'monospace', textAdlign: 'center'}
+    },
     [
       leftPlayer(state.leftHiding),
       barrier,
