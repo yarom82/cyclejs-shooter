@@ -12,6 +12,13 @@
     "cycle.js"
   ],
   "author": "Yarom Shoval <yarom.adi@gmail.com> (yarom82)",
+  "contributors": [
+    {
+      "name": "Shahar Or (mightyiam)",
+      "email": "mightyiampresence@gmail.com",
+      "url": "https://mightyi.am"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "@cycle/dom": "^12.2.5",
