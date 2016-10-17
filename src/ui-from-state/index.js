@@ -1,15 +1,6 @@
-const { div, span } = require('@cycle/dom')
+const { div } = require('@cycle/dom')
 const R = require('ramda')
-
-const player = (side, hiding) => {
-  return span(
-    {style: {
-      display: 'inline-block',
-      transform: side === 'right' ? 'scale(-1,1)' : null
-    }},
-    hiding ? 'd' : 'D'
-  )
-}
+const player = require('./player')
 
 const curriedPlayer = R.curry(player)
 const leftPlayer = curriedPlayer('left')
