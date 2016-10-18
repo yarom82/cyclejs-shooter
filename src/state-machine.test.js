@@ -1,5 +1,5 @@
-const assert = require('assert')
 const stateMachine = require('./state-machine')
+const { test } = require('ava')
 
 const actionTests = {
   'LEFT_HIDE': [
@@ -44,13 +44,15 @@ const actionTests = {
   ]
 }
 
-for (const action in actionTests) {
-  const tests = actionTests[action]
-  tests.forEach((test, index) => {
-    const actual = stateMachine(test.currentState, action)
-    assert.deepStrictEqual(
-      actual,
-      test.expectedState,
-      `Test index ${index} of action ${action}`)
-  })
-}
+test('stateMachine', t => {
+  for (const action in actionTests) {
+    const tests = actionTests[action]
+    tests.forEach((test, index) => {
+      const actual = stateMachine(test.currentState, action)
+      t.deepEqual(
+        actual,
+        test.expectedState,
+        `Test index ${index} of action ${action}`)
+    })
+  }
+})
