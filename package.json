@@ -28,6 +28,7 @@
     "xstream": "^6.4.1"
   },
   "devDependencies": {
+    "ava": "^0.16.0",
     "budo": "^9.2.1"
   }
 }
