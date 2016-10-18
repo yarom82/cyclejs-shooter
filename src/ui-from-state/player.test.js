@@ -7,7 +7,7 @@ const curriedPlayer = R.curry(player)
 const leftPlayer = curriedPlayer('left')
 const rightPlayer = curriedPlayer('right')
 
-test('`player` left hiding', t => {
+test('left hiding', t => {
   const expected = span(
     {style: {
       display: 'inline-block',
@@ -18,7 +18,7 @@ test('`player` left hiding', t => {
   t.deepEqual(leftPlayer(true), expected)
 })
 
-test('`player` left not hiding', t => {
+test('left not hiding', t => {
   const expected = span(
     {style: {
       display: 'inline-block',
@@ -29,7 +29,7 @@ test('`player` left not hiding', t => {
   t.deepEqual(leftPlayer(false), expected)
 })
 
-test('`player` right hiding', t => {
+test('right hiding', t => {
   const expected = span(
     {style: {
       display: 'inline-block',
@@ -40,7 +40,7 @@ test('`player` right hiding', t => {
   t.deepEqual(rightPlayer(true), expected)
 })
 
-test('`player` right not hiding', t => {
+test('right not hiding', t => {
   const expected = span(
     {style: {
       display: 'inline-block',
