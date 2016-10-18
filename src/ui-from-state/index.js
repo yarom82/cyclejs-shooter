@@ -11,7 +11,7 @@ const uiFromState = (state) => {
   return div(
     {
       attrs: {tabindex: 0},
-      style: {fontFamily: 'monospace', textAdlign: 'center'}
+      style: {fontFamily: 'monospace', textAlign: 'center'}
     },
     [
       leftPlayer(state.leftHiding),
