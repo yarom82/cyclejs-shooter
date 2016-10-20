@@ -6,5 +6,10 @@ const actionNames = {
   leftShoot: 'LEFT_SHOOT',
   rightShoot: 'RIGHT_SHOOT'
 }
-
 module.exports.actionNames = actionNames
+
+const players = {
+  leftPlayer: 'LEFT_PLAYER',
+  rightPlayer: 'RIGHT_PLAYER'
+}
+module.exports.players = players
