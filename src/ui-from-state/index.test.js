@@ -13,14 +13,14 @@ const divData = {
 }
 const barrier = '='
 
-const possibleStateMatrix = [
+const possibleStates = [
   {leftHiding: true, rightHiding: true},
   {leftHiding: true, rightHiding: false},
   {leftHiding: false, rightHiding: true},
   {leftHiding: false, rightHiding: false}
 ]
 
-const forEachPossibleStateMatrix = state => {
+const testWithState = state => {
   const testNameLeft = state.leftHiding ? 'hiding' : 'not hiding'
   const testNameRight = state.rightHiding ? 'hiding' : 'not hiding'
   const testName = `left ${testNameLeft}, right ${testNameRight}`
@@ -38,4 +38,4 @@ const forEachPossibleStateMatrix = state => {
   })
 }
 
-possibleStateMatrix.forEach(forEachPossibleStateMatrix)
+possibleStates.forEach(testWithState)
