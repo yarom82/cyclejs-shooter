@@ -13,58 +13,29 @@ const divData = {
 }
 const barrier = '='
 
-test('left hiding, right hiding', t => {
-  const expected = div(
-    divData,
-    [
-      'left, true',
-      barrier,
-      'right, true'
-    ]
-  )
-  const actual = uiFromState({leftHiding: true, rightHiding: true})
+const possibleStates = [
+  {leftHiding: true, rightHiding: true},
+  {leftHiding: true, rightHiding: false},
+  {leftHiding: false, rightHiding: true},
+  {leftHiding: false, rightHiding: false}
+]
 
-  t.deepEqual(actual, expected)
-})
+const testWithState = state => {
+  const testNameLeft = state.leftHiding ? 'hiding' : 'not hiding'
+  const testNameRight = state.rightHiding ? 'hiding' : 'not hiding'
+  const testName = `left ${testNameLeft}, right ${testNameRight}`
+  test(testName, t => {
+    const expected = div(
+      divData,
+      [
+        `left, ${state.leftHiding}`,
+        barrier,
+        `right, ${state.rightHiding}`
+      ]
+    )
+    const actual = uiFromState(state)
+    t.deepEqual(actual, expected)
+  })
+}
 
-test('left hiding, right not hiding', t => {
-  const expected = div(
-    divData,
-    [
-      'left, true',
-      barrier,
-      'right, false'
-    ]
-  )
-  const actual = uiFromState({leftHiding: true, rightHiding: false})
-
-  t.deepEqual(actual, expected)
-})
-
-test('left not hiding, right hiding', t => {
-  const expected = div(
-    divData,
-    [
-      'left, false',
-      barrier,
-      'right, true'
-    ]
-  )
-  const actual = uiFromState({leftHiding: false, rightHiding: true})
-
-  t.deepEqual(actual, expected)
-})
-
-test('left not hiding, right not hiding', t => {
-  const expected = div(
-    divData,
-    [
-      'left, false',
-      barrier,
-      'right, false'
-    ]
-  )
-  const actual = uiFromState({leftHiding: false, rightHiding: false})
-
-  t.deepEqual(actual, expected)
-})
+possibleStates.forEach(testWithState)
