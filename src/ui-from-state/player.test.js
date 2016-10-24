@@ -1,52 +1,26 @@
 const player = require('./player')
 const { test } = require('ava')
-const R = require('ramda')
 const { span } = require('@cycle/dom')
 
-const curriedPlayer = R.curry(player)
-const leftPlayer = curriedPlayer('left')
-const rightPlayer = curriedPlayer('right')
+const possibleCallArgs = [
+  ['left', false],
+  ['left', true],
+  ['right', false],
+  ['right', true]
+]
 
-test('left hiding', t => {
+const testWithCallArgs = ([side, hiding]) => {
+  const testName = `side: ${side}, hiding: ${hiding}`
   const expected = span(
     {style: {
       display: 'inline-block',
-      transform: null
+      transform: side === 'left' ? null : 'scale(-1,1)'
     }},
-    'd'
+    hiding ? 'd' : 'D'
   )
-  t.deepEqual(leftPlayer(true), expected)
-})
+  test(testName, t => {
+    t.deepEqual(player(side, hiding), expected)
+  })
+}
 
-test('left not hiding', t => {
-  const expected = span(
-    {style: {
-      display: 'inline-block',
-      transform: null
-    }},
-    'D'
-  )
-  t.deepEqual(leftPlayer(false), expected)
-})
-
-test('right hiding', t => {
-  const expected = span(
-    {style: {
-      display: 'inline-block',
-      transform: 'scale(-1,1)'
-    }},
-    'd'
-  )
-  t.deepEqual(rightPlayer(true), expected)
-})
-
-test('right not hiding', t => {
-  const expected = span(
-    {style: {
-      display: 'inline-block',
-      transform: 'scale(-1,1)'
-    }},
-    'D'
-  )
-  t.deepEqual(rightPlayer(false), expected)
-})
+possibleCallArgs.forEach(testWithCallArgs)
