@@ -16,19 +16,19 @@ const stateMachine = (currentState, action) => {
       newState.rightHiding = false
       break
     case actionNames.leftShoot:
-      if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-        newState.leftHiding = newState.rightHiding = null
-        newState.winner = players.leftPlayer
-      }
+      Object.assign(newState, shoot(players.leftPlayer, currentState))
       break
     case actionNames.rightShoot:
-      if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-        newState.leftHiding = newState.rightHiding = null
-        newState.winner = players.rightPlayer
-      }
+      Object.assign(newState, shoot(players.rightPlayer, currentState))
       break
   }
   return newState
+}
+
+const shoot = (player, currentState) => {
+  if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+    return { leftHiding: null, rightHiding: null, winner: player }
+  }
 }
 
 const noPlayersHiding = (leftHiding, rightHiding) => {
