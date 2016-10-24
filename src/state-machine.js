@@ -17,11 +17,13 @@ const stateMachine = (currentState, action) => {
       break
     case actionNames.leftShoot:
       if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+        newState.leftHiding = newState.rightHiding = null
         newState.winner = players.leftPlayer
       }
       break
     case actionNames.rightShoot:
       if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+        newState.leftHiding = newState.rightHiding = null
         newState.winner = players.rightPlayer
       }
       break

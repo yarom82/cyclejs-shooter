@@ -45,7 +45,7 @@ const actionTests = {
   'LEFT_SHOOT': [
     {
       currentState: { leftHiding: false, rightHiding: false, winner: null },
-      expectedState: { leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER' }
+      expectedState: { leftHiding: null, rightHiding: null, winner: 'LEFT_PLAYER' }
     },
     {
       currentState: { leftHiding: false, rightHiding: true, winner: null },
@@ -63,7 +63,7 @@ const actionTests = {
   'RIGHT_SHOOT': [
     {
       currentState: { leftHiding: false, rightHiding: false, winner: null },
-      expectedState: { leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER' }
+      expectedState: { leftHiding: null, rightHiding: null, winner: 'RIGHT_PLAYER' }
     },
     {
       currentState: { leftHiding: false, rightHiding: true, winner: null },
