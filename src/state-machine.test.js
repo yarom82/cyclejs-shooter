@@ -92,3 +92,25 @@ test('stateMachine', t => {
     })
   }
 })
+
+const impossibleStatesOfAction = {
+  'LEFT_SHOOT': [
+    { winner: 'LEFT_PLAYER' },
+    { winner: 'RIGHT_PLAYER' }
+  ],
+  'RIGHT_SHOOT': [
+    { winner: 'LEFT_PLAYER' },
+    { winner: 'RIGHT_PLAYER' }
+  ]
+}
+
+for (const action in impossibleStatesOfAction) {
+  const states = impossibleStatesOfAction[action]
+  states.forEach((state, index) => {
+    test(`${action} throws on impossible state ${index}`, t => {
+      t.throws(() => {
+        stateMachine(state, action)
+      })
+    })
+  })
+}
