@@ -41,6 +41,42 @@ const actionTests = {
       currentState: { rightHiding: true },
       expectedState: { rightHiding: false }
     }
+  ],
+  'LEFT_SHOOT': [
+    {
+      currentState: { leftHiding: false, rightHiding: false, winner: null },
+      expectedState: { leftHiding: null, rightHiding: null, winner: 'LEFT_PLAYER' }
+    },
+    {
+      currentState: { leftHiding: false, rightHiding: true, winner: null },
+      expectedState: { leftHiding: false, rightHiding: true, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: false, winner: null },
+      expectedState: { leftHiding: true, rightHiding: false, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: true, winner: null },
+      expectedState: { leftHiding: true, rightHiding: true, winner: null }
+    }
+  ],
+  'RIGHT_SHOOT': [
+    {
+      currentState: { leftHiding: false, rightHiding: false, winner: null },
+      expectedState: { leftHiding: null, rightHiding: null, winner: 'RIGHT_PLAYER' }
+    },
+    {
+      currentState: { leftHiding: false, rightHiding: true, winner: null },
+      expectedState: { leftHiding: false, rightHiding: true, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: false, winner: null },
+      expectedState: { leftHiding: true, rightHiding: false, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: true, winner: null },
+      expectedState: { leftHiding: true, rightHiding: true, winner: null }
+    }
   ]
 }
 
@@ -56,3 +92,25 @@ test('stateMachine', t => {
     })
   }
 })
+
+const impossibleStatesOfAction = {
+  'LEFT_SHOOT': [
+    { winner: 'LEFT_PLAYER' },
+    { winner: 'RIGHT_PLAYER' }
+  ],
+  'RIGHT_SHOOT': [
+    { winner: 'LEFT_PLAYER' },
+    { winner: 'RIGHT_PLAYER' }
+  ]
+}
+
+for (const action in impossibleStatesOfAction) {
+  const states = impossibleStatesOfAction[action]
+  states.forEach((state, index) => {
+    test(`${action} throws on impossible state ${index}`, t => {
+      t.throws(
+        () => { stateMachine(state, action) },
+        'Impossible action at current state')
+    })
+  })
+}
