@@ -41,6 +41,42 @@ const actionTests = {
       currentState: { rightHiding: true },
       expectedState: { rightHiding: false }
     }
+  ],
+  'LEFT_SHOOT': [
+    {
+      currentState: { leftHiding: false, rightHiding: false, winner: null },
+      expectedState: { leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER' }
+    },
+    {
+      currentState: { leftHiding: false, rightHiding: true, winner: null },
+      expectedState: { leftHiding: false, rightHiding: true, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: false, winner: null },
+      expectedState: { leftHiding: true, rightHiding: false, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: true, winner: null },
+      expectedState: { leftHiding: true, rightHiding: true, winner: null }
+    }
+  ],
+  'RIGHT_SHOOT': [
+    {
+      currentState: { leftHiding: false, rightHiding: false, winner: null },
+      expectedState: { leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER' }
+    },
+    {
+      currentState: { leftHiding: false, rightHiding: true, winner: null },
+      expectedState: { leftHiding: false, rightHiding: true, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: false, winner: null },
+      expectedState: { leftHiding: true, rightHiding: false, winner: null }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: true, winner: null },
+      expectedState: { leftHiding: true, rightHiding: true, winner: null }
+    }
   ]
 }
 

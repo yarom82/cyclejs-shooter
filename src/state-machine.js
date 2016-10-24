@@ -1,4 +1,4 @@
-const {actionNames} = require('./constants')
+const {actionNames, players} = require('./constants')
 
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
@@ -15,8 +15,22 @@ const stateMachine = (currentState, action) => {
     case actionNames.rightUnhide:
       newState.rightHiding = false
       break
+    case actionNames.leftShoot:
+      if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+        newState.winner = players.leftPlayer
+      }
+      break
+    case actionNames.rightShoot:
+      if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+        newState.winner = players.rightPlayer
+      }
+      break
   }
   return newState
+}
+
+const noPlayersHiding = (leftHiding, rightHiding) => {
+  return !leftHiding && !rightHiding
 }
 
 module.exports = stateMachine
