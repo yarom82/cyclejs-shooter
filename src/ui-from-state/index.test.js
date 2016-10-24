@@ -1,10 +1,14 @@
 const { test } = require('ava')
 const mock = require('mock-require')
 const { div } = require('@cycle/dom')
+const { spy } = require('simple-spy')
 const R = require('ramda')
 
-const playerStub = (...args) => args
-mock('./player', R.curryN(2, playerStub))
+const playerStubReturn = Symbol('playerStub')
+const playerStub = () => playerStubReturn
+const playerSpy = spy(playerStub)
+test.afterEach(() => playerSpy.reset())
+mock('./player', R.curryN(2, playerSpy))
 
 const uiFromState = require('.')
 
@@ -20,14 +24,21 @@ test(t => {
     rightHiding: Symbol('rightHiding')
   }
 
-  const expected = div(
+  const expectedVtree = div(
     divData,
     [
-      ['left', state.leftHiding],
+      playerStubReturn,
       barrier,
-      ['right', state.rightHiding]
+      playerStubReturn
     ]
   )
-  const actual = uiFromState(state)
-  t.deepEqual(actual, expected)
+  const actualVtree = uiFromState(state)
+  t.deepEqual(actualVtree, expectedVtree, 'Vtree')
+
+  const expectedPlayerCallsArgs = [
+    ['left', state.leftHiding],
+    ['right', state.rightHiding]
+  ]
+  t.deepEqual(playerSpy.args, expectedPlayerCallsArgs, '`player` calls args')
+  t.is(playerSpy.callCount, 2, '`player` call count')
 })
