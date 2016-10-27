@@ -16,24 +16,28 @@ const divData = {
   style: {textAlign: 'center'}
 }
 
-test(t => {
-  const state = {
-    leftHiding: Symbol('leftHiding'),
-    rightHiding: Symbol('rightHiding')
-  }
-
+test('vtree', t => {
   const expectedVtree = div(
     divData,
     [
       arenaStubReturn
     ]
   )
-  const actualVtree = uiFromState(state)
-  t.deepEqual(actualVtree, expectedVtree, 'Vtree')
+  const actualVtree = uiFromState({})
+  t.deepEqual(actualVtree, expectedVtree)
+})
+
+test('`arena` descendant', t => {
+  const state = {
+    leftHiding: Symbol('leftHiding'),
+    rightHiding: Symbol('rightHiding')
+  }
+
+  uiFromState(state)
 
   const expectedArenaCallsArgs = [
     [state.leftHiding, state.rightHiding]
   ]
-  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs, '`arena` calls args')
-  t.is(arenaSpy.callCount, 1, '`arena` call count')
+  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs, 'calls args')
+  t.is(arenaSpy.callCount, 1, 'call count')
 })
