@@ -24,6 +24,7 @@
   ],
   "license": "ISC",
   "nyc": {
+    "checkCoverage": true,
     "include": ["src/**.js"],
     "all": true,
     "functions": 100,
