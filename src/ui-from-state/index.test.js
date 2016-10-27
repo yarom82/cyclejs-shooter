@@ -27,7 +27,7 @@ test('vtree', t => {
   t.deepEqual(actualVtree, expectedVtree)
 })
 
-test('`arena` descendant', t => {
+test('`arena` descendant calls args', t => {
   const state = {
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
@@ -38,6 +38,5 @@ test('`arena` descendant', t => {
   const expectedArenaCallsArgs = [
     [state.leftHiding, state.rightHiding]
   ]
-  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs, 'calls args')
-  t.is(arenaSpy.callCount, 1, 'call count')
+  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
 })
