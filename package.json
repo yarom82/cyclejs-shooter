@@ -25,7 +25,10 @@
   "license": "ISC",
   "nyc": {
     "include": ["src/**.js"],
-    "all": true
+    "all": true,
+    "functions": 100,
+    "lines": 100,
+    "statements": 100
   },
   "dependencies": {
     "@cycle/dom": "^12.2.5",
