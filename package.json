@@ -26,7 +26,6 @@
   "nyc": {
     "checkCoverage": true,
     "include": ["src/**.js"],
-    "all": true,
     "functions": 100,
     "lines": 100,
     "statements": 100
