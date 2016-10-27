@@ -1,22 +1,13 @@
 const { div } = require('@cycle/dom')
-const R = require('ramda')
-const player = require('./player')
+const arena = require('./arena')
 
-const curriedPlayer = R.curry(player)
-const leftPlayer = curriedPlayer('left')
-const rightPlayer = curriedPlayer('right')
-const barrier = '='
-
-const uiFromState = (state) => {
+const uiFromState = ({leftHiding, rightHiding}) => {
   return div(
     {
-      attrs: {tabindex: 0},
-      style: {fontFamily: 'monospace', textAlign: 'center'}
+      style: {textAlign: 'center'}
     },
     [
-      leftPlayer(state.leftHiding),
-      barrier,
-      rightPlayer(state.rightHiding)
+      arena(leftHiding, rightHiding)
     ]
   )
 }

@@ -4,19 +4,17 @@ const { div } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 const R = require('ramda')
 
-const playerStubReturn = Symbol('playerStub')
-const playerStub = () => playerStubReturn
-const playerSpy = spy(playerStub)
-test.afterEach(() => playerSpy.reset())
-mock('./player', R.curryN(2, playerSpy))
+const arenaStubReturn = Symbol('arenaStub')
+const arenaStub = () => arenaStubReturn
+const arenaSpy = spy(arenaStub)
+test.afterEach(() => arenaSpy.reset())
+mock('./arena', R.curryN(2, arenaSpy))
 
 const uiFromState = require('.')
 
 const divData = {
-  attrs: {tabindex: 0},
-  style: {fontFamily: 'monospace', textAlign: 'center'}
+  style: {textAlign: 'center'}
 }
-const barrier = '='
 
 test(t => {
   const state = {
@@ -27,18 +25,15 @@ test(t => {
   const expectedVtree = div(
     divData,
     [
-      playerStubReturn,
-      barrier,
-      playerStubReturn
+      arenaStubReturn
     ]
   )
   const actualVtree = uiFromState(state)
   t.deepEqual(actualVtree, expectedVtree, 'Vtree')
 
-  const expectedPlayerCallsArgs = [
-    ['left', state.leftHiding],
-    ['right', state.rightHiding]
+  const expectedArenaCallsArgs = [
+    [state.leftHiding, state.rightHiding]
   ]
-  t.deepEqual(playerSpy.args, expectedPlayerCallsArgs, '`player` calls args')
-  t.is(playerSpy.callCount, 2, '`player` call count')
+  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs, '`arena` calls args')
+  t.is(arenaSpy.callCount, 1, '`arena` call count')
 })
