@@ -5,7 +5,7 @@ const stringifyOptions = {
   inlineCharacterLimit: 999
 }
 
-const actionTests = {
+const testsForAction = {
   'LEFT_HIDE': [
     {
       currentState: { leftHiding: false },
@@ -84,8 +84,8 @@ const actionTests = {
   ]
 }
 
-for (const action in actionTests) {
-  const tests = actionTests[action]
+for (const action in testsForAction) {
+  const tests = testsForAction[action]
   tests.forEach(({currentState, expectedState}, index) => {
     test(`action ${action} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}`, t => {
       const actual = stateMachine(currentState, action)
