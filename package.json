@@ -32,10 +32,10 @@
     "statements": 100
   },
   "dependencies": {
-    "@cycle/dom": "^12.2.5",
+    "@cycle/dom": "^13.0.0",
     "@cycle/xstream-run": "^3.1.0",
     "ramda": "^0.22.1",
-    "xstream": "^6.4.1"
+    "xstream": "^7.0.0"
   },
   "devDependencies": {
     "ava": "^0.16.0",
