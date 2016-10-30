@@ -1,7 +1,11 @@
 const stateMachine = require('./state-machine')
 const { test } = require('ava')
+const stringifyObject = require('stringify-object')
+const stringifyOptions = {
+  inlineCharacterLimit: 999
+}
 
-const actionTests = {
+const testsForAction = {
   'LEFT_HIDE': [
     {
       currentState: { leftHiding: false },
@@ -80,18 +84,15 @@ const actionTests = {
   ]
 }
 
-test('stateMachine', t => {
-  for (const action in actionTests) {
-    const tests = actionTests[action]
-    tests.forEach((test, index) => {
-      const actual = stateMachine(test.currentState, action)
-      t.deepEqual(
-        actual,
-        test.expectedState,
-        `Test index ${index} of action ${action}`)
+for (const action in testsForAction) {
+  const tests = testsForAction[action]
+  tests.forEach(({currentState, expectedState}, index) => {
+    test(`action ${action} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}`, t => {
+      const actual = stateMachine(currentState, action)
+      t.deepEqual(actual, expectedState)
     })
-  }
-})
+  })
+}
 
 const impossibleStatesOfAction = {
   'LEFT_SHOOT': [
