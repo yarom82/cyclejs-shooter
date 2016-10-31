@@ -23,6 +23,11 @@
     }
   ],
   "license": "ISC",
+  "browserify": {
+    "transform": [
+      "urify/transform"
+    ]
+  },
   "nyc": {
     "checkCoverage": true,
     "include": ["src/**.js"],
