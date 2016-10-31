@@ -18,12 +18,7 @@ const divData = {
 }
 const barrier = '='
 
-test(t => {
-  const args = [
-    Symbol('leftHiding'),
-    Symbol('rightHiding')
-  ]
-
+test('vtree', t => {
   const expectedVtree = div(
     divData,
     [
@@ -32,13 +27,20 @@ test(t => {
       playerStubReturn
     ]
   )
-  const actualVtree = arena(...args)
-  t.deepEqual(actualVtree, expectedVtree, 'Vtree')
 
+  const actualVtree = arena()
+  t.deepEqual(actualVtree, expectedVtree)
+})
+
+test('`player` descendants calls args', t => {
+  const args = [
+    Symbol('leftHiding'),
+    Symbol('rightHiding')
+  ]
   const expectedPlayerCallsArgs = [
     ['left', args[0]],
     ['right', args[1]]
   ]
-  t.deepEqual(playerSpy.args, expectedPlayerCallsArgs, '`player` calls args')
-  t.is(playerSpy.callCount, 2, '`player` call count')
+  arena(...args)
+  t.deepEqual(playerSpy.args, expectedPlayerCallsArgs)
 })
