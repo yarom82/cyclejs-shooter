@@ -2,13 +2,12 @@ const { test } = require('ava')
 const mock = require('mock-require')
 const { div } = require('@cycle/dom')
 const { spy } = require('simple-spy')
-const R = require('ramda')
 
 const arenaStubReturn = Symbol('arenaStub')
 const arenaStub = () => arenaStubReturn
 const arenaSpy = spy(arenaStub)
 test.afterEach(() => arenaSpy.reset())
-mock('./arena', R.curryN(2, arenaSpy))
+mock('./arena', arenaSpy)
 
 const uiFromState = require('.')
 
