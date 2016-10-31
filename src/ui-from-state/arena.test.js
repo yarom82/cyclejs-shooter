@@ -29,7 +29,7 @@ test('vtree', t => {
           style: {
             fontSize: '40px',
             position: 'absolute',
-            bottom: 0
+            bottom: '0'
           }
         },
         '|'

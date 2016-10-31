@@ -13,8 +13,8 @@ const player = (side, hiding) => {
       },
       style: {
         position: 'absolute',
-        bottom: 0,
-        [side]: 0,
+        bottom: '0',
+        [side]: '0',
         transform: side === 'right' ? 'scale(-1,1)' : null
       }
     }
