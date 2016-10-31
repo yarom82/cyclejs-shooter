@@ -10,7 +10,7 @@ const possibleCallArgs = [
 ]
 
 const testWithCallArgs = ([side, hiding]) => {
-  const testName = `side: ${side}, hiding: ${hiding}`
+  const testName = `vtree when side: ${side}, hiding: ${hiding}`
   const expected = span(
     {style: {
       display: 'inline-block',
