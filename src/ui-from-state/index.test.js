@@ -51,7 +51,7 @@ const possibleWinStates = [
   {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
 ]
 
-const withPossibleWinState = winState => {
+possibleWinStates.forEach(winState => {
   test(`vtree after ${winState.winner} win`, t => {
     const expectedVtree = div(
       divData,
@@ -62,9 +62,7 @@ const withPossibleWinState = winState => {
     const actualVtree = uiFromState(winState)
     t.deepEqual(actualVtree, expectedVtree)
   })
-}
-
-possibleWinStates.forEach(withPossibleWinState)
+})
 
 test('`winMessage` descendant call arg', t => {
   const winState = {leftHiding: false, rightHiding: false, winner: Symbol()}
