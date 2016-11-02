@@ -13,8 +13,14 @@ const winMessageStub = () => winMessageStubReturn
 const winMessageSpy = spy(winMessageStub)
 mock('./win-message', winMessageSpy)
 
+const instructionsStubReturn = Symbol('instructionsStubReturn')
+const instructionsStub = () => instructionsStubReturn
+const instructionsSpy = spy(instructionsStub)
+mock('./instructions', instructionsSpy)
+
 test.beforeEach(() => {
   [
+    instructionsSpy,
     winMessageSpy,
     arenaSpy
   ]
@@ -38,11 +44,24 @@ test('vtree before win', t => {
   const expectedVtree = div(
     divData,
     [
-      arenaStubReturn
+      arenaStubReturn,
+      instructionsStubReturn
     ]
   )
   const actualVtree = uiFromState(beforeWinState)
   t.deepEqual(actualVtree, expectedVtree)
+})
+
+test('`instructions` descendant call arg before win', t => {
+  uiFromState(beforeWinState)
+  t.deepEqual(instructionsSpy.args, [['BEFORE_WIN']])
+})
+
+possibleWinStates.forEach(winState => {
+  test(`\`instructions\` descendant call arg after ${winState.winner} win`, t => {
+    uiFromState(winState)
+    t.deepEqual(instructionsSpy.args, [['AFTER_WIN']])
+  })
 })
 
 test('`arena` descendant calls args', t => {
@@ -64,7 +83,8 @@ const withPossibleWinState = winState => {
     const expectedVtree = div(
       divData,
       [
-        winMessageStubReturn
+        winMessageStubReturn,
+        instructionsStubReturn
       ]
     )
     const actualVtree = uiFromState(winState)
