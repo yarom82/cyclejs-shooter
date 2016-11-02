@@ -6,14 +6,20 @@ const { spy } = require('simple-spy')
 const arenaStubReturn = Symbol('arenaStub')
 const arenaStub = () => arenaStubReturn
 const arenaSpy = spy(arenaStub)
-test.afterEach(() => arenaSpy.reset())
 mock('./arena', arenaSpy)
 
 const winMessageStubReturn = Symbol('winMessageStub')
 const winMessageStub = () => winMessageStubReturn
 const winMessageSpy = spy(winMessageStub)
-test.afterEach(() => winMessageSpy.reset())
 mock('./win-message', winMessageSpy)
+
+test.beforeEach(() => {
+  [
+    winMessageSpy,
+    arenaSpy
+  ]
+  .forEach(spy => spy.reset())
+})
 
 const uiFromState = require('.')
 
@@ -22,6 +28,11 @@ const divData = {
 }
 
 const beforeWinState = { winner: null }
+
+const possibleWinStates = [
+  {leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER'},
+  {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
+]
 
 test('vtree before win', t => {
   const expectedVtree = div(
@@ -47,11 +58,6 @@ test('`arena` descendant calls args', t => {
   ]
   t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
 })
-
-const possibleWinStates = [
-  {leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER'},
-  {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
-]
 
 const withPossibleWinState = winState => {
   test(`vtree after ${winState.winner} win`, t => {
