@@ -21,6 +21,8 @@ const divData = {
   style: {textAlign: 'center'}
 }
 
+const beforeWinState = { winner: null }
+
 test('vtree before win', t => {
   const expectedVtree = div(
     divData,
@@ -28,7 +30,7 @@ test('vtree before win', t => {
       arenaStubReturn
     ]
   )
-  const actualVtree = uiFromState({})
+  const actualVtree = uiFromState(beforeWinState)
   t.deepEqual(actualVtree, expectedVtree)
 })
 
