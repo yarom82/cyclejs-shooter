@@ -3,15 +3,15 @@ const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
 const {actionNames} = require('./constants')
-
-const getKeyFromEvent = e => e.key
+const arenaDOM$FromDOM = require('./arena-dom-stream-from-dom')
+const keyFromEvent = require('./key-from-event')
 
 const main = ({DOM}) => {
-  const arenaDOM$ = DOM.select(':root .arena')
+  const arenaDOM$ = arenaDOM$FromDOM(DOM)
 
   const keypress$ = arenaDOM$
     .events('keypress')
-    .map(getKeyFromEvent)
+    .map(keyFromEvent)
   const leftShoot$ = keypress$
     .filter(key => key === 'z')
     .mapTo(actionNames.leftShoot)
@@ -21,7 +21,7 @@ const main = ({DOM}) => {
 
   const keydown$ = arenaDOM$
     .events('keydown')
-    .map(getKeyFromEvent)
+    .map(keyFromEvent)
   const leftHide$ = keydown$
     .filter(key => key === 'a')
     .mapTo(actionNames.leftHide)
@@ -31,7 +31,7 @@ const main = ({DOM}) => {
 
   const keyup$ = arenaDOM$
     .events('keyup')
-    .map(getKeyFromEvent)
+    .map(keyFromEvent)
   const leftUnhide$ = keyup$
     .filter(key => key === 'a')
     .mapTo(actionNames.leftUnhide)
@@ -39,8 +39,10 @@ const main = ({DOM}) => {
     .filter(key => key === '\'')
     .mapTo(actionNames.rightUnhide)
 
-  const state$ = xs
+  const action$ = xs
     .merge(leftShoot$, rightShoot$, leftHide$, rightHide$, leftUnhide$, rightUnhide$)
+
+  const state$ = action$
     .fold(stateMachine, initialState)
 
   const vtree$ = state$.map(uiFromState)
