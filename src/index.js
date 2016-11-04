@@ -39,8 +39,10 @@ const main = ({DOM}) => {
     .filter(key => key === '\'')
     .mapTo(actionNames.rightUnhide)
 
-  const state$ = xs
+  const action$ = xs
     .merge(leftShoot$, rightShoot$, leftHide$, rightHide$, leftUnhide$, rightUnhide$)
+
+  const state$ = action$
     .fold(stateMachine, initialState)
 
   const vtree$ = state$.map(uiFromState)
