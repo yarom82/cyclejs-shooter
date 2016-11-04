@@ -9,6 +9,7 @@ const rightPlayer = curriedPlayer('right')
 const arena = (leftHiding, rightHiding) => {
   return div(
     {
+      class: {arena: true},
       attrs: {tabindex: 0},
       style: {
         position: 'relative',
