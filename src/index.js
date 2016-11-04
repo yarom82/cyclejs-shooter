@@ -1,3 +1,4 @@
+const rootDOM$FromDOM = require('./root-dom-stream-from-dom')
 const start$FromDOM = require('./start-stream-from-dom')
 const uiFromState = require('./ui-from-state')
 const xs = require('xstream').default
@@ -8,9 +9,10 @@ const arenaDOM$FromDOM = require('./arena-dom-stream-from-dom')
 const keyFromEvent = require('./key-from-event')
 
 const main = ({DOM}) => {
-  const arenaDOM$ = arenaDOM$FromDOM(DOM)
+  const rootDOM$ = rootDOM$FromDOM(DOM)
+  const arenaDOM$ = arenaDOM$FromDOM(rootDOM$)
 
-  const start$ = start$FromDOM(DOM)
+  const start$ = start$FromDOM(rootDOM$)
 
   const keypress$ = arenaDOM$
     .events('keypress')
