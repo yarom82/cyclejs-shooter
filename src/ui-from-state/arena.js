@@ -1,21 +1,33 @@
-const { div } = require('@cycle/dom')
+const { div, span } = require('@cycle/dom')
 const R = require('ramda')
 const player = require('./player')
 
 const curriedPlayer = R.curry(player)
 const leftPlayer = curriedPlayer('left')
 const rightPlayer = curriedPlayer('right')
-const barrier = '='
 
 const arena = (leftHiding, rightHiding) => {
   return div(
     {
+      class: {arena: true},
       attrs: {tabindex: 0},
-      style: {fontFamily: 'monospace'}
+      style: {
+        position: 'relative',
+        minHeight: '60px'
+      }
     },
     [
       leftPlayer(leftHiding),
-      barrier,
+      span(
+        {
+          style: {
+            fontSize: '40px',
+            position: 'absolute',
+            bottom: '0'
+          }
+        },
+        '|'
+      ),
       rightPlayer(rightHiding)
     ]
   )

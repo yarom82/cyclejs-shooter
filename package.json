@@ -23,10 +23,17 @@
     }
   ],
   "license": "ISC",
+  "browserify": {
+    "transform": [
+      "urify/transform"
+    ]
+  },
   "nyc": {
     "checkCoverage": true,
-    "include": ["src/**.js"],
     "all": true,
+    "include": [
+      "src/**.js"
+    ],
     "functions": 100,
     "lines": 100,
     "statements": 100
@@ -35,6 +42,7 @@
     "@cycle/dom": "^13.0.0",
     "@cycle/xstream-run": "^3.1.0",
     "ramda": "^0.22.1",
+    "urify": "^2.1.0",
     "xstream": "^7.0.0"
   },
   "devDependencies": {
@@ -42,7 +50,8 @@
     "budo": "^9.2.1",
     "mock-require": "^1.3.0",
     "nyc": "^8.3.2",
-    "simple-spy": "^2.0.3",
-    "standard": "^8.4.0"
+    "simple-spy": "^2.0.4",
+    "standard": "^8.4.0",
+    "stringify-object": "^2.4.0"
   }
 }

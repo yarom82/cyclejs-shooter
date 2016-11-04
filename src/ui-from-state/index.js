@@ -1,13 +1,22 @@
 const { div } = require('@cycle/dom')
 const arena = require('./arena')
+const winMessage = require('./win-message')
+const instructions = require('./instructions')
 
-const uiFromState = ({leftHiding, rightHiding}) => {
+const uiFromState = ({leftHiding, rightHiding, winner}) => {
+  let firstChild
+  if (winner) {
+    firstChild = winMessage(winner)
+  } else {
+    firstChild = arena(leftHiding, rightHiding)
+  }
   return div(
     {
       style: {textAlign: 'center'}
     },
     [
-      arena(leftHiding, rightHiding)
+      firstChild,
+      instructions(winner ? 'AFTER_WIN' : 'BEFORE_WIN')
     ]
   )
 }

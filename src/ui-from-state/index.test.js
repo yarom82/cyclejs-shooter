@@ -2,13 +2,30 @@ const { test } = require('ava')
 const mock = require('mock-require')
 const { div } = require('@cycle/dom')
 const { spy } = require('simple-spy')
-const R = require('ramda')
 
 const arenaStubReturn = Symbol('arenaStub')
 const arenaStub = () => arenaStubReturn
 const arenaSpy = spy(arenaStub)
-test.afterEach(() => arenaSpy.reset())
-mock('./arena', R.curryN(2, arenaSpy))
+mock('./arena', arenaSpy)
+
+const winMessageStubReturn = Symbol('winMessageStub')
+const winMessageStub = () => winMessageStubReturn
+const winMessageSpy = spy(winMessageStub)
+mock('./win-message', winMessageSpy)
+
+const instructionsStubReturn = Symbol('instructionsStubReturn')
+const instructionsStub = () => instructionsStubReturn
+const instructionsSpy = spy(instructionsStub)
+mock('./instructions', instructionsSpy)
+
+test.beforeEach(() => {
+  [
+    instructionsSpy,
+    winMessageSpy,
+    arenaSpy
+  ]
+  .forEach(spy => spy.reset())
+})
 
 const uiFromState = require('.')
 
@@ -16,24 +33,71 @@ const divData = {
   style: {textAlign: 'center'}
 }
 
-test(t => {
+const beforeWinState = { winner: null }
+
+const possibleWinStates = [
+  {leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER'},
+  {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
+]
+
+test('vtree before win', t => {
+  const expectedVtree = div(
+    divData,
+    [
+      arenaStubReturn,
+      instructionsStubReturn
+    ]
+  )
+  const actualVtree = uiFromState(beforeWinState)
+  t.deepEqual(actualVtree, expectedVtree)
+})
+
+test('`instructions` descendant call arg before win', t => {
+  uiFromState(beforeWinState)
+  t.deepEqual(instructionsSpy.args, [['BEFORE_WIN']])
+})
+
+possibleWinStates.forEach(winState => {
+  test(`\`instructions\` descendant call arg after ${winState.winner} win`, t => {
+    uiFromState(winState)
+    t.deepEqual(instructionsSpy.args, [['AFTER_WIN']])
+  })
+})
+
+test('`arena` descendant calls args', t => {
   const state = {
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
   }
 
-  const expectedVtree = div(
-    divData,
-    [
-      arenaStubReturn
-    ]
-  )
-  const actualVtree = uiFromState(state)
-  t.deepEqual(actualVtree, expectedVtree, 'Vtree')
+  uiFromState(state)
 
   const expectedArenaCallsArgs = [
     [state.leftHiding, state.rightHiding]
   ]
-  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs, '`arena` calls args')
-  t.is(arenaSpy.callCount, 1, '`arena` call count')
+  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
+})
+
+possibleWinStates.forEach(winState => {
+  test(`vtree after ${winState.winner} win`, t => {
+    const expectedVtree = div(
+      divData,
+      [
+        winMessageStubReturn,
+        instructionsStubReturn
+      ]
+    )
+    const actualVtree = uiFromState(winState)
+    t.deepEqual(actualVtree, expectedVtree)
+  })
+})
+
+test('`winMessage` descendant call arg', t => {
+  const winState = {leftHiding: false, rightHiding: false, winner: Symbol()}
+  const expectedCallsArgs = [
+    [ winState.winner ]
+  ]
+
+  uiFromState(winState)
+  t.deepEqual(winMessageSpy.args, expectedCallsArgs)
 })
