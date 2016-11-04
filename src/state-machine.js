@@ -1,5 +1,7 @@
 const {actionNames, players} = require('./constants')
 
+const impossibleActionMessage = 'Impossible action at current state'
+
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
@@ -27,7 +29,7 @@ const stateMachine = (currentState, action) => {
 
 const shoot = (player, currentState) => {
   if (currentState.winner) {
-    throw new Error('Impossible action at current state')
+    throw new Error(impossibleActionMessage)
   }
   if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
     return { leftHiding: null, rightHiding: null, winner: player }
