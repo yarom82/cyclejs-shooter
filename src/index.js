@@ -7,8 +7,9 @@ const {actionNames} = require('./constants')
 const getKeyFromEvent = e => e.key
 
 const main = ({DOM}) => {
-  const keypress$ = DOM
-    .select(':root')
+  const arenaDOM$ = DOM.select(':root .arena')
+
+  const keypress$ = arenaDOM$
     .events('keypress')
     .map(getKeyFromEvent)
   const leftShoot$ = keypress$
@@ -18,8 +19,7 @@ const main = ({DOM}) => {
     .filter(key => key === '/')
     .mapTo(actionNames.rightShoot)
 
-  const keydown$ = DOM
-    .select(':root')
+  const keydown$ = arenaDOM$
     .events('keydown')
     .map(getKeyFromEvent)
   const leftHide$ = keydown$
@@ -29,8 +29,7 @@ const main = ({DOM}) => {
     .filter(key => key === '\'')
     .mapTo(actionNames.rightHide)
 
-  const keyup$ = DOM
-    .select(':root')
+  const keyup$ = arenaDOM$
     .events('keyup')
     .map(getKeyFromEvent)
   const leftUnhide$ = keyup$

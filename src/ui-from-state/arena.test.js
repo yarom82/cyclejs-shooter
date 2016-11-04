@@ -12,6 +12,7 @@ mock('./player', playerSpy)
 const arena = require('./arena')
 
 const divData = {
+  class: {arena: true},
   attrs: {tabindex: 0},
   style: {
     position: 'relative',
