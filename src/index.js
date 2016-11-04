@@ -3,11 +3,12 @@ const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
 const {actionNames} = require('./constants')
+const arenaDOM$FromDOM = require('./arena-dom-stream-from-dom')
 
 const getKeyFromEvent = e => e.key
 
 const main = ({DOM}) => {
-  const arenaDOM$ = DOM.select(':root .arena')
+  const arenaDOM$ = arenaDOM$FromDOM(DOM)
 
   const keypress$ = arenaDOM$
     .events('keypress')
