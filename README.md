@@ -4,4 +4,6 @@ A hide-and-shoot two-player browser game experiment, built with [Cycle.js](https
 
 # Credits
 
-* [Character sprite by tokka](http://opengameart.org/content/2d-hero)
+* [Character graphics by tokka](http://opengameart.org/content/2d-hero);
+  modification: cropping;
+  license: [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/)
