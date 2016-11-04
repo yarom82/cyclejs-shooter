@@ -27,6 +27,8 @@ const divData = {
   style: {textAlign: 'center'}
 }
 
+const beforeWinState = { winner: null }
+
 const possibleWinStates = [
   {leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER'},
   {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
@@ -39,7 +41,7 @@ test('vtree before win', t => {
       arenaStubReturn
     ]
   )
-  const actualVtree = uiFromState({})
+  const actualVtree = uiFromState(beforeWinState)
   t.deepEqual(actualVtree, expectedVtree)
 })
 
@@ -57,7 +59,7 @@ test('`arena` descendant calls args', t => {
   t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
 })
 
-const withPossibleWinState = winState => {
+possibleWinStates.forEach(winState => {
   test(`vtree after ${winState.winner} win`, t => {
     const expectedVtree = div(
       divData,
@@ -68,9 +70,7 @@ const withPossibleWinState = winState => {
     const actualVtree = uiFromState(winState)
     t.deepEqual(actualVtree, expectedVtree)
   })
-}
-
-possibleWinStates.forEach(withPossibleWinState)
+})
 
 test('`winMessage` descendant call arg', t => {
   const winState = {leftHiding: false, rightHiding: false, winner: Symbol()}
