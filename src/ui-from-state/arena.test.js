@@ -1,6 +1,6 @@
 const { test } = require('ava')
 const mock = require('mock-require')
-const { div } = require('@cycle/dom')
+const { div, span } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 
 const playerStubReturn = Symbol('playerStub')
@@ -13,16 +13,27 @@ const arena = require('./arena')
 
 const divData = {
   attrs: {tabindex: 0},
-  style: {fontFamily: 'monospace'}
+  style: {
+    position: 'relative',
+    minHeight: '60px'
+  }
 }
-const barrier = '='
 
 test('vtree', t => {
   const expectedVtree = div(
     divData,
     [
       playerStubReturn,
-      barrier,
+      span(
+        {
+          style: {
+            fontSize: '40px',
+            position: 'absolute',
+            bottom: '0'
+          }
+        },
+        '|'
+      ),
       playerStubReturn
     ]
   )
