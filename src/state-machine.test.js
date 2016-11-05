@@ -54,38 +54,38 @@ const testsForAction = {
   ],
   'LEFT_SHOOT': [
     {
-      currentState: { leftHiding: false, rightHiding: false, winner: null },
-      expectedState: { leftHiding: null, rightHiding: null, winner: 'LEFT_PLAYER' }
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: null, rightHiding: null, gameStatus: 'AFTER_GAME', winner: 'LEFT_PLAYER' }
     },
     {
-      currentState: { leftHiding: false, rightHiding: true, winner: null },
-      expectedState: { leftHiding: false, rightHiding: true, winner: null }
+      currentState: { leftHiding: false, rightHiding: true, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: false, rightHiding: true, gameStatus: 'DURING_GAME' }
     },
     {
-      currentState: { leftHiding: true, rightHiding: false, winner: null },
-      expectedState: { leftHiding: true, rightHiding: false, winner: null }
+      currentState: { leftHiding: true, rightHiding: false, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: true, rightHiding: false, gameStatus: 'DURING_GAME' }
     },
     {
-      currentState: { leftHiding: true, rightHiding: true, winner: null },
-      expectedState: { leftHiding: true, rightHiding: true, winner: null }
+      currentState: { leftHiding: true, rightHiding: true, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: true, rightHiding: true, gameStatus: 'DURING_GAME' }
     }
   ],
   'RIGHT_SHOOT': [
     {
-      currentState: { leftHiding: false, rightHiding: false, winner: null },
-      expectedState: { leftHiding: null, rightHiding: null, winner: 'RIGHT_PLAYER' }
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: null, rightHiding: null, gameStatus: 'AFTER_GAME', winner: 'RIGHT_PLAYER' }
     },
     {
-      currentState: { leftHiding: false, rightHiding: true, winner: null },
-      expectedState: { leftHiding: false, rightHiding: true, winner: null }
+      currentState: { leftHiding: false, rightHiding: true, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: false, rightHiding: true, gameStatus: 'DURING_GAME' }
     },
     {
-      currentState: { leftHiding: true, rightHiding: false, winner: null },
-      expectedState: { leftHiding: true, rightHiding: false, winner: null }
+      currentState: { leftHiding: true, rightHiding: false, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: true, rightHiding: false, gameStatus: 'DURING_GAME' }
     },
     {
-      currentState: { leftHiding: true, rightHiding: true, winner: null },
-      expectedState: { leftHiding: true, rightHiding: true, winner: null }
+      currentState: { leftHiding: true, rightHiding: true, gameStatus: 'DURING_GAME' },
+      expectedState: { leftHiding: true, rightHiding: true, gameStatus: 'DURING_GAME' }
     }
   ]
 }
@@ -106,12 +106,12 @@ const impossibleStatesOfAction = {
     { gameStatus: 'AFTER_GAME' }
   ],
   'LEFT_SHOOT': [
-    { winner: 'LEFT_PLAYER' },
-    { winner: 'RIGHT_PLAYER' }
+    { gameStatus: 'BEFORE_GAME' },
+    { gameStatus: 'AFTER_GAME' }
   ],
   'RIGHT_SHOOT': [
-    { winner: 'LEFT_PLAYER' },
-    { winner: 'RIGHT_PLAYER' }
+    { gameStatus: 'BEFORE_GAME' },
+    { gameStatus: 'AFTER_GAME' }
   ]
 }
 

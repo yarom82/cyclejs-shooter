@@ -41,11 +41,11 @@ const stateMachine = (currentState, action) => {
 }
 
 const shoot = (player, currentState) => {
-  if (currentState.winner) {
+  if (currentState.gameStatus !== 'DURING_GAME') {
     throw new Error(impossibleActionMessage)
   }
   if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-    return { leftHiding: null, rightHiding: null, winner: player }
+    return { leftHiding: null, rightHiding: null, gameStatus: 'AFTER_GAME', winner: player }
   }
 }
 
