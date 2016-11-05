@@ -33,39 +33,46 @@ const divData = {
   style: {textAlign: 'center'}
 }
 
-const beforeWinState = { winner: null }
+const expectedValuesForGameStatus = {
+  'DURING_GAME': {
+    vtree: div(
+      divData,
+      [
+        arenaStubReturn,
+        instructionsStubReturn
+      ]
+    ),
+    instructionsCallsArgs: [['BEFORE_WIN']]
+  },
+  'AFTER_GAME': {
+    vtree: div(
+      divData,
+      [
+        winMessageStubReturn,
+        instructionsStubReturn
+      ]
+    ),
+    instructionsCallsArgs: [['AFTER_WIN']]
+  }
+}
 
-const possibleWinStates = [
-  {leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER'},
-  {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
-]
+for (const gameStatus in expectedValuesForGameStatus) {
+  const {vtree, instructionsCallsArgs} = expectedValuesForGameStatus[gameStatus]
 
-test('vtree before win', t => {
-  const expectedVtree = div(
-    divData,
-    [
-      arenaStubReturn,
-      instructionsStubReturn
-    ]
-  )
-  const actualVtree = uiFromState(beforeWinState)
-  t.deepEqual(actualVtree, expectedVtree)
-})
-
-test('`instructions` descendant call arg before win', t => {
-  uiFromState(beforeWinState)
-  t.deepEqual(instructionsSpy.args, [['BEFORE_WIN']])
-})
-
-possibleWinStates.forEach(winState => {
-  test(`\`instructions\` descendant call arg after ${winState.winner} win`, t => {
-    uiFromState(winState)
-    t.deepEqual(instructionsSpy.args, [['AFTER_WIN']])
+  test(`vtree ${gameStatus}`, t => {
+    const actualVtree = uiFromState({gameStatus})
+    t.deepEqual(actualVtree, vtree)
   })
-})
+
+  test(`\`instructions\` call arg ${gameStatus} is '${instructionsCallsArgs}'`, t => {
+    uiFromState({gameStatus})
+    t.deepEqual(instructionsSpy.args, instructionsCallsArgs)
+  })
+}
 
 test('`arena` descendant calls args', t => {
   const state = {
+    gameStatus: 'DURING_GAME',
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
   }
@@ -78,22 +85,13 @@ test('`arena` descendant calls args', t => {
   t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
 })
 
-possibleWinStates.forEach(winState => {
-  test(`vtree after ${winState.winner} win`, t => {
-    const expectedVtree = div(
-      divData,
-      [
-        winMessageStubReturn,
-        instructionsStubReturn
-      ]
-    )
-    const actualVtree = uiFromState(winState)
-    t.deepEqual(actualVtree, expectedVtree)
-  })
-})
-
 test('`winMessage` descendant call arg', t => {
-  const winState = {leftHiding: false, rightHiding: false, winner: Symbol()}
+  const winState = {
+    gameStatus: 'AFTER_GAME',
+    leftHiding: false,
+    rightHiding: false,
+    winner: Symbol()
+  }
   const expectedCallsArgs = [
     [ winState.winner ]
   ]
