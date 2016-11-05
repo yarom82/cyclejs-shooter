@@ -6,7 +6,7 @@ const stringifyOptions = {
 }
 
 const testsForAction = {
-  'START': [
+  'START_GAME': [
     {
       currentState: { started: false },
       expectedState: { started: true }
@@ -101,7 +101,7 @@ for (const action in testsForAction) {
 }
 
 const impossibleStatesOfAction = {
-  'START': [
+  'START_GAME': [
     { started: true }
   ],
   'LEFT_SHOOT': [

@@ -5,7 +5,7 @@ const impossibleActionMessage = 'Impossible action at current state'
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
-    case actionNames.start:
+    case actionNames.startGame:
       if (currentState.started) {
         throw new Error(impossibleActionMessage)
       }
