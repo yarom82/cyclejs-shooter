@@ -1,5 +1,6 @@
 const constants = {
   actionNames: {
+    start: 'START',
     leftHide: 'LEFT_HIDE',
     rightHide: 'RIGHT_HIDE',
     leftUnhide: 'LEFT_UNHIDE',
