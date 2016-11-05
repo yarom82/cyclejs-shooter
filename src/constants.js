@@ -1,4 +1,8 @@
 const constants = {
+  gameStatus: {
+    duringGame: 'DURING_GAME',
+    afterGame: 'AFTER_GAME'
+  },
   actionNames: {
     start: 'START',
     leftHide: 'LEFT_HIDE',
