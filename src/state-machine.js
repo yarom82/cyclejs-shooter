@@ -5,6 +5,12 @@ const impossibleActionMessage = 'Impossible action at current state'
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
+    case actionNames.start:
+      if (currentState.started) {
+        throw new Error(impossibleActionMessage)
+      }
+      newState.started = true
+      break
     case actionNames.leftHide:
       newState.leftHiding = true
       break
