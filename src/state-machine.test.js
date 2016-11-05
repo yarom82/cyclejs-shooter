@@ -8,8 +8,8 @@ const stringifyOptions = {
 const testsForAction = {
   'START_GAME': [
     {
-      currentState: { started: false },
-      expectedState: { started: true }
+      currentState: { gameStatus: 'BEFORE_GAME' },
+      expectedState: { gameStatus: 'DURING_GAME' }
     }
   ],
   'LEFT_HIDE': [
@@ -102,7 +102,8 @@ for (const action in testsForAction) {
 
 const impossibleStatesOfAction = {
   'START_GAME': [
-    { started: true }
+    { gameStatus: 'DURING_GAME' },
+    { gameStatus: 'AFTER_GAME' }
   ],
   'LEFT_SHOOT': [
     { winner: 'LEFT_PLAYER' },

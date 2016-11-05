@@ -1,4 +1,11 @@
-const {actionNames, players} = require('./constants')
+const {
+  actionNames,
+  gameStatus: {
+    beforeGame,
+    duringGame
+  },
+  players
+} = require('./constants')
 
 const impossibleActionMessage = 'Impossible action at current state'
 
@@ -6,10 +13,10 @@ const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
     case actionNames.startGame:
-      if (currentState.started) {
+      if (currentState.gameStatus !== beforeGame) {
         throw new Error(impossibleActionMessage)
       }
-      newState.started = true
+      newState.gameStatus = duringGame
       break
     case actionNames.leftHide:
       newState.leftHiding = true
