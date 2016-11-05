@@ -8,7 +8,7 @@ test('exported object deep equality assertion', t => {
       afterGame: 'AFTER_GAME'
     },
     actionNames: {
-      start: 'START',
+      startGame: 'START_GAME',
       leftHide: 'LEFT_HIDE',
       rightHide: 'RIGHT_HIDE',
       leftUnhide: 'LEFT_UNHIDE',
