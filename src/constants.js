@@ -1,5 +1,6 @@
 const constants = {
   gameStatus: {
+    beforeGame: 'BEFORE_GAME',
     duringGame: 'DURING_GAME',
     afterGame: 'AFTER_GAME'
   },
