@@ -11,11 +11,11 @@ const expectedDataForEventAndKey = {
   },
   'keydown': {
     'a': 'LEFT_HIDE',
-    '"': 'RIGHT_HIDE'
+    '\'': 'RIGHT_HIDE'
   },
   'keyup': {
     'a': 'LEFT_UNHIDE',
-    '"': 'RIGHT_UNHIDE'
+    '\'': 'RIGHT_UNHIDE'
   }
 }
 
