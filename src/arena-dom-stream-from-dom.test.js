@@ -9,7 +9,7 @@ test('selects the arena', t => {
 
   const arenaDOMStub = Symbol()
   const DOMMock = mockDOMSource(xstreamAdapter, {
-    ':root .arena': {
+    '.arena': {
       elements: xs.of(arenaDOMStub)
     }
   })
