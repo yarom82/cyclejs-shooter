@@ -42,7 +42,7 @@ const expectedValuesForGameStatus = {
         instructionsStubReturn
       ]
     ),
-    instructionsCallsArgs: [['BEFORE_WIN']]
+    instructionsCallArg: 'BEFORE_WIN'
   },
   'AFTER_GAME': {
     vtree: div(
@@ -52,21 +52,21 @@ const expectedValuesForGameStatus = {
         instructionsStubReturn
       ]
     ),
-    instructionsCallsArgs: [['AFTER_WIN']]
+    instructionsCallArg: 'AFTER_WIN'
   }
 }
 
 for (const gameStatus in expectedValuesForGameStatus) {
-  const {vtree, instructionsCallsArgs} = expectedValuesForGameStatus[gameStatus]
+  const {vtree, instructionsCallArg} = expectedValuesForGameStatus[gameStatus]
 
   test(`vtree ${gameStatus}`, t => {
     const actualVtree = uiFromState({gameStatus})
     t.deepEqual(actualVtree, vtree)
   })
 
-  test(`\`instructions\` call arg ${gameStatus} is '${instructionsCallsArgs}'`, t => {
+  test(`\`instructions\` call arg ${gameStatus} is '${instructionsCallArg}'`, t => {
     uiFromState({gameStatus})
-    t.deepEqual(instructionsSpy.args, instructionsCallsArgs)
+    t.deepEqual(instructionsSpy.args, [[instructionsCallArg]])
   })
 }
 
