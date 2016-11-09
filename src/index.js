@@ -1,4 +1,5 @@
 const rootDOM$FromDOM = require('./root-dom-stream-from-dom')
+const start$FromDOM = require('./start-stream-from-dom')
 const uiFromState = require('./ui-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
@@ -10,6 +11,8 @@ const keyFromEvent = require('./key-from-event')
 const main = ({DOM}) => {
   const rootDOM$ = rootDOM$FromDOM(DOM)
   const arenaDOM$ = arenaDOM$FromDOM(rootDOM$)
+
+  const start$ = start$FromDOM(rootDOM$)
 
   const keypress$ = arenaDOM$
     .events('keypress')
@@ -42,7 +45,7 @@ const main = ({DOM}) => {
     .mapTo(actionNames.rightUnhide)
 
   const action$ = xs
-    .merge(leftShoot$, rightShoot$, leftHide$, rightHide$, leftUnhide$, rightUnhide$)
+    .merge(start$, leftShoot$, rightShoot$, leftHide$, rightHide$, leftUnhide$, rightUnhide$)
 
   const state$ = action$
     .fold(stateMachine, initialState)
