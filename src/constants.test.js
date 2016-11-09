@@ -8,6 +8,9 @@ test('exported object deep equality assertion', t => {
       duringGame: 'DURING_GAME',
       afterGame: 'AFTER_GAME'
     },
+    selectorPrefixes: {
+      action: 'ACTION'
+    },
     actionNames: {
       startGame: 'START_GAME',
       leftHide: 'LEFT_HIDE',
