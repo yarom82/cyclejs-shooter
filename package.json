@@ -5,8 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "budo bootstrap.js",
-    "unit": "nyc ava --verbose",
-    "test": "npm run lint && npm run unit",
+    "unit": "ava --verbose",
+    "coverage": "nyc npm run unit",
+    "test": "npm run lint && npm run coverage",
     "lint": "standard"
   },
   "keywords": [
