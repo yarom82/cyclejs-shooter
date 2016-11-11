@@ -4,9 +4,14 @@ const stringifyObject = require('stringify-object')
 const stringifyOptions = {
   inlineCharacterLimit: 999
 }
+const {
+  actionNames: {
+    start
+  }
+} = require('./constants')
 
 const testsForAction = {
-  'START': [
+  [start]: [
     {
       currentState: { started: false },
       expectedState: { started: true }
@@ -101,7 +106,7 @@ for (const action in testsForAction) {
 }
 
 const impossibleStatesOfAction = {
-  'START': [
+  [start]: [
     { started: true }
   ],
   'LEFT_SHOOT': [
