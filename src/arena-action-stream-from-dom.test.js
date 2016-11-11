@@ -3,6 +3,11 @@ const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const arenaAction$FromDOM = require('./arena-action-stream-from-dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
+const {
+  actionNames: {
+    leftHide
+  }
+} = require('./constants')
 
 const expectedDataForEventAndKey = {
   'keypress': {
@@ -10,7 +15,7 @@ const expectedDataForEventAndKey = {
     '/': 'RIGHT_SHOOT'
   },
   'keydown': {
-    'a': 'LEFT_HIDE',
+    'a': leftHide,
     '\'': 'RIGHT_HIDE'
   },
   'keyup': {
