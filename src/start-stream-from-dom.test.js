@@ -6,20 +6,24 @@ const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   selectorPrefixes: {
     action
+  },
+  actionNames: {
+    start
   }
 } = require('./constants')
 
-test(`emits 'START' for clicks on \`.${action}:START\``, t => {
+const selector = `.${action}:${start}`
+test(`emits '${start}' for clicks on \`${selector}\``, t => {
   t.plan(1)
 
   const DOMMock = mockDOMSource(xstreamAdapter, {
-    [`.${action}:START`]: {
+    [selector]: {
       'click': xs.of(null)
     }
   })
 
   start$FromDOM(DOMMock)
-    .addListener({next: start => {
-      t.is(start, 'START')
+    .addListener({next: value => {
+      t.is(value, start)
     }})
 })
