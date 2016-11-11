@@ -8,14 +8,16 @@ const {
     leftHide,
     rightHide,
     leftUnhide,
-    rightUnhide
+    rightUnhide,
+    leftShoot,
+    rightShoot
   }
 } = require('./constants')
 
 const expectedDataForEventAndKey = {
   'keypress': {
-    'z': 'LEFT_SHOOT',
-    '/': 'RIGHT_SHOOT'
+    'z': leftShoot,
+    '/': rightShoot
   },
   'keydown': {
     'a': leftHide,
