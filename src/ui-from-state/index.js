@@ -4,8 +4,8 @@ const winMessage = require('./win-message')
 const instructions = require('./instructions')
 const {
   gameStatus: {
-    duringGame,
-    afterGame
+    afoot,
+    ended
   }
 } = require('../constants')
 
@@ -13,11 +13,11 @@ const uiFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
   let firstChild
   let instructionsArg
   switch (gameStatus) {
-    case duringGame:
+    case afoot:
       firstChild = arena(leftHiding, rightHiding)
       instructionsArg = 'BEFORE_WIN'
       break
-    case afterGame:
+    case ended:
       firstChild = winMessage(winner)
       instructionsArg = 'AFTER_WIN'
       break

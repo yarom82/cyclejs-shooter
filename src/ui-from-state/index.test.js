@@ -34,7 +34,7 @@ const divData = {
 }
 
 const expectedValuesForGameStatus = {
-  'DURING_GAME': {
+  'AFOOT': {
     vtree: div(
       divData,
       [
@@ -44,7 +44,7 @@ const expectedValuesForGameStatus = {
     ),
     instructionsCallArg: 'BEFORE_WIN'
   },
-  'AFTER_GAME': {
+  'ENDED': {
     vtree: div(
       divData,
       [
@@ -72,7 +72,7 @@ for (const gameStatus in expectedValuesForGameStatus) {
 
 test('`arena` descendant calls args', t => {
   const state = {
-    gameStatus: 'DURING_GAME',
+    gameStatus: 'AFOOT',
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
   }
@@ -87,7 +87,7 @@ test('`arena` descendant calls args', t => {
 
 test('`winMessage` descendant call arg', t => {
   const winState = {
-    gameStatus: 'AFTER_GAME',
+    gameStatus: 'ENDED',
     leftHiding: false,
     rightHiding: false,
     winner: Symbol()

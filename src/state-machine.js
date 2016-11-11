@@ -1,8 +1,8 @@
 const {
   actionNames,
   gameStatus: {
-    beforeGame,
-    duringGame
+    idle,
+    afoot
   },
   players
 } = require('./constants')
@@ -13,10 +13,10 @@ const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
     case actionNames.startGame:
-      if (currentState.gameStatus !== beforeGame) {
+      if (currentState.gameStatus !== idle) {
         throw new Error(impossibleActionMessage)
       }
-      newState.gameStatus = duringGame
+      newState.gameStatus = afoot
       break
     case actionNames.leftHide:
       newState.leftHiding = true
@@ -41,11 +41,11 @@ const stateMachine = (currentState, action) => {
 }
 
 const shoot = (player, currentState) => {
-  if (currentState.gameStatus !== 'DURING_GAME') {
+  if (currentState.gameStatus !== 'AFOOT') {
     throw new Error(impossibleActionMessage)
   }
   if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-    return { leftHiding: null, rightHiding: null, gameStatus: 'AFTER_GAME', winner: player }
+    return { leftHiding: null, rightHiding: null, gameStatus: 'ENDED', winner: player }
   }
 }
 

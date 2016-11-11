@@ -4,9 +4,9 @@ const { test } = require('ava')
 test('exported object deep equality assertion', t => {
   const expectedConstants = {
     gameStatus: {
-      beforeGame: 'BEFORE_GAME',
-      duringGame: 'DURING_GAME',
-      afterGame: 'AFTER_GAME'
+      idle: 'IDLE',
+      afoot: 'AFOOT',
+      ended: 'ENDED'
     },
     selectorPrefixes: {
       action: 'ACTION'

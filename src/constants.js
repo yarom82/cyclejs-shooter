@@ -1,8 +1,8 @@
 const constants = {
   gameStatus: {
-    beforeGame: 'BEFORE_GAME',
-    duringGame: 'DURING_GAME',
-    afterGame: 'AFTER_GAME'
+    idle: 'IDLE',
+    afoot: 'AFOOT',
+    ended: 'ENDED'
   },
   selectorPrefixes: {
     action: 'ACTION'
