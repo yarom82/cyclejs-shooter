@@ -6,7 +6,8 @@ const stringifyOptions = {
 }
 const {
   actionNames: {
-    start
+    start,
+    leftHide
   }
 } = require('./constants')
 
@@ -17,7 +18,7 @@ const testsForAction = {
       expectedState: { started: true }
     }
   ],
-  'LEFT_HIDE': [
+  [leftHide]: [
     {
       currentState: { leftHiding: false },
       expectedState: { leftHiding: true }
