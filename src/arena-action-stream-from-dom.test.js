@@ -6,7 +6,8 @@ const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   actionNames: {
     leftHide,
-    rightHide
+    rightHide,
+    leftUnhide
   }
 } = require('./constants')
 
@@ -20,7 +21,7 @@ const expectedDataForEventAndKey = {
     '\'': rightHide
   },
   'keyup': {
-    'a': 'LEFT_UNHIDE',
+    'a': leftUnhide,
     '\'': 'RIGHT_UNHIDE'
   }
 }
