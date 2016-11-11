@@ -1,4 +1,7 @@
 const constants = {
+  selectorPrefixes: {
+    action: 'ACTION'
+  },
   actionNames: {
     start: 'START',
     leftHide: 'LEFT_HIDE',
