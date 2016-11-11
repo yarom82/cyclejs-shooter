@@ -7,7 +7,8 @@ const {
   actionNames: {
     leftHide,
     rightHide,
-    leftUnhide
+    leftUnhide,
+    rightUnhide
   }
 } = require('./constants')
 
@@ -22,7 +23,7 @@ const expectedDataForEventAndKey = {
   },
   'keyup': {
     'a': leftUnhide,
-    '\'': 'RIGHT_UNHIDE'
+    '\'': rightUnhide
   }
 }
 
