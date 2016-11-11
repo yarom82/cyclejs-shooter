@@ -8,7 +8,8 @@ const {
   actionNames: {
     start,
     leftHide,
-    rightHide
+    rightHide,
+    leftUnhide
   }
 } = require('./constants')
 
@@ -29,7 +30,7 @@ const testsForAction = {
       expectedState: { leftHiding: true }
     }
   ],
-  'LEFT_UNHIDE': [
+  [leftUnhide]: [
     {
       currentState: { leftHiding: false },
       expectedState: { leftHiding: false }
