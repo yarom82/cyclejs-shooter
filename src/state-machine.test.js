@@ -6,6 +6,12 @@ const stringifyOptions = {
 }
 
 const testsForAction = {
+  'START': [
+    {
+      currentState: { started: false },
+      expectedState: { started: true }
+    }
+  ],
   'LEFT_HIDE': [
     {
       currentState: { leftHiding: false },
@@ -95,6 +101,9 @@ for (const action in testsForAction) {
 }
 
 const impossibleStatesOfAction = {
+  'START': [
+    { started: true }
+  ],
   'LEFT_SHOOT': [
     { winner: 'LEFT_PLAYER' },
     { winner: 'RIGHT_PLAYER' }
