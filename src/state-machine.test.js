@@ -10,7 +10,9 @@ const {
     leftHide,
     rightHide,
     leftUnhide,
-    rightUnhide
+    rightUnhide,
+    leftShoot,
+    rightShoot
   }
 } = require('./constants')
 
@@ -61,7 +63,7 @@ const testsForAction = {
       expectedState: { rightHiding: false }
     }
   ],
-  'LEFT_SHOOT': [
+  [leftShoot]: [
     {
       currentState: { leftHiding: false, rightHiding: false, winner: null },
       expectedState: { leftHiding: null, rightHiding: null, winner: 'LEFT_PLAYER' }
@@ -79,7 +81,7 @@ const testsForAction = {
       expectedState: { leftHiding: true, rightHiding: true, winner: null }
     }
   ],
-  'RIGHT_SHOOT': [
+  [rightShoot]: [
     {
       currentState: { leftHiding: false, rightHiding: false, winner: null },
       expectedState: { leftHiding: null, rightHiding: null, winner: 'RIGHT_PLAYER' }
@@ -113,11 +115,11 @@ const impossibleStatesOfAction = {
   [start]: [
     { started: true }
   ],
-  'LEFT_SHOOT': [
+  [leftShoot]: [
     { winner: 'LEFT_PLAYER' },
     { winner: 'RIGHT_PLAYER' }
   ],
-  'RIGHT_SHOOT': [
+  [rightShoot]: [
     { winner: 'LEFT_PLAYER' },
     { winner: 'RIGHT_PLAYER' }
   ]
