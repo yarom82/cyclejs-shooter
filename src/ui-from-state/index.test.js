@@ -18,6 +18,13 @@ const instructionsStub = () => instructionsStubReturn
 const instructionsSpy = spy(instructionsStub)
 mock('./instructions', instructionsSpy)
 
+const {
+  players: {
+    leftPlayer,
+    rightPlayer
+  }
+} = require('../constants')
+
 test.beforeEach(() => {
   [
     instructionsSpy,
@@ -36,8 +43,8 @@ const divData = {
 const beforeWinState = { winner: null }
 
 const possibleWinStates = [
-  {leftHiding: false, rightHiding: false, winner: 'LEFT_PLAYER'},
-  {leftHiding: false, rightHiding: false, winner: 'RIGHT_PLAYER'}
+  {leftHiding: false, rightHiding: false, winner: leftPlayer},
+  {leftHiding: false, rightHiding: false, winner: rightPlayer}
 ]
 
 test('vtree before win', t => {
