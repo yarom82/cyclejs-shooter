@@ -5,7 +5,8 @@ const arenaAction$FromDOM = require('./arena-action-stream-from-dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   actionNames: {
-    leftHide
+    leftHide,
+    rightHide
   }
 } = require('./constants')
 
@@ -16,7 +17,7 @@ const expectedDataForEventAndKey = {
   },
   'keydown': {
     'a': leftHide,
-    '\'': 'RIGHT_HIDE'
+    '\'': rightHide
   },
   'keyup': {
     'a': 'LEFT_UNHIDE',
