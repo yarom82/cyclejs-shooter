@@ -3,5 +3,5 @@ node_js:
   - "node"
 env:
   - JOB=lint
-  - JOB=coverage
-script: npm run $JOB
+  - JOB="coverage report-coverage"
+script: ./node_modules/.bin/run-s $JOB
