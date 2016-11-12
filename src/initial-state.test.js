@@ -3,7 +3,7 @@ const { test } = require('ava')
 
 test('exported object deep equality assertion', t => {
   const expected = {
-    gameStatus: 'AFOOT',
+    gameStatus: 'IDLE',
     leftHiding: true,
     rightHiding: true,
     winner: null
