@@ -9,6 +9,9 @@ const playerSpy = spy(playerStub)
 test.afterEach(() => playerSpy.reset())
 mock('./player', playerSpy)
 
+const focusOnElmFromVnodeStub = Symbol('focusOnElmFromVnodeStub')
+mock('./focus-on-elm-from-vnode', focusOnElmFromVnodeStub)
+
 const arena = require('./arena')
 
 const divData = {
@@ -17,6 +20,9 @@ const divData = {
   style: {
     position: 'relative',
     minHeight: '60px'
+  },
+  hook: {
+    insert: focusOnElmFromVnodeStub
   }
 }
 
