@@ -1,15 +1,22 @@
-const {actionNames, players} = require('./constants')
+const {
+  actionNames,
+  gameStatus: {
+    idle,
+    afoot
+  },
+  players
+} = require('./constants')
 
 const impossibleActionMessage = 'Impossible action at current state'
 
 const stateMachine = (currentState, action) => {
   const newState = Object.assign({}, currentState)
   switch (action) {
-    case actionNames.start:
-      if (currentState.started) {
+    case actionNames.startGame:
+      if (currentState.gameStatus !== idle) {
         throw new Error(impossibleActionMessage)
       }
-      newState.started = true
+      newState.gameStatus = afoot
       break
     case actionNames.leftHide:
       newState.leftHiding = true
@@ -34,11 +41,11 @@ const stateMachine = (currentState, action) => {
 }
 
 const shoot = (player, currentState) => {
-  if (currentState.winner) {
+  if (currentState.gameStatus !== 'AFOOT') {
     throw new Error(impossibleActionMessage)
   }
   if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-    return { leftHiding: null, rightHiding: null, winner: player }
+    return { leftHiding: null, rightHiding: null, gameStatus: 'ENDED', winner: player }
   }
 }
 
