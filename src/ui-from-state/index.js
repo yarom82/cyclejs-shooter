@@ -15,7 +15,7 @@ const uiFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
   let firstChild
   switch (gameStatus) {
     case idle:
-      firstChild = startGameButton
+      firstChild = startGameButton()
       break
     case afoot:
       firstChild = arena(leftHiding, rightHiding)

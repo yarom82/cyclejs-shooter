@@ -3,8 +3,10 @@ const mock = require('mock-require')
 const { div } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 
-const startGameButtonStub = Symbol('startGameButtonStub')
-mock('./start-game-button', startGameButtonStub)
+const startGameButtonStubReturn = Symbol('startGameButtonStubReturn')
+const startGameButtonStub = () => startGameButtonStubReturn
+const startGameButtonSpy = spy(startGameButtonStub)
+mock('./start-game-button', startGameButtonSpy)
 
 const arenaStubReturn = Symbol('arenaStub')
 const arenaStub = () => arenaStubReturn
@@ -41,7 +43,7 @@ const expectedValuesForGameStatus = {
     vtree: div(
       divData,
       [
-        startGameButtonStub,
+        startGameButtonStubReturn,
         instructionsStubReturn
       ]
     ),
