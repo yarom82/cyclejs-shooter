@@ -20,7 +20,6 @@ test('emits \'START\' for clicks on `startGameButton`', t => {
   })
 
   startGame$FromDOM(DOMMock)
-    .debug()
     .addListener({next: start => {
       t.is(start, 'START_GAME')
     }})
