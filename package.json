@@ -54,6 +54,6 @@
     "require-new": "^1.1.0",
     "simple-spy": "^2.0.4",
     "standard": "^8.4.0",
-    "stringify-object": "^2.4.0"
+    "stringify-object": "^3.0.0"
   }
 }
