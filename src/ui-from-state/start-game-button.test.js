@@ -4,7 +4,7 @@ const { spy } = require('simple-spy')
 const mock = require('mock-require')
 const requireNew = require('require-new')
 
-const cuidStubReturn = Symbol('cuidStub')
+const cuidStubReturn = Symbol('cuidStubReturn')
 const cuidStub = () => cuidStubReturn
 const cuidSpy = spy(cuidStub)
 mock('cuid', cuidSpy)
