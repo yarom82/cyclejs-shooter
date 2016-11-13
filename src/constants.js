@@ -1,9 +1,14 @@
 const constants = {
+  gameStatus: {
+    idle: 'IDLE',
+    afoot: 'AFOOT',
+    ended: 'ENDED'
+  },
   selectorPrefixes: {
     action: 'ACTION'
   },
   actionNames: {
-    start: 'START',
+    startGame: 'START_GAME',
     leftHide: 'LEFT_HIDE',
     rightHide: 'RIGHT_HIDE',
     leftUnhide: 'LEFT_UNHIDE',
