@@ -33,7 +33,7 @@ test('vtree', t => {
   t.deepEqual(startGameButton(), expected)
 })
 
-test('`cuid` descendant called once with no args', t => {
+test('`cuid` called once with no args', t => {
   requireNew(modulePath)
   t.deepEqual(cuidSpy.args, [[]])
 })
