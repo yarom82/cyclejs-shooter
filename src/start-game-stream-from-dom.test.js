@@ -1,9 +1,8 @@
 const { test } = require('ava')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
-const xstreamAdapter = require('@cycle/xstream-adapter').default
-
 const startGame$FromDOM = require('./start-game-stream-from-dom')
+const xstreamAdapter = require('@cycle/xstream-adapter').default
 
 test('emits \'START\' for clicks on `startGameButton`’s exported selector', t => {
   t.plan(1)
