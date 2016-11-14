@@ -1,19 +1,19 @@
 const { test } = require('ava')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
-const start$FromDOM = require('./start-stream-from-dom')
+const startGame$FromDOM = require('./start-game-stream-from-dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   selectorPrefixes: {
     action
   },
   actionNames: {
-    start
+    startGame
   }
 } = require('./constants')
 
-const selector = `.${action}:${start}`
-test(`emits '${start}' for clicks on \`${selector}\``, t => {
+const selector = `.${action}:${startGame}`
+test(`emits '${startGame}' for clicks on \`${selector}\``, t => {
   t.plan(1)
 
   const DOMMock = mockDOMSource(xstreamAdapter, {
@@ -22,8 +22,8 @@ test(`emits '${start}' for clicks on \`${selector}\``, t => {
     }
   })
 
-  start$FromDOM(DOMMock)
+  startGame$FromDOM(DOMMock)
     .addListener({next: value => {
-      t.is(value, start)
+      t.is(value, startGame)
     }})
 })

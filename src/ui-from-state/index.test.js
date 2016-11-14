@@ -18,13 +18,6 @@ const instructionsStub = () => instructionsStubReturn
 const instructionsSpy = spy(instructionsStub)
 mock('./instructions', instructionsSpy)
 
-const {
-  players: {
-    leftPlayer,
-    rightPlayer
-  }
-} = require('../constants')
-
 test.beforeEach(() => {
   [
     instructionsSpy,
@@ -34,45 +27,59 @@ test.beforeEach(() => {
   .forEach(spy => spy.reset())
 })
 
+const {
+  gameStatus: {
+    afoot,
+    ended
+  }
+} = require('../constants')
+
 const uiFromState = require('.')
 
 const divData = {
   style: {textAlign: 'center'}
 }
 
-const beforeWinState = { winner: null }
+const expectedValuesForGameStatus = {
+  [afoot]: {
+    vtree: div(
+      divData,
+      [
+        arenaStubReturn,
+        instructionsStubReturn
+      ]
+    ),
+    instructionsCallArg: 'BEFORE_WIN'
+  },
+  [ended]: {
+    vtree: div(
+      divData,
+      [
+        winMessageStubReturn,
+        instructionsStubReturn
+      ]
+    ),
+    instructionsCallArg: 'AFTER_WIN'
+  }
+}
 
-const possibleWinStates = [
-  {leftHiding: false, rightHiding: false, winner: leftPlayer},
-  {leftHiding: false, rightHiding: false, winner: rightPlayer}
-]
+for (const gameStatus in expectedValuesForGameStatus) {
+  const {vtree, instructionsCallArg} = expectedValuesForGameStatus[gameStatus]
 
-test('vtree before win', t => {
-  const expectedVtree = div(
-    divData,
-    [
-      arenaStubReturn,
-      instructionsStubReturn
-    ]
-  )
-  const actualVtree = uiFromState(beforeWinState)
-  t.deepEqual(actualVtree, expectedVtree)
-})
-
-test('`instructions` descendant call arg before win', t => {
-  uiFromState(beforeWinState)
-  t.deepEqual(instructionsSpy.args, [['BEFORE_WIN']])
-})
-
-possibleWinStates.forEach(winState => {
-  test(`\`instructions\` descendant call arg after ${winState.winner} win`, t => {
-    uiFromState(winState)
-    t.deepEqual(instructionsSpy.args, [['AFTER_WIN']])
+  test(`vtree ${gameStatus}`, t => {
+    const actualVtree = uiFromState({gameStatus})
+    t.deepEqual(actualVtree, vtree)
   })
-})
+
+  test(`\`instructions\` call arg ${gameStatus} is '${instructionsCallArg}'`, t => {
+    uiFromState({gameStatus})
+    t.deepEqual(instructionsSpy.args, [[instructionsCallArg]])
+  })
+}
 
 test('`arena` descendant calls args', t => {
   const state = {
+    gameStatus: afoot,
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
   }
@@ -85,22 +92,13 @@ test('`arena` descendant calls args', t => {
   t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
 })
 
-possibleWinStates.forEach(winState => {
-  test(`vtree after ${winState.winner} win`, t => {
-    const expectedVtree = div(
-      divData,
-      [
-        winMessageStubReturn,
-        instructionsStubReturn
-      ]
-    )
-    const actualVtree = uiFromState(winState)
-    t.deepEqual(actualVtree, expectedVtree)
-  })
-})
-
 test('`winMessage` descendant call arg', t => {
-  const winState = {leftHiding: false, rightHiding: false, winner: Symbol()}
+  const winState = {
+    gameStatus: ended,
+    leftHiding: false,
+    rightHiding: false,
+    winner: Symbol()
+  }
   const expectedCallsArgs = [
     [ winState.winner ]
   ]

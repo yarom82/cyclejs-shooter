@@ -1,9 +1,15 @@
 const initialState = require('./initial-state')
 const { test } = require('ava')
 
+const {
+  gameStatus: {
+    afoot
+  }
+} = require('./constants')
+
 test('exported object deep equality assertion', t => {
   const expected = {
-    started: false,
+    gameStatus: afoot,
     leftHiding: true,
     rightHiding: true,
     winner: null
