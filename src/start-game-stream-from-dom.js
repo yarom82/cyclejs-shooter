@@ -1,11 +1,13 @@
 const {
   actionNames: {startGame}
 } = require('./constants')
-const { className } = require('./ui-from-state/start-game-button')
+const {
+  selector: startGameButtonSelector
+} = require('./ui-from-state/start-game-button')
 
 const startGame$FromDOM = DOM => {
   return DOM
-    .select(`.${className}`)
+    .select(startGameButtonSelector)
     .events('click')
     .mapTo(startGame)
 }

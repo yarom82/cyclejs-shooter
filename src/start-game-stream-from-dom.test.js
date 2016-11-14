@@ -2,19 +2,16 @@ const { test } = require('ava')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const xstreamAdapter = require('@cycle/xstream-adapter').default
-const mock = require('mock-require')
-const cuid = require('cuid')
-
-const className = cuid()
-mock('./ui-from-state/start-game-button', { className })
 
 const startGame$FromDOM = require('./start-game-stream-from-dom')
 
-test('emits \'START\' for clicks on `startGameButton`', t => {
+test('emits \'START\' for clicks on `startGameButton`’s exported selector', t => {
   t.plan(1)
 
+  const { selector } = require('./ui-from-state/start-game-button')
+
   const DOMMock = mockDOMSource(xstreamAdapter, {
-    [`.${className}`]: {
+    [selector]: {
       'click': xs.of(null)
     }
   })
