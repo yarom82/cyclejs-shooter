@@ -3,8 +3,9 @@ const { button } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 const mock = require('mock-require')
 const requireNew = require('require-new')
+const cuid = require('cuid')
 
-const cuidStubReturn = Symbol('cuidStubReturn')
+const cuidStubReturn = cuid()
 const cuidStub = () => cuidStubReturn
 const cuidSpy = spy(cuidStub)
 mock('cuid', cuidSpy)
@@ -19,8 +20,8 @@ const startGameButton = require(modulePath)
 test('vtree', t => {
   const expected = button(
     {
-      class: {
-        [cuidStubReturn]: true
+      attrs: {
+        'data-id': cuidStubReturn
       },
       style: {
         textTransform: 'uppercase'
@@ -37,6 +38,6 @@ test('`cuid` descendant called once with no args', t => {
   t.deepEqual(cuidSpy.args, [[]])
 })
 
-test('exports its unique className', t => {
-  t.is(startGameButton.className, cuidStubReturn)
+test('exports its unique selector', t => {
+  t.is(startGameButton.selector, `[data-id='${cuidStubReturn}']`)
 })

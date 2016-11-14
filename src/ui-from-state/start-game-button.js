@@ -1,12 +1,12 @@
 const { button } = require('@cycle/dom')
 const cuid = require('cuid')
 
-const className = cuid()
+const id = cuid()
 
 const vnode = button(
   {
-    class: {
-      [className]: true
+    attrs: {
+      'data-id': id
     },
     style: {
       textTransform: 'uppercase'
@@ -17,5 +17,5 @@ const vnode = button(
 
 const startGameButton = () => vnode
 
-startGameButton.className = className
+startGameButton.selector = `[data-id='${id}']`
 module.exports = startGameButton
