@@ -5,11 +5,11 @@ const {
   selector: startGameButtonSelector
 } = require('./ui-from-state/start-game-button')
 
-const startGame$FromDOM = DOMSource => {
+const startGame$fromDOMSource = DOMSource => {
   return DOMSource
     .select(startGameButtonSelector)
     .events('click')
     .mapTo(startGame)
 }
 
-module.exports = startGame$FromDOM
+module.exports = startGame$fromDOMSource
