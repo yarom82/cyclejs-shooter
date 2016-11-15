@@ -3,7 +3,7 @@ const main = require('.')
 const { mockDOMSource } = require('@cycle/dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 
-test('given a DOMDriver emits some initial vtree', t => {
+test('given a DOMSource emits some initial vtree', t => {
   t.plan(1)
   const DOMSourceMock = mockDOMSource(xstreamAdapter, {})
   const { DOM } = main({ DOM: DOMSourceMock })
