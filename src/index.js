@@ -6,8 +6,8 @@ const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
 
-const main = ({DOM}) => {
-  const rootDOM$ = rootDOM$FromDOM(DOM)
+const main = ({DOM: DOMSource}) => {
+  const rootDOM$ = rootDOM$FromDOM(DOMSource)
 
   const startGame$ = startGame$FromDOM(rootDOM$)
   const arenaAction$ = arenaAction$FromDOM(rootDOM$)
