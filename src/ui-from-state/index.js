@@ -1,9 +1,11 @@
 const { div } = require('@cycle/dom')
+const startGameButton = require('./start-game-button')
 const arena = require('./arena')
 const winMessage = require('./win-message')
 const instructions = require('./instructions')
 const {
   gameStatus: {
+    idle,
     afoot,
     ended
   }
@@ -11,15 +13,15 @@ const {
 
 const uiFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
   let firstChild
-  let instructionsArg
   switch (gameStatus) {
+    case idle:
+      firstChild = startGameButton()
+      break
     case afoot:
       firstChild = arena(leftHiding, rightHiding)
-      instructionsArg = 'BEFORE_WIN'
       break
     case ended:
       firstChild = winMessage(winner)
-      instructionsArg = 'AFTER_WIN'
       break
   }
 
@@ -29,7 +31,7 @@ const uiFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
     },
     [
       firstChild,
-      instructions(instructionsArg)
+      instructions(gameStatus === ended ? 'AFTER_WIN' : 'BEFORE_WIN')
     ]
   )
 }

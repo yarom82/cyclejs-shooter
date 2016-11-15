@@ -3,6 +3,11 @@ const mock = require('mock-require')
 const { div } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 
+const startGameButtonStubReturn = Symbol('startGameButtonStubReturn')
+const startGameButtonStub = () => startGameButtonStubReturn
+const startGameButtonSpy = spy(startGameButtonStub)
+mock('./start-game-button', startGameButtonSpy)
+
 const arenaStubReturn = Symbol('arenaStub')
 const arenaStub = () => arenaStubReturn
 const arenaSpy = spy(arenaStub)
@@ -29,6 +34,7 @@ test.beforeEach(() => {
 
 const {
   gameStatus: {
+    idle,
     afoot,
     ended
   }
@@ -41,6 +47,16 @@ const divData = {
 }
 
 const expectedValuesForGameStatus = {
+  [idle]: {
+    vtree: div(
+      divData,
+      [
+        startGameButtonStubReturn,
+        instructionsStubReturn
+      ]
+    ),
+    instructionsCallArg: 'BEFORE_WIN'
+  },
   [afoot]: {
     vtree: div(
       divData,

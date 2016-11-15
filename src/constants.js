@@ -4,9 +4,6 @@ const constants = {
     afoot: 'AFOOT',
     ended: 'ENDED'
   },
-  selectorPrefixes: {
-    action: 'ACTION'
-  },
   actionNames: {
     startGame: 'START_GAME',
     leftHide: 'LEFT_HIDE',
