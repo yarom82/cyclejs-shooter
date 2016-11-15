@@ -1,7 +1,7 @@
 const { test } = require('ava')
 const { mockDOMSource } = require('@cycle/dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
-const rootDOM$FromDOM = require('./root-dom-stream-from-dom')
+const rootDOMsFromDOM = require('./root-doms-from-dom')
 const xs = require('xstream').default
 
 test('selects the root DOM', t => {
@@ -13,7 +13,7 @@ test('selects the root DOM', t => {
     }
   })
 
-  rootDOM$FromDOM(DOMMock)
+  rootDOMsFromDOM(DOMMock)
     .elements()
     .addListener({next: rootDOM => {
       t.is(rootDOM, rootDOMStub)

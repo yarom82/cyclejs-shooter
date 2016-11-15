@@ -1,25 +1,25 @@
-const rootDOM$FromDOM = require('./root-dom-stream-from-dom')
-const startGame$FromDOM = require('./start-game-stream-from-dom')
-const arenaAction$FromDOM = require('./arena-action-stream-from-dom')
+const rootDOMsFromDOM = require('./root-doms-from-dom')
+const startGameActionsFromDOM = require('./start-game-actions-from-dom')
+const arenaActionsFromDOM = require('./arena-actions-from-dom')
 const uiFromState = require('./ui-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
 
 const main = ({DOM}) => {
-  const rootDOM$ = rootDOM$FromDOM(DOM)
+  const rootDOMs = rootDOMsFromDOM(DOM)
 
-  const startGame$ = startGame$FromDOM(rootDOM$)
-  const arenaAction$ = arenaAction$FromDOM(rootDOM$)
+  const startGameActions = startGameActionsFromDOM(rootDOMs)
+  const arenaActions = arenaActionsFromDOM(rootDOMs)
 
-  const action$ = xs
-    .merge(arenaAction$, startGame$)
+  const actions = xs
+    .merge(arenaActions, startGameActions)
 
-  const state$ = action$
+  const states = actions
     .fold(stateMachine, initialState)
 
-  const vtree$ = state$.map(uiFromState)
-  return {DOM: vtree$}
+  const vtrees = states.map(uiFromState)
+  return {DOM: vtrees}
 }
 
 module.exports = main

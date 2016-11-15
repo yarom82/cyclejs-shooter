@@ -1,7 +1,7 @@
 const { test } = require('ava')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
-const startGame$FromDOM = require('./start-game-stream-from-dom')
+const startGameActionsFromDOM = require('./start-game-actions-from-dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   actionNames: {
@@ -20,7 +20,7 @@ test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported select
     }
   })
 
-  startGame$FromDOM(DOMMock)
+  startGameActionsFromDOM(DOMMock)
     .addListener({next: value => {
       t.is(value, startGame)
     }})
