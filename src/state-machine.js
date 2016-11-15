@@ -2,7 +2,8 @@ const {
   actionNames,
   gameStatus: {
     idle,
-    afoot
+    afoot,
+    ended
   },
   players
 } = require('./constants')
@@ -41,11 +42,11 @@ const stateMachine = (currentState, action) => {
 }
 
 const shoot = (player, currentState) => {
-  if (currentState.gameStatus !== 'AFOOT') {
+  if (currentState.gameStatus !== afoot) {
     throw new Error(impossibleActionMessage)
   }
   if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-    return { leftHiding: null, rightHiding: null, gameStatus: 'ENDED', winner: player }
+    return { leftHiding: null, rightHiding: null, gameStatus: ended, winner: player }
   }
 }
 

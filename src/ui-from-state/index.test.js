@@ -27,6 +27,13 @@ test.beforeEach(() => {
   .forEach(spy => spy.reset())
 })
 
+const {
+  gameStatus: {
+    afoot,
+    ended
+  }
+} = require('../constants')
+
 const uiFromState = require('.')
 
 const divData = {
@@ -34,7 +41,7 @@ const divData = {
 }
 
 const expectedValuesForGameStatus = {
-  'AFOOT': {
+  [afoot]: {
     vtree: div(
       divData,
       [
@@ -44,7 +51,7 @@ const expectedValuesForGameStatus = {
     ),
     instructionsCallArg: 'BEFORE_WIN'
   },
-  'ENDED': {
+  [ended]: {
     vtree: div(
       divData,
       [
@@ -72,7 +79,7 @@ for (const gameStatus in expectedValuesForGameStatus) {
 
 test('`arena` descendant calls args', t => {
   const state = {
-    gameStatus: 'AFOOT',
+    gameStatus: afoot,
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
   }
@@ -87,7 +94,7 @@ test('`arena` descendant calls args', t => {
 
 test('`winMessage` descendant call arg', t => {
   const winState = {
-    gameStatus: 'ENDED',
+    gameStatus: ended,
     leftHiding: false,
     rightHiding: false,
     winner: Symbol()
