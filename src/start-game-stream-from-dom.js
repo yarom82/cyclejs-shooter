@@ -3,7 +3,7 @@ const {
 } = require('./constants')
 const {
   selector: startGameButtonSelector
-} = require('./ui-from-state/start-game-button')
+} = require('./vtree-from-state/start-game-button')
 
 const startGame$FromDOM = DOM => {
   return DOM

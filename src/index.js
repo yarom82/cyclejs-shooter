@@ -1,7 +1,7 @@
 const rootDOM$FromDOM = require('./root-dom-stream-from-dom')
 const startGame$FromDOM = require('./start-game-stream-from-dom')
 const arenaAction$FromDOM = require('./arena-action-stream-from-dom')
-const uiFromState = require('./ui-from-state')
+const vtreeFromState = require('./vtree-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
@@ -18,7 +18,7 @@ const main = ({DOM}) => {
   const state$ = action$
     .fold(stateMachine, initialState)
 
-  const vtree$ = state$.map(uiFromState)
+  const vtree$ = state$.map(vtreeFromState)
   return {DOM: vtree$}
 }
 
