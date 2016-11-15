@@ -13,12 +13,10 @@ const afterWin = div(
 )
 
 const instructions = state => {
-  if (state === 'BEFORE_WIN') {
-    return beforeWin
-  }
-  if (state === 'AFTER_WIN') {
-    return afterWin
-  }
+  return {
+    'BEFORE_WIN': beforeWin,
+    'AFTER_WIN': afterWin
+  }[state]
 }
 
 module.exports = instructions

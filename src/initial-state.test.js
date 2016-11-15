@@ -3,13 +3,13 @@ const { test } = require('ava')
 
 const {
   gameStatus: {
-    afoot
+    idle
   }
 } = require('./constants')
 
 test('exported object deep equality assertion', t => {
   const expected = {
-    gameStatus: afoot,
+    gameStatus: idle,
     leftHiding: true,
     rightHiding: true,
     winner: null

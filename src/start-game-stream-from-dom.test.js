@@ -4,17 +4,15 @@ const xs = require('xstream').default
 const startGame$FromDOM = require('./start-game-stream-from-dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
-  selectorPrefixes: {
-    action
-  },
   actionNames: {
     startGame
   }
 } = require('./constants')
 
-const selector = `.${action}:${startGame}`
-test(`emits '${startGame}' for clicks on \`${selector}\``, t => {
+test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported selector`, t => {
   t.plan(1)
+
+  const { selector } = require('./ui-from-state/start-game-button')
 
   const DOMMock = mockDOMSource(xstreamAdapter, {
     [selector]: {
