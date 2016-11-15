@@ -4,15 +4,35 @@ const stringifyObject = require('stringify-object')
 const stringifyOptions = {
   inlineCharacterLimit: 999
 }
+const {
+  gameStatus: {
+    idle,
+    afoot,
+    ended
+  },
+  actionNames: {
+    startGame,
+    leftHide,
+    rightHide,
+    leftUnhide,
+    rightUnhide,
+    leftShoot,
+    rightShoot
+  },
+  players: {
+    leftPlayer,
+    rightPlayer
+  }
+} = require('./constants')
 
 const testsForAction = {
-  'START_GAME': [
+  [startGame]: [
     {
-      currentState: { gameStatus: 'IDLE' },
-      expectedState: { gameStatus: 'AFOOT' }
+      currentState: { gameStatus: idle },
+      expectedState: { gameStatus: afoot }
     }
   ],
-  'LEFT_HIDE': [
+  [leftHide]: [
     {
       currentState: { leftHiding: false },
       expectedState: { leftHiding: true }
@@ -22,7 +42,7 @@ const testsForAction = {
       expectedState: { leftHiding: true }
     }
   ],
-  'LEFT_UNHIDE': [
+  [leftUnhide]: [
     {
       currentState: { leftHiding: false },
       expectedState: { leftHiding: false }
@@ -32,7 +52,7 @@ const testsForAction = {
       expectedState: { leftHiding: false }
     }
   ],
-  'RIGHT_HIDE': [
+  [rightHide]: [
     {
       currentState: { rightHiding: false },
       expectedState: { rightHiding: true }
@@ -42,7 +62,7 @@ const testsForAction = {
       expectedState: { rightHiding: true }
     }
   ],
-  'RIGHT_UNHIDE': [
+  [rightUnhide]: [
     {
       currentState: { rightHiding: false },
       expectedState: { rightHiding: false }
@@ -52,40 +72,40 @@ const testsForAction = {
       expectedState: { rightHiding: false }
     }
   ],
-  'LEFT_SHOOT': [
+  [leftShoot]: [
     {
-      currentState: { leftHiding: false, rightHiding: false, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: null, rightHiding: null, gameStatus: 'ENDED', winner: 'LEFT_PLAYER' }
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: afoot },
+      expectedState: { leftHiding: null, rightHiding: null, gameStatus: ended, winner: leftPlayer }
     },
     {
-      currentState: { leftHiding: false, rightHiding: true, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: false, rightHiding: true, gameStatus: 'AFOOT' }
+      currentState: { leftHiding: false, rightHiding: true, gameStatus: afoot },
+      expectedState: { leftHiding: false, rightHiding: true, gameStatus: afoot }
     },
     {
-      currentState: { leftHiding: true, rightHiding: false, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: true, rightHiding: false, gameStatus: 'AFOOT' }
+      currentState: { leftHiding: true, rightHiding: false, gameStatus: afoot },
+      expectedState: { leftHiding: true, rightHiding: false, gameStatus: afoot }
     },
     {
-      currentState: { leftHiding: true, rightHiding: true, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: true, rightHiding: true, gameStatus: 'AFOOT' }
+      currentState: { leftHiding: true, rightHiding: true, gameStatus: afoot },
+      expectedState: { leftHiding: true, rightHiding: true, gameStatus: afoot }
     }
   ],
-  'RIGHT_SHOOT': [
+  [rightShoot]: [
     {
-      currentState: { leftHiding: false, rightHiding: false, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: null, rightHiding: null, gameStatus: 'ENDED', winner: 'RIGHT_PLAYER' }
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: afoot },
+      expectedState: { leftHiding: null, rightHiding: null, gameStatus: ended, winner: rightPlayer }
     },
     {
-      currentState: { leftHiding: false, rightHiding: true, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: false, rightHiding: true, gameStatus: 'AFOOT' }
+      currentState: { leftHiding: false, rightHiding: true, gameStatus: afoot },
+      expectedState: { leftHiding: false, rightHiding: true, gameStatus: afoot }
     },
     {
-      currentState: { leftHiding: true, rightHiding: false, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: true, rightHiding: false, gameStatus: 'AFOOT' }
+      currentState: { leftHiding: true, rightHiding: false, gameStatus: afoot },
+      expectedState: { leftHiding: true, rightHiding: false, gameStatus: afoot }
     },
     {
-      currentState: { leftHiding: true, rightHiding: true, gameStatus: 'AFOOT' },
-      expectedState: { leftHiding: true, rightHiding: true, gameStatus: 'AFOOT' }
+      currentState: { leftHiding: true, rightHiding: true, gameStatus: afoot },
+      expectedState: { leftHiding: true, rightHiding: true, gameStatus: afoot }
     }
   ]
 }
@@ -101,17 +121,17 @@ for (const action in testsForAction) {
 }
 
 const impossibleStatesOfAction = {
-  'START_GAME': [
-    { gameStatus: 'AFOOT' },
-    { gameStatus: 'ENDED' }
+  [startGame]: [
+    { gameStatus: afoot },
+    { gameStatus: ended }
   ],
-  'LEFT_SHOOT': [
-    { gameStatus: 'IDLE' },
-    { gameStatus: 'ENDED' }
+  [leftShoot]: [
+    { gameStatus: idle },
+    { gameStatus: ended }
   ],
-  'RIGHT_SHOOT': [
-    { gameStatus: 'IDLE' },
-    { gameStatus: 'ENDED' }
+  [rightShoot]: [
+    { gameStatus: idle },
+    { gameStatus: ended }
   ]
 }
 
