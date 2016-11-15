@@ -3,8 +3,13 @@ const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const startGame$FromDOM = require('./start-game-stream-from-dom')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
+const {
+  actionNames: {
+    startGame
+  }
+} = require('./constants')
 
-test('emits \'START\' for clicks on `startGameButton`’s exported selector', t => {
+test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported selector`, t => {
   t.plan(1)
 
   const { selector } = require('./ui-from-state/start-game-button')
@@ -16,7 +21,7 @@ test('emits \'START\' for clicks on `startGameButton`’s exported selector', t 
   })
 
   startGame$FromDOM(DOMMock)
-    .addListener({next: start => {
-      t.is(start, 'START_GAME')
+    .addListener({next: value => {
+      t.is(value, startGame)
     }})
 })
