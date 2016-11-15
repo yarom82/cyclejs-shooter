@@ -3,6 +3,11 @@ const mock = require('mock-require')
 const { div } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 
+const startGameButtonStubReturn = Symbol('startGameButtonStubReturn')
+const startGameButtonStub = () => startGameButtonStubReturn
+const startGameButtonSpy = spy(startGameButtonStub)
+mock('./start-game-button', startGameButtonSpy)
+
 const arenaStubReturn = Symbol('arenaStub')
 const arenaStub = () => arenaStubReturn
 const arenaSpy = spy(arenaStub)
@@ -27,6 +32,14 @@ test.beforeEach(() => {
   .forEach(spy => spy.reset())
 })
 
+const {
+  gameStatus: {
+    idle,
+    afoot,
+    ended
+  }
+} = require('../constants')
+
 const uiFromState = require('.')
 
 const divData = {
@@ -34,7 +47,17 @@ const divData = {
 }
 
 const expectedValuesForGameStatus = {
-  'AFOOT': {
+  [idle]: {
+    vtree: div(
+      divData,
+      [
+        startGameButtonStubReturn,
+        instructionsStubReturn
+      ]
+    ),
+    instructionsCallArg: 'BEFORE_WIN'
+  },
+  [afoot]: {
     vtree: div(
       divData,
       [
@@ -44,7 +67,7 @@ const expectedValuesForGameStatus = {
     ),
     instructionsCallArg: 'BEFORE_WIN'
   },
-  'ENDED': {
+  [ended]: {
     vtree: div(
       divData,
       [
@@ -72,7 +95,7 @@ for (const gameStatus in expectedValuesForGameStatus) {
 
 test('`arena` descendant calls args', t => {
   const state = {
-    gameStatus: 'AFOOT',
+    gameStatus: afoot,
     leftHiding: Symbol('leftHiding'),
     rightHiding: Symbol('rightHiding')
   }
@@ -87,7 +110,7 @@ test('`arena` descendant calls args', t => {
 
 test('`winMessage` descendant call arg', t => {
   const winState = {
-    gameStatus: 'ENDED',
+    gameStatus: ended,
     leftHiding: false,
     rightHiding: false,
     winner: Symbol()
