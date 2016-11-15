@@ -1,6 +1,6 @@
 const rootDOMSourceFromDOMSource = require('./root-dom-source-from-dom-source')
 const startGame$FromDOMSource = require('./start-game-stream-from-dom-source')
-const arenaAction$FromDOM = require('./arena-action-stream-from-dom')
+const arenaAction$FromDOMSource = require('./arena-action-stream-from-dom-source')
 const uiFromState = require('./ui-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
@@ -10,7 +10,7 @@ const main = ({DOM: DOMSource}) => {
   const rootDOMSource = rootDOMSourceFromDOMSource(DOMSource)
 
   const startGame$ = startGame$FromDOMSource(rootDOMSource)
-  const arenaAction$ = arenaAction$FromDOM(rootDOMSource)
+  const arenaAction$ = arenaAction$FromDOMSource(rootDOMSource)
 
   const action$ = xs
     .merge(arenaAction$, startGame$)

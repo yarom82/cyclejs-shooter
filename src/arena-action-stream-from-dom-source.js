@@ -2,7 +2,7 @@ const xs = require('xstream').default
 const keyFromEvent = require('./key-from-event')
 const {actionNames} = require('./constants')
 
-const arenaAction$FromDOM = DOMSource => {
+const arenaAction$FromDOMSource = DOMSource => {
   const arenaDOM$ = DOMSource.select('.arena')
   const keypress$ = arenaDOM$
     .events('keypress')
@@ -44,4 +44,4 @@ const arenaAction$FromDOM = DOMSource => {
   )
 }
 
-module.exports = arenaAction$FromDOM
+module.exports = arenaAction$FromDOMSource
