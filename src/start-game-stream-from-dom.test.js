@@ -14,13 +14,13 @@ test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported select
 
   const { selector } = require('./ui-from-state/start-game-button')
 
-  const DOMMock = mockDOMSource(xstreamAdapter, {
+  const DOMSourceMock = mockDOMSource(xstreamAdapter, {
     [selector]: {
       'click': xs.of(null)
     }
   })
 
-  startGame$FromDOM(DOMMock)
+  startGame$FromDOM(DOMSourceMock)
     .addListener({next: value => {
       t.is(value, startGame)
     }})

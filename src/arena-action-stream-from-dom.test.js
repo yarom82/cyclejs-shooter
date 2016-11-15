@@ -36,13 +36,13 @@ for (const event in expectedDataForEventAndKey) {
     test(`emits ${expectedAction} for ${event} ${key} on '.arena'`, t => {
       t.plan(1)
 
-      const DOMMock = mockDOMSource(xstreamAdapter, {
+      const DOMSourceMock = mockDOMSource(xstreamAdapter, {
         '.arena': {
           [event]: xs.of({key})
         }
       })
 
-      arenaAction$FromDOM(DOMMock)
+      arenaAction$FromDOM(DOMSourceMock)
         .addListener({next: action => {
           t.is(action, expectedAction)
         }})
