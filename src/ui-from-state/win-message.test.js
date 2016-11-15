@@ -1,13 +1,20 @@
 const { test } = require('ava')
 const winMessage = require('./win-message')
 
+const {
+  players: {
+    leftPlayer,
+    rightPlayer
+  }
+} = require('../constants')
+
 const possibleArgs = [
-  'LEFT_PLAYER',
-  'RIGHT_PLAYER'
+  leftPlayer,
+  rightPlayer
 ]
 
 const withPossibleArg = arg => {
-  const winner = arg === 'LEFT_PLAYER' ? 'Left' : 'Right'
+  const winner = arg === leftPlayer ? 'Left' : 'Right'
   const expected = `${winner} won!`
   test(`given '${arg}' returns '${expected}'`, t => {
     const actual = winMessage(arg)

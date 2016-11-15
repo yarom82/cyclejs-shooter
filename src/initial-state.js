@@ -1,11 +1,11 @@
 const {
   gameStatus: {
-    afoot
+    idle
   }
 } = require('./constants')
 
 const initialState = {
-  gameStatus: afoot,
+  gameStatus: idle,
   leftHiding: true,
   rightHiding: true,
   winner: null

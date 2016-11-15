@@ -2,6 +2,13 @@
 
 A hide-and-shoot two-player browser game experiment, built with [Cycle.js](https://cycle.js.org/).
 
+# Start a Local Development Server
+
+1. Clone the repository.
+1. `$ npm install`
+1. `$ npm run dev`
+1. A URL was printed. Open it in a browser.
+
 # Credits
 
 * [Character graphics by tokka](http://opengameart.org/content/2d-hero);
