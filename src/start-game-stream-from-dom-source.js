@@ -5,11 +5,11 @@ const {
   selector: startGameButtonSelector
 } = require('./vtree-from-state/start-game-button')
 
-const startGame$FromDOM = DOM => {
-  return DOM
+const startGame$fromDOMSource = DOMSource => {
+  return DOMSource
     .select(startGameButtonSelector)
     .events('click')
     .mapTo(startGame)
 }
 
-module.exports = startGame$FromDOM
+module.exports = startGame$fromDOMSource

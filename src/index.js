@@ -1,16 +1,16 @@
-const rootDOM$FromDOM = require('./root-dom-stream-from-dom')
-const startGame$FromDOM = require('./start-game-stream-from-dom')
-const arenaAction$FromDOM = require('./arena-action-stream-from-dom')
+const rootDOMSourceFromDOMSource = require('./root-dom-source-from-dom-source')
+const startGame$FromDOMSource = require('./start-game-stream-from-dom-source')
+const arenaAction$FromDOMSource = require('./arena-action-stream-from-dom-source')
 const vtreeFromState = require('./vtree-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
 
-const main = ({DOM}) => {
-  const rootDOM$ = rootDOM$FromDOM(DOM)
+const main = ({DOM: DOMSource}) => {
+  const rootDOMSource = rootDOMSourceFromDOMSource(DOMSource)
 
-  const startGame$ = startGame$FromDOM(rootDOM$)
-  const arenaAction$ = arenaAction$FromDOM(rootDOM$)
+  const startGame$ = startGame$FromDOMSource(rootDOMSource)
+  const arenaAction$ = arenaAction$FromDOMSource(rootDOMSource)
 
   const action$ = xs
     .merge(arenaAction$, startGame$)
