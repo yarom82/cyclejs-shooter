@@ -1,16 +1,16 @@
-const rootDOMsFromDOM = require('./root-doms-from-dom')
-const startGameActionsFromDOM = require('./start-game-actions-from-dom')
-const arenaActionsFromDOM = require('./arena-actions-from-dom')
+const rootDOMSourceFromDOMSource = require('./root-dom-source-from-dom-source')
+const startGameActionsFromDOMSource = require('./start-game-actions-from-dom-source')
+const arenaActionsFromDOMSource = require('./arena-actions-from-dom-source')
 const uiFromState = require('./ui-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
 const stateMachine = require('./state-machine')
 
-const main = ({DOM}) => {
-  const rootDOMs = rootDOMsFromDOM(DOM)
+const main = ({DOM: DOMSource}) => {
+  const rootDOMSource = rootDOMSourceFromDOMSource(DOMSource)
 
-  const startGameActions = startGameActionsFromDOM(rootDOMs)
-  const arenaActions = arenaActionsFromDOM(rootDOMs)
+  const startGameActions = startGameActionsFromDOMSource(rootDOMSource)
+  const arenaActions = arenaActionsFromDOMSource(rootDOMSource)
 
   const actions = xs
     .merge(arenaActions, startGameActions)
