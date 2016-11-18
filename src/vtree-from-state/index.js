@@ -11,7 +11,7 @@ const {
   }
 } = require('../constants')
 
-const uiFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
+const vtreeFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
   let firstChild
   switch (gameStatus) {
     case idle:
@@ -36,4 +36,4 @@ const uiFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
   )
 }
 
-module.exports = uiFromState
+module.exports = vtreeFromState
