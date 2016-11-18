@@ -1,7 +1,7 @@
 const { div, span } = require('@cycle/dom')
 const R = require('ramda')
 const player = require('./player')
-const focusOnElmFromVnode = require('./focus-on-elm-from-vnode')
+const focusOnElmOfVnode = require('./focus-on-elm-of-vnode')
 
 const curriedPlayer = R.curry(player)
 const leftPlayer = curriedPlayer('left')
@@ -17,7 +17,7 @@ const arena = (leftHiding, rightHiding) => {
         minHeight: '60px'
       },
       hook: {
-        insert: focusOnElmFromVnode
+        insert: focusOnElmOfVnode
       }
     },
     [
