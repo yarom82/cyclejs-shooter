@@ -3,8 +3,8 @@ const keyFromEvent = require('./key-from-event')
 const {actionNames} = require('./constants')
 
 const arenaAction$FromDOMSource = DOMSource => {
-  const arenaDOM$ = DOMSource.select('.arena')
-  const keypress$ = arenaDOM$
+  const arenaDOMSource = DOMSource.select('.arena')
+  const keypress$ = arenaDOMSource
     .events('keypress')
     .map(keyFromEvent)
   const leftShoot$ = keypress$
@@ -14,7 +14,7 @@ const arenaAction$FromDOMSource = DOMSource => {
     .filter(key => key === '/')
     .mapTo(actionNames.rightShoot)
 
-  const keydown$ = arenaDOM$
+  const keydown$ = arenaDOMSource
     .events('keydown')
     .map(keyFromEvent)
   const leftHide$ = keydown$
@@ -24,7 +24,7 @@ const arenaAction$FromDOMSource = DOMSource => {
     .filter(key => key === '\'')
     .mapTo(actionNames.rightHide)
 
-  const keyup$ = arenaDOM$
+  const keyup$ = arenaDOMSource
     .events('keyup')
     .map(keyFromEvent)
   const leftUnhide$ = keyup$
