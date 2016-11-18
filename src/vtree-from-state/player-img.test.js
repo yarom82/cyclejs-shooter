@@ -1,0 +1,30 @@
+const { test } = require('ava')
+const { img } = require('@cycle/dom')
+const path = require('path')
+const urify = require('urify')
+const standingUri = urify(path.join(__dirname, 'player-not-hiding.png'))
+const hidingUri = urify(path.join(__dirname, 'player-hiding.png'))
+const playerImg = require('./player-img')
+
+const possibleCallArgs = [
+  [false, false],
+  [false, true],
+  [true, false],
+  [true, true]
+]
+
+possibleCallArgs.forEach(([hiding, displayNone]) => {
+  test(`vtree when hiding: ${hiding}, displayNone: ${displayNone}`, t => {
+    const expected = img({
+      style: {
+        display: displayNone ? 'none' : 'unset'
+      },
+      attrs: {
+        alt: hiding ? 'd' : 'D',
+        src: hiding ? hidingUri : standingUri
+      }
+    })
+
+    t.deepEqual(playerImg(hiding, displayNone), expected)
+  })
+})

@@ -1,23 +1,25 @@
-const { img } = require('@cycle/dom')
-const path = require('path')
-const urify = require('urify')
-const standingUri = urify(path.join(__dirname, 'player-not-hiding.png'))
-const hidingUri = urify(path.join(__dirname, 'player-hiding.png'))
+const { div } = require('@cycle/dom')
+const playerImg = require('./player-img')
+const R = require('ramda')
+
+const curriedPlayerImg = R.curry(playerImg)
+const standingPlayerImg = curriedPlayerImg(false)
+const hidingPlayerImg = curriedPlayerImg(true)
 
 const player = (side, hiding) => {
-  return img(
+  return div(
     {
-      attrs: {
-        alt: hiding ? 'd' : 'D',
-        src: hiding ? hidingUri : standingUri
-      },
       style: {
         position: 'absolute',
         bottom: '0',
         [side]: '0',
         transform: side === 'right' ? 'scale(-1,1)' : null
       }
-    }
+    },
+    [
+      standingPlayerImg(hiding),
+      hidingPlayerImg(!hiding)
+    ]
   )
 }
 
