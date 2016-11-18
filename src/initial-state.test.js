@@ -17,3 +17,7 @@ test('exported object deep equality assertion', t => {
 
   t.deepEqual(initialState, expected)
 })
+
+test('exported object is frozen', t => {
+  t.true(Object.isFrozen(initialState))
+})

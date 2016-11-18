@@ -11,4 +11,6 @@ const initialState = {
   winner: null
 }
 
+Object.freeze(initialState)
+
 module.exports = initialState
