@@ -25,6 +25,7 @@ mock('./instructions', instructionsSpy)
 
 test.beforeEach(() => {
   [
+    startGameButtonSpy,
     instructionsSpy,
     winMessageSpy,
     arenaSpy
