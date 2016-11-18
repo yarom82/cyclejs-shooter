@@ -40,7 +40,7 @@ const {
   }
 } = require('../constants')
 
-const uiFromState = require('.')
+const vtreeFromState = require('.')
 
 const divData = {
   style: {textAlign: 'center'}
@@ -83,12 +83,12 @@ for (const gameStatus in expectedValuesForGameStatus) {
   const {vtree, instructionsCallArg} = expectedValuesForGameStatus[gameStatus]
 
   test(`vtree ${gameStatus}`, t => {
-    const actualVtree = uiFromState({gameStatus})
+    const actualVtree = vtreeFromState({gameStatus})
     t.deepEqual(actualVtree, vtree)
   })
 
   test(`\`instructions\` call arg ${gameStatus} is '${instructionsCallArg}'`, t => {
-    uiFromState({gameStatus})
+    vtreeFromState({gameStatus})
     t.deepEqual(instructionsSpy.args, [[instructionsCallArg]])
   })
 }
@@ -100,7 +100,7 @@ test('`arena` descendant calls args', t => {
     rightHiding: Symbol('rightHiding')
   }
 
-  uiFromState(state)
+  vtreeFromState(state)
 
   const expectedArenaCallsArgs = [
     [state.leftHiding, state.rightHiding]
@@ -119,6 +119,6 @@ test('`winMessage` descendant call arg', t => {
     [ winState.winner ]
   ]
 
-  uiFromState(winState)
+  vtreeFromState(winState)
   t.deepEqual(winMessageSpy.args, expectedCallsArgs)
 })

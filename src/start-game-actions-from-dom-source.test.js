@@ -12,7 +12,7 @@ const {
 test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported selector`, t => {
   t.plan(1)
 
-  const { selector } = require('./ui-from-state/start-game-button')
+  const { selector } = require('./vtree-from-state/start-game-button')
 
   const DOMSourceMock = mockDOMSource(xstreamAdapter, {
     [selector]: {
