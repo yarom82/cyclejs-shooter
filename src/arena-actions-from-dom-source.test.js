@@ -1,7 +1,7 @@
 const { test } = require('ava')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
-const arenaAction$FromDOMSource = require('./arena-action-stream-from-dom-source')
+const arenaActionsFromDOMSource = require('./arena-actions-from-dom-source')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   actionNames: {
@@ -42,7 +42,7 @@ for (const event in expectedDataForEventAndKey) {
         }
       })
 
-      arenaAction$FromDOMSource(DOMSourceMock)
+      arenaActionsFromDOMSource(DOMSourceMock)
         .addListener({next: action => {
           t.is(action, expectedAction)
         }})
