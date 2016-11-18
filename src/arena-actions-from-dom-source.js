@@ -2,46 +2,46 @@ const xs = require('xstream').default
 const keyFromEvent = require('./key-from-event')
 const {actionNames} = require('./constants')
 
-const arenaAction$FromDOMSource = DOMSource => {
-  const arenaDOM$ = DOMSource.select('.arena')
-  const keypress$ = arenaDOM$
+const arenaActionsFromDOMSource = DOMSource => {
+  const arenaDOMs = DOMSource.select('.arena')
+  const keypressEvents = arenaDOMs
     .events('keypress')
     .map(keyFromEvent)
-  const leftShoot$ = keypress$
+  const leftShootActions = keypressEvents
     .filter(key => key === 'z')
     .mapTo(actionNames.leftShoot)
-  const rightShoot$ = keypress$
+  const rightShootActions = keypressEvents
     .filter(key => key === '/')
     .mapTo(actionNames.rightShoot)
 
-  const keydown$ = arenaDOM$
+  const keydownEvents = arenaDOMs
     .events('keydown')
     .map(keyFromEvent)
-  const leftHide$ = keydown$
+  const leftHideActions = keydownEvents
     .filter(key => key === 'a')
     .mapTo(actionNames.leftHide)
-  const rightHide$ = keydown$
+  const rightHideActions = keydownEvents
     .filter(key => key === '\'')
     .mapTo(actionNames.rightHide)
 
-  const keyup$ = arenaDOM$
+  const keyupEvents = arenaDOMs
     .events('keyup')
     .map(keyFromEvent)
-  const leftUnhide$ = keyup$
+  const leftUnhideActions = keyupEvents
     .filter(key => key === 'a')
     .mapTo(actionNames.leftUnhide)
-  const rightUnhide$ = keyup$
+  const rightUnhideActions = keyupEvents
     .filter(key => key === '\'')
     .mapTo(actionNames.rightUnhide)
 
   return xs.merge(
-    leftShoot$,
-    rightShoot$,
-    leftHide$,
-    rightHide$,
-    leftUnhide$,
-    rightUnhide$
+    leftShootActions,
+    rightShootActions,
+    leftHideActions,
+    rightHideActions,
+    leftUnhideActions,
+    rightUnhideActions
   )
 }
 
-module.exports = arenaAction$FromDOMSource
+module.exports = arenaActionsFromDOMSource
