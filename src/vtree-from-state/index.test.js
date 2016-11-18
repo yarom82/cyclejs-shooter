@@ -1,27 +1,26 @@
 const { test } = require('ava')
-const mock = require('mock-require')
+const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const { div } = require('@cycle/dom')
-const { spy } = require('simple-spy')
 
-const startGameButtonStubReturn = Symbol('startGameButtonStubReturn')
-const startGameButtonStub = () => startGameButtonStubReturn
-const startGameButtonSpy = spy(startGameButtonStub)
-mock('./start-game-button', startGameButtonSpy)
+const {
+  returnSymbol: startGameButtonReturnSymbol
+  // spy is missing here; #142
+} = mockPathWithSpyThatReturnsSymbolHere('./start-game-button')
 
-const arenaStubReturn = Symbol('arenaStub')
-const arenaStub = () => arenaStubReturn
-const arenaSpy = spy(arenaStub)
-mock('./arena', arenaSpy)
+const {
+  returnSymbol: arenaReturnSymbol,
+  spy: arenaSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./arena')
 
-const winMessageStubReturn = Symbol('winMessageStub')
-const winMessageStub = () => winMessageStubReturn
-const winMessageSpy = spy(winMessageStub)
-mock('./win-message', winMessageSpy)
+const {
+  returnSymbol: winMessageReturnSymbol,
+  spy: winMessageSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./win-message')
 
-const instructionsStubReturn = Symbol('instructionsStubReturn')
-const instructionsStub = () => instructionsStubReturn
-const instructionsSpy = spy(instructionsStub)
-mock('./instructions', instructionsSpy)
+const {
+  returnSymbol: instructionsReturnSymbol,
+  spy: instructionsSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./instructions')
 
 test.beforeEach(() => {
   [
@@ -51,8 +50,8 @@ const expectedValuesForGameStatus = {
     vtree: div(
       divData,
       [
-        startGameButtonStubReturn,
-        instructionsStubReturn
+        startGameButtonReturnSymbol,
+        instructionsReturnSymbol
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -61,8 +60,8 @@ const expectedValuesForGameStatus = {
     vtree: div(
       divData,
       [
-        arenaStubReturn,
-        instructionsStubReturn
+        arenaReturnSymbol,
+        instructionsReturnSymbol
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -71,8 +70,8 @@ const expectedValuesForGameStatus = {
     vtree: div(
       divData,
       [
-        winMessageStubReturn,
-        instructionsStubReturn
+        winMessageReturnSymbol,
+        instructionsReturnSymbol
       ]
     ),
     instructionsCallArg: 'AFTER_WIN'

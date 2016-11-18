@@ -1,13 +1,13 @@
 const { test } = require('ava')
 const mock = require('mock-require')
 const { div, span } = require('@cycle/dom')
-const { spy } = require('simple-spy')
+const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
-const playerStubReturn = Symbol('playerStub')
-const playerStub = (side, hiding) => playerStubReturn
-const playerSpy = spy(playerStub)
+const {
+  returnSymbol: playerReturnSymbol,
+  spy: playerSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./player')
 test.afterEach(() => playerSpy.reset())
-mock('./player', playerSpy)
 
 const focusOnElmFromVnodeStub = Symbol('focusOnElmFromVnodeStub')
 mock('./focus-on-elm-from-vnode', focusOnElmFromVnodeStub)
@@ -30,7 +30,7 @@ test('vtree', t => {
   const expectedVtree = div(
     divData,
     [
-      playerStubReturn,
+      playerReturnSymbol,
       span(
         {
           style: {
@@ -41,7 +41,7 @@ test('vtree', t => {
         },
         '|'
       ),
-      playerStubReturn
+      playerReturnSymbol
     ]
   )
 
