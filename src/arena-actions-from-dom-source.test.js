@@ -33,11 +33,13 @@ for (const event in expectedDataForEventAndKey) {
   const keys = expectedDataForEventAndKey[event]
   for (const key in keys) {
     const expectedAction = keys[key]
-    test(`emits ${expectedAction} for ${event} ${key} on '.arena'`, t => {
+    test(`emits ${expectedAction} for ${event} ${key} on \`arena\`’s exported selector`, t => {
       t.plan(1)
 
+      const { selector } = require('./vtree-from-state/arena')
+
       const DOMSourceMock = mockDOMSource(xstreamAdapter, {
-        '.arena': {
+        [selector]: {
           [event]: xs.of({key})
         }
       })

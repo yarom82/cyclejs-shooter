@@ -1,12 +1,11 @@
 const { test } = require('ava')
 const { div } = require('@cycle/dom')
-const { spy } = require('simple-spy')
-const mock = require('mock-require')
+const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
-const playerImgStubReturn = Symbol('playerImgStubReturn')
-const playerImgStub = (hiding, displayNone) => playerImgStubReturn
-const playerImgSpy = spy(playerImgStub)
-mock('./player-img', playerImgSpy)
+const {
+  returnSymbol: playerImgReturnSymbol,
+  spy: playerImgSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./player-img')
 
 test.beforeEach(() => {
   playerImgSpy.reset()
@@ -35,8 +34,8 @@ const testWithCallArgs = ([side, hiding]) => {
         }
       },
       [
-        playerImgStubReturn,
-        playerImgStubReturn
+        playerImgReturnSymbol,
+        playerImgReturnSymbol
       ]
     )
     t.deepEqual(player(side, hiding), expected)
