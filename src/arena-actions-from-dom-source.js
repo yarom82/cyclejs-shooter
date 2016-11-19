@@ -1,9 +1,10 @@
 const xs = require('xstream').default
 const keyFromEvent = require('./key-from-event')
 const {actionNames} = require('./constants')
+const { selector } = require('./vtree-from-state/arena')
 
 const arenaActionsFromDOMSource = DOMSource => {
-  const arenaDOMSource = DOMSource.select('.arena')
+  const arenaDOMSource = DOMSource.select(selector)
   const keypressEvents = arenaDOMSource
     .events('keypress')
     .map(keyFromEvent)
