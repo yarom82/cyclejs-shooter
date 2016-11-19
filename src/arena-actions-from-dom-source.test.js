@@ -16,16 +16,16 @@ const {
 
 const expectedDataForEventAndKey = {
   'keypress': {
-    'z': leftShoot,
-    '/': rightShoot
+    'z': { name: leftShoot },
+    '/': { name: rightShoot }
   },
   'keydown': {
-    'a': leftHide,
-    '\'': rightHide
+    'a': { name: leftHide },
+    '\'': { name: rightHide }
   },
   'keyup': {
-    'a': leftUnhide,
-    '\'': rightUnhide
+    'a': { name: leftUnhide },
+    '\'': { name: rightUnhide }
   }
 }
 
@@ -44,7 +44,7 @@ for (const event in expectedDataForEventAndKey) {
 
       arenaActionsFromDOMSource(DOMSourceMock)
         .addListener({next: action => {
-          t.is(action, expectedAction)
+          t.deepEqual(action, expectedAction)
         }})
     })
   }

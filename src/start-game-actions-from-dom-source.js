@@ -9,7 +9,7 @@ const startGameActionsFromDOMSource = DOMSource => {
   return DOMSource
     .select(startGameButtonSelector)
     .events('click')
-    .mapTo(startGame)
+    .mapTo({ name: startGame })
 }
 
 module.exports = startGameActionsFromDOMSource
