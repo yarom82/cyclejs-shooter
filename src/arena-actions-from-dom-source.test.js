@@ -13,19 +13,20 @@ const {
     rightShoot
   }
 } = require('./constants')
+const actionNameKey = require('./action').nameKey
 
 const expectedDataForEventAndKey = {
   'keypress': {
-    'z': { name: leftShoot },
-    '/': { name: rightShoot }
+    'z': { [actionNameKey]: leftShoot },
+    '/': { [actionNameKey]: rightShoot }
   },
   'keydown': {
-    'a': { name: leftHide },
-    '\'': { name: rightHide }
+    'a': { [actionNameKey]: leftHide },
+    '\'': { [actionNameKey]: rightHide }
   },
   'keyup': {
-    'a': { name: leftUnhide },
-    '\'': { name: rightUnhide }
+    'a': { [actionNameKey]: leftUnhide },
+    '\'': { [actionNameKey]: rightUnhide }
   }
 }
 
