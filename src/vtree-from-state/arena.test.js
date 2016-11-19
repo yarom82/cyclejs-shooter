@@ -25,8 +25,8 @@ test.afterEach(() => playerSpy.reset())
     })
   })
 
-const focusOnElmFromVnodeStub = Symbol('focusOnElmFromVnodeStub')
-mock('./focus-on-elm-from-vnode', focusOnElmFromVnodeStub)
+const focusOnElmOfVnodeStub = Symbol('focusOnElmOfVnodeStub')
+mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
 
 const arena = require('./arena')
 
@@ -40,7 +40,7 @@ const divData = {
     minHeight: '60px'
   },
   hook: {
-    insert: focusOnElmFromVnodeStub
+    insert: focusOnElmOfVnodeStub
   }
 }
 
