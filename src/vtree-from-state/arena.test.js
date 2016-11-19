@@ -1,28 +1,46 @@
 const { test } = require('ava')
 const mock = require('mock-require')
 const { div, span } = require('@cycle/dom')
+const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const { spy } = require('simple-spy')
+const cuid = require('cuid')
 
-const playerStubReturn = Symbol('playerStub')
-const playerStub = (side, hiding) => playerStubReturn
-const playerSpy = spy(playerStub)
+const cuidStubReturn = cuid()
+const cuidStub = () => cuidStubReturn
+const cuidSpy = spy(cuidStub)
+mock('cuid', cuidSpy)
+const {
+  returnSymbol: playerReturnSymbol,
+  spy: playerSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./player')
 test.afterEach(() => playerSpy.reset())
-mock('./player', playerSpy)
 
-const focusOnElmFromVnodeStub = Symbol('focusOnElmFromVnodeStub')
-mock('./focus-on-elm-from-vnode', focusOnElmFromVnodeStub)
+;[
+  cuidSpy,
+  playerSpy
+]
+  .forEach(spy => {
+    test.afterEach(() => {
+      spy.reset()
+    })
+  })
+
+const focusOnElmOfVnodeStub = Symbol('focusOnElmOfVnodeStub')
+mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
 
 const arena = require('./arena')
 
 const divData = {
-  class: {arena: true},
-  attrs: {tabindex: 0},
+  attrs: {
+    'data-id': cuidStubReturn,
+    tabindex: 0
+  },
   style: {
     position: 'relative',
     minHeight: '60px'
   },
   hook: {
-    insert: focusOnElmFromVnodeStub
+    insert: focusOnElmOfVnodeStub
   }
 }
 
@@ -30,7 +48,7 @@ test('vtree', t => {
   const expectedVtree = div(
     divData,
     [
-      playerStubReturn,
+      playerReturnSymbol,
       span(
         {
           style: {
@@ -41,7 +59,7 @@ test('vtree', t => {
         },
         '|'
       ),
-      playerStubReturn
+      playerReturnSymbol
     ]
   )
 
@@ -60,4 +78,8 @@ test('`player` descendants calls args', t => {
   ]
   arena(...args)
   t.deepEqual(playerSpy.args, expectedPlayerCallsArgs)
+})
+
+test('exports its unique selector', t => {
+  t.is(arena.selector, `[data-id='${cuidStubReturn}']`)
 })

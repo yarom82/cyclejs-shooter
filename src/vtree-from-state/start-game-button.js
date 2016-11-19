@@ -1,5 +1,6 @@
 const { button } = require('@cycle/dom')
 const cuid = require('cuid')
+const selectorFromId = require('./selector-from-id')
 
 const id = cuid()
 
@@ -17,5 +18,5 @@ const vnode = button(
 
 const startGameButton = () => vnode
 
-startGameButton.selector = `[data-id='${id}']`
+startGameButton.selector = selectorFromId(id)
 module.exports = startGameButton
