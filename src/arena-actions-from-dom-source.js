@@ -4,8 +4,8 @@ const {actionNames} = require('./constants')
 const { selector } = require('./vtree-from-state/arena')
 
 const arenaActionsFromDOMSource = DOMSource => {
-  const arenaDOMs = DOMSource.select(selector)
-  const keypressEvents = arenaDOMs
+  const arenaDOMSource = DOMSource.select(selector)
+  const keypressEvents = arenaDOMSource
     .events('keypress')
     .map(keyFromEvent)
   const leftShootActions = keypressEvents
@@ -15,7 +15,7 @@ const arenaActionsFromDOMSource = DOMSource => {
     .filter(key => key === '/')
     .mapTo(actionNames.rightShoot)
 
-  const keydownEvents = arenaDOMs
+  const keydownEvents = arenaDOMSource
     .events('keydown')
     .map(keyFromEvent)
   const leftHideActions = keydownEvents
@@ -25,7 +25,7 @@ const arenaActionsFromDOMSource = DOMSource => {
     .filter(key => key === '\'')
     .mapTo(actionNames.rightHide)
 
-  const keyupEvents = arenaDOMs
+  const keyupEvents = arenaDOMSource
     .events('keyup')
     .map(keyFromEvent)
   const leftUnhideActions = keyupEvents
