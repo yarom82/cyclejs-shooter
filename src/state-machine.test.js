@@ -25,7 +25,7 @@ const {
   }
 } = require('./constants')
 
-const testsForAction = {
+const testsForActionName = {
   [startGame]: [
     {
       currentState: { gameStatus: idle },
@@ -110,17 +110,17 @@ const testsForAction = {
   ]
 }
 
-for (const action in testsForAction) {
-  const tests = testsForAction[action]
+for (const name in testsForActionName) {
+  const tests = testsForActionName[name]
   tests.forEach(({currentState, expectedState}, index) => {
-    test(`action ${action} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}`, t => {
-      const actual = stateMachine(currentState, action)
+    test(`action ${name} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}`, t => {
+      const actual = stateMachine(currentState, { name })
       t.deepEqual(actual, expectedState)
     })
   })
 }
 
-const impossibleStatesOfAction = {
+const impossibleStatesForActionName = {
   [startGame]: [
     { gameStatus: afoot },
     { gameStatus: ended }
@@ -135,12 +135,12 @@ const impossibleStatesOfAction = {
   ]
 }
 
-for (const action in impossibleStatesOfAction) {
-  const states = impossibleStatesOfAction[action]
+for (const name in impossibleStatesForActionName) {
+  const states = impossibleStatesForActionName[name]
   states.forEach((state, index) => {
-    test(`${action} throws on impossible state ${index}`, t => {
+    test(`${name} throws on impossible state ${index}`, t => {
       t.throws(
-        () => { stateMachine(state, action) },
+        () => { stateMachine(state, { name }) },
         'Impossible action at current state')
     })
   })

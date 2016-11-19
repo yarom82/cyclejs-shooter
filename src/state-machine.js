@@ -10,9 +10,9 @@ const {
 
 const impossibleActionMessage = 'Impossible action at current state'
 
-const stateMachine = (currentState, action) => {
+const stateMachine = (currentState, { name }) => {
   const newState = Object.assign({}, currentState)
-  switch (action) {
+  switch (name) {
     case actionNames.startGame:
       if (currentState.gameStatus !== idle) {
         throw new Error(impossibleActionMessage)

@@ -22,6 +22,6 @@ test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported select
 
   startGameActionsFromDOMSource(DOMSourceMock)
     .addListener({next: value => {
-      t.is(value, startGame)
+      t.deepEqual(value, { name: startGame })
     }})
 })
