@@ -2,12 +2,27 @@ const { test } = require('ava')
 const mock = require('mock-require')
 const { div, span } = require('@cycle/dom')
 const { spy } = require('simple-spy')
+const cuid = require('cuid')
+
+const cuidStubReturn = cuid()
+const cuidStub = () => cuidStubReturn
+const cuidSpy = spy(cuidStub)
+mock('cuid', cuidSpy)
 
 const playerStubReturn = Symbol('playerStub')
 const playerStub = (side, hiding) => playerStubReturn
 const playerSpy = spy(playerStub)
-test.afterEach(() => playerSpy.reset())
 mock('./player', playerSpy)
+
+;[
+  cuidSpy,
+  playerSpy
+]
+  .forEach(spy => {
+    test.afterEach(() => {
+      spy.reset()
+    })
+  })
 
 const focusOnElmFromVnodeStub = Symbol('focusOnElmFromVnodeStub')
 mock('./focus-on-elm-from-vnode', focusOnElmFromVnodeStub)
@@ -15,8 +30,10 @@ mock('./focus-on-elm-from-vnode', focusOnElmFromVnodeStub)
 const arena = require('./arena')
 
 const divData = {
-  class: {arena: true},
-  attrs: {tabindex: 0},
+  attrs: {
+    'data-id': cuidStubReturn,
+    tabindex: 0
+  },
   style: {
     position: 'relative',
     minHeight: '60px'
@@ -60,4 +77,8 @@ test('`player` descendants calls args', t => {
   ]
   arena(...args)
   t.deepEqual(playerSpy.args, expectedPlayerCallsArgs)
+})
+
+test('exports its unique selector', t => {
+  t.is(arena.selector, `[data-id='${cuidStubReturn}']`)
 })
