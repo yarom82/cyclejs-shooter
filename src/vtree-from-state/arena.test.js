@@ -1,6 +1,7 @@
 const { test } = require('ava')
 const mock = require('mock-require')
 const { div, span } = require('@cycle/dom')
+const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 
@@ -8,11 +9,11 @@ const cuidStubReturn = cuid()
 const cuidStub = () => cuidStubReturn
 const cuidSpy = spy(cuidStub)
 mock('cuid', cuidSpy)
-
-const playerStubReturn = Symbol('playerStub')
-const playerStub = (side, hiding) => playerStubReturn
-const playerSpy = spy(playerStub)
-mock('./player', playerSpy)
+const {
+  returnSymbol: playerReturnSymbol,
+  spy: playerSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./player')
+test.afterEach(() => playerSpy.reset())
 
 ;[
   cuidSpy,
@@ -47,7 +48,7 @@ test('vtree', t => {
   const expectedVtree = div(
     divData,
     [
-      playerStubReturn,
+      playerReturnSymbol,
       span(
         {
           style: {
@@ -58,7 +59,7 @@ test('vtree', t => {
         },
         '|'
       ),
-      playerStubReturn
+      playerReturnSymbol
     ]
   )
 
