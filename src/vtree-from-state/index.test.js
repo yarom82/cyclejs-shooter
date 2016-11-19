@@ -3,8 +3,8 @@ const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with
 const { div } = require('@cycle/dom')
 
 const {
-  returnSymbol: startGameButtonReturnSymbol
-  // spy is missing here; #142
+  returnSymbol: startGameButtonReturnSymbol,
+  spy: startGameButtonSpy
 } = mockPathWithSpyThatReturnsSymbolHere('./start-game-button')
 
 const {
@@ -24,6 +24,7 @@ const {
 
 test.beforeEach(() => {
   [
+    startGameButtonSpy,
     instructionsSpy,
     winMessageSpy,
     arenaSpy
