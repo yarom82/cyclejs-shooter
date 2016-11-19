@@ -1,5 +1,5 @@
 const xs = require('xstream').default
-const keyFromEvent = require('./key-from-event')
+const keyFromEvent = event => event.key
 const {actionNames} = require('./constants')
 
 const arenaActionsFromDOMSource = DOMSource => {
