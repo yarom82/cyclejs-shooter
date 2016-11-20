@@ -42,9 +42,3 @@ test('returned object is superset of payload', t => {
   const actual = action(undefined, payload)
   t.true(isSubset(actual, payload))
 })
-
-test('returned object has same property names as payload', t => {
-  const payload = { [Symbol()]: undefined }
-  const actual = action(undefined, payload)
-  t.deepEqual(Object.getOwnPropertyNames(actual), Object.getOwnPropertyNames(payload))
-})
