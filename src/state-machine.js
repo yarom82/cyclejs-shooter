@@ -5,8 +5,12 @@ const {
     afoot,
     ended
   },
-  actionPayloadKeys: {
-    player
+actionPayloadKeys: {
+  player
+  },
+  players: {
+    leftPlayer,
+    rightPlayer
   }
 } = require('./constants')
 
@@ -29,17 +33,25 @@ const stateMachine = (currentState, action) => {
       }
       newState.gameStatus = afoot
       break
-    case actionNames.leftHide:
-      newState.leftHiding = true
+    case actionNames.hide:
+      switch (action[player]) {
+        case leftPlayer:
+          newState.leftHiding = true
+          break
+        case rightPlayer:
+          newState.rightHiding = true
+          break
+      }
       break
-    case actionNames.leftUnhide:
-      newState.leftHiding = false
-      break
-    case actionNames.rightHide:
-      newState.rightHiding = true
-      break
-    case actionNames.rightUnhide:
-      newState.rightHiding = false
+    case actionNames.unhide:
+      switch (action[player]) {
+        case leftPlayer:
+          newState.leftHiding = false
+          break
+        case rightPlayer:
+          newState.rightHiding = false
+          break
+      }
       break
     case actionNames.shoot:
       if (gameStatus !== afoot) {

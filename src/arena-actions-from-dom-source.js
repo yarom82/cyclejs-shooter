@@ -3,10 +3,8 @@ const keyFromEvent = event => event.key
 const {
   actionNames: {
     shoot,
-    leftHide,
-    rightHide,
-    leftUnhide,
-    rightUnhide
+    hide,
+    unhide
   },
   actionPayloadKeys: {
     player
@@ -20,10 +18,10 @@ const action = require('./action')
 
 const leftShootAction = action(shoot, { [player]: leftPlayer })
 const rightShootAction = action(shoot, { [player]: rightPlayer })
-const leftHideAction = action(leftHide)
-const rightHideAction = action(rightHide)
-const leftUnhideAction = action(leftUnhide)
-const rightUnhideAction = action(rightUnhide)
+const leftHideAction = action(hide, { [player]: leftPlayer })
+const rightHideAction = action(hide, { [player]: rightPlayer })
+const leftUnhideAction = action(unhide, { [player]: leftPlayer })
+const rightUnhideAction = action(unhide, { [player]: rightPlayer })
 const { selector } = require('./vtree-from-state/arena')
 
 const arenaActionsFromDOMSource = DOMSource => {

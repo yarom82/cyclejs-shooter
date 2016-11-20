@@ -9,10 +9,8 @@ const {
   },
   actionNames: {
     startGame,
-    leftHide,
-    rightHide,
-    leftUnhide,
-    rightUnhide,
+    hide,
+    unhide,
     shoot
   },
   actionPayloadKeys: {
@@ -32,42 +30,46 @@ const testsForActionName = {
       expectedState: { gameStatus: afoot }
     }
   ],
-  [leftHide]: [
+  [hide]: [
     {
+      payload: { [player]: leftPlayer },
       currentState: { leftHiding: false },
       expectedState: { leftHiding: true }
     },
     {
+      payload: { [player]: leftPlayer },
       currentState: { leftHiding: true },
       expectedState: { leftHiding: true }
-    }
-  ],
-  [leftUnhide]: [
-    {
-      currentState: { leftHiding: false },
-      expectedState: { leftHiding: false }
     },
     {
-      currentState: { leftHiding: true },
-      expectedState: { leftHiding: false }
-    }
-  ],
-  [rightHide]: [
-    {
+      payload: { [player]: rightPlayer },
       currentState: { rightHiding: false },
       expectedState: { rightHiding: true }
     },
     {
+      payload: { [player]: rightPlayer },
       currentState: { rightHiding: true },
       expectedState: { rightHiding: true }
     }
   ],
-  [rightUnhide]: [
+  [unhide]: [
     {
+      payload: { [player]: leftPlayer },
+      currentState: { leftHiding: false },
+      expectedState: { leftHiding: false }
+    },
+    {
+      payload: { [player]: leftPlayer },
+      currentState: { leftHiding: true },
+      expectedState: { leftHiding: false }
+    },
+    {
+      payload: { [player]: rightPlayer },
       currentState: { rightHiding: false },
       expectedState: { rightHiding: false }
     },
     {
+      payload: { [player]: rightPlayer },
       currentState: { rightHiding: true },
       expectedState: { rightHiding: false }
     }
