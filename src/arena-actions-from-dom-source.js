@@ -2,18 +2,24 @@ const xs = require('xstream').default
 const keyFromEvent = event => event.key
 const {
   actionNames: {
-    leftShoot,
-    rightShoot,
+    shoot,
     leftHide,
     rightHide,
     leftUnhide,
     rightUnhide
+  },
+  actionPayloadKeys: {
+    player
+  },
+  players: {
+    rightPlayer,
+    leftPlayer
   }
 } = require('./constants')
 const action = require('./action')
 
-const leftShootAction = action(leftShoot)
-const rightShootAction = action(rightShoot)
+const leftShootAction = action(shoot, { [player]: leftPlayer })
+const rightShootAction = action(shoot, { [player]: rightPlayer })
 const leftHideAction = action(leftHide)
 const rightHideAction = action(rightHide)
 const leftUnhideAction = action(leftUnhide)

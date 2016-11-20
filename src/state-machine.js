@@ -5,7 +5,9 @@ const {
     afoot,
     ended
   },
-  players
+  actionPayloadKeys: {
+    player
+  }
 } = require('./constants')
 
 const actionNameKey = require('./action').nameKey
@@ -34,23 +36,24 @@ const stateMachine = (currentState, action) => {
     case actionNames.rightUnhide:
       newState.rightHiding = false
       break
-    case actionNames.leftShoot:
-      Object.assign(newState, shoot(players.leftPlayer, currentState))
-      break
-    case actionNames.rightShoot:
-      Object.assign(newState, shoot(players.rightPlayer, currentState))
+    case actionNames.shoot:
+      if (currentState.gameStatus !== afoot) {
+        throw new Error(impossibleActionMessage)
+      }
+      if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+        Object.assign(
+          newState,
+          {
+            leftHiding: null,
+            rightHiding: null,
+            gameStatus: ended,
+            winner: action[player]
+          }
+        )
+      }
       break
   }
   return newState
-}
-
-const shoot = (player, currentState) => {
-  if (currentState.gameStatus !== afoot) {
-    throw new Error(impossibleActionMessage)
-  }
-  if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-    return { leftHiding: null, rightHiding: null, gameStatus: ended, winner: player }
-  }
 }
 
 const noPlayersHiding = (leftHiding, rightHiding) => {
