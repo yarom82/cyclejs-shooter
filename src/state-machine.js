@@ -8,9 +8,12 @@ const {
   players
 } = require('./constants')
 
+const actionNameKey = require('./action').nameKey
+
 const impossibleActionMessage = 'Impossible action at current state'
 
-const stateMachine = (currentState, { name }) => {
+const stateMachine = (currentState, action) => {
+  const name = action[actionNameKey]
   const newState = Object.assign({}, currentState)
   switch (name) {
     case actionNames.startGame:

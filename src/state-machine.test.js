@@ -24,6 +24,7 @@ const {
     rightPlayer
   }
 } = require('./constants')
+const actionNameKey = require('./action').nameKey
 
 const testsForActionName = {
   [startGame]: [
@@ -114,7 +115,7 @@ for (const name in testsForActionName) {
   const tests = testsForActionName[name]
   tests.forEach(({currentState, expectedState}, index) => {
     test(`action ${name} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}`, t => {
-      const actual = stateMachine(currentState, { name })
+      const actual = stateMachine(currentState, { [actionNameKey]: name })
       t.deepEqual(actual, expectedState)
     })
   })
@@ -140,7 +141,7 @@ for (const name in impossibleStatesForActionName) {
   states.forEach((state, index) => {
     test(`${name} throws on impossible state ${index}`, t => {
       t.throws(
-        () => { stateMachine(state, { name }) },
+        () => { stateMachine(state, { [actionNameKey]: name }) },
         'Impossible action at current state')
     })
   })
