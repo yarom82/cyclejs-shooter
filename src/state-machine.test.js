@@ -139,8 +139,8 @@ const impossibleStatesForActionName = {
 
 for (const name in impossibleStatesForActionName) {
   const states = impossibleStatesForActionName[name]
-  states.forEach((state, index) => {
-    test(`${name} throws on impossible state ${index}`, t => {
+  states.forEach(state => {
+    test(`${name} throws on impossible state ${stringFromObject(state)}`, t => {
       t.throws(
         () => { stateMachine(state, { [actionNameKey]: name }) },
         'Impossible action at current state')
