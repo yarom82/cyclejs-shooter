@@ -41,8 +41,15 @@ const stateMachine = (currentState, action) => {
         throw new Error(impossibleActionMessage)
       }
       if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
-        Object.assign(newState,
-          { leftHiding: null, rightHiding: null, gameStatus: ended, winner: action[player] })
+        Object.assign(
+          newState,
+          {
+            leftHiding: null,
+            rightHiding: null,
+            gameStatus: ended,
+            winner: action[player]
+          }
+        )
       }
       break
   }
