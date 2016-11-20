@@ -8,6 +8,7 @@ const {
     startGame
   }
 } = require('./constants')
+const actionNameKey = require('./action').nameKey
 
 test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported selector`, t => {
   t.plan(1)
@@ -22,6 +23,6 @@ test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported select
 
   startGameActionsFromDOMSource(DOMSourceMock)
     .addListener({next: value => {
-      t.deepEqual(value, { name: startGame })
+      t.deepEqual(value, { [actionNameKey]: startGame })
     }})
 })

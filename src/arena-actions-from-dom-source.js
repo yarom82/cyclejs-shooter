@@ -10,6 +10,14 @@ const {
     rightUnhide
   }
 } = require('./constants')
+const action = require('./action')
+
+const leftShootAction = action(leftShoot)
+const rightShootAction = action(rightShoot)
+const leftHideAction = action(leftHide)
+const rightHideAction = action(rightHide)
+const leftUnhideAction = action(leftUnhide)
+const rightUnhideAction = action(rightUnhide)
 const { selector } = require('./vtree-from-state/arena')
 
 const arenaActionsFromDOMSource = DOMSource => {
@@ -19,30 +27,30 @@ const arenaActionsFromDOMSource = DOMSource => {
     .map(keyFromEvent)
   const leftShootActions = keypressEvents
     .filter(key => key === 'z')
-    .mapTo({ name: leftShoot })
+    .mapTo(leftShootAction)
   const rightShootActions = keypressEvents
     .filter(key => key === '/')
-    .mapTo({ name: rightShoot })
+    .mapTo(rightShootAction)
 
   const keydownEvents = arenaDOMSource
     .events('keydown')
     .map(keyFromEvent)
   const leftHideActions = keydownEvents
     .filter(key => key === 'a')
-    .mapTo({ name: leftHide })
+    .mapTo(leftHideAction)
   const rightHideActions = keydownEvents
     .filter(key => key === '\'')
-    .mapTo({ name: rightHide })
+    .mapTo(rightHideAction)
 
   const keyupEvents = arenaDOMSource
     .events('keyup')
     .map(keyFromEvent)
   const leftUnhideActions = keyupEvents
     .filter(key => key === 'a')
-    .mapTo({ name: leftUnhide })
+    .mapTo(leftUnhideAction)
   const rightUnhideActions = keyupEvents
     .filter(key => key === '\'')
-    .mapTo({ name: rightUnhide })
+    .mapTo(rightUnhideAction)
 
   return xs.merge(
     leftShootActions,
