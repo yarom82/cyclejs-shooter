@@ -16,7 +16,7 @@ test('exported object deep equality assertion', t => {
       rightUnhide: 'RIGHT_UNHIDE',
       shoot: 'SHOOT'
     },
-    payloadKeys: {
+    actionPayloadKeys: {
       player: 'PLAYER'
     },
     players: {

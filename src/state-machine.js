@@ -5,7 +5,7 @@ const {
     afoot,
     ended
   },
-  payloadKeys: {
+  actionPayloadKeys: {
     player
   }
 } = require('./constants')

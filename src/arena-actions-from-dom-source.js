@@ -8,7 +8,7 @@ const {
     leftUnhide,
     rightUnhide
   },
-  payloadKeys: {
+  actionPayloadKeys: {
     player
   },
   players: {

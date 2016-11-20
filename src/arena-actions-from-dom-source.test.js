@@ -11,7 +11,7 @@ const {
     rightUnhide,
     shoot
   },
-  payloadKeys: {
+  actionPayloadKeys: {
     player
   },
   players: {

@@ -12,7 +12,7 @@ const constants = {
     rightUnhide: 'RIGHT_UNHIDE',
     shoot: 'SHOOT'
   },
-  payloadKeys: {
+  actionPayloadKeys: {
     player: 'PLAYER'
   },
   players: {
