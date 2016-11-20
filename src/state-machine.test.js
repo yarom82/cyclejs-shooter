@@ -1,9 +1,6 @@
 const stateMachine = require('./state-machine')
 const { test } = require('ava')
-const stringifyObject = require('stringify-object')
-const stringifyOptions = {
-  inlineCharacterLimit: 999
-}
+const stringFromObject = require('../utils/single-line-string-from-object')
 const {
   gameStatus: {
     idle,
@@ -122,7 +119,7 @@ const testsForActionName = {
 for (const name in testsForActionName) {
   const tests = testsForActionName[name]
   tests.forEach(({currentState, expectedState, payload}, index) => {
-    test(`action ${name} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}${payload ? ' payload:' + stringifyObject(payload, stringifyOptions) : ''}`, t => {
+    test(`action ${name} with state index ${index}: ${stringFromObject(currentState)} ${payload ? ' payload:' + stringifyObject(payload, stringifyOptions) : ''}`, t => {
       const actual = stateMachine(currentState, Object.assign({ [actionNameKey]: name }, payload))
       t.deepEqual(actual, expectedState)
     })
