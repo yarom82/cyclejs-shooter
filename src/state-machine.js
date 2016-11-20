@@ -17,9 +17,14 @@ const impossibleActionMessage = 'Impossible action at current state'
 const stateMachine = (currentState, action) => {
   const name = action[actionNameKey]
   const newState = Object.assign({}, currentState)
+  const {
+    gameStatus,
+    leftHiding,
+    rightHiding
+  } = currentState
   switch (name) {
     case actionNames.startGame:
-      if (currentState.gameStatus !== idle) {
+      if (gameStatus !== idle) {
         throw new Error(impossibleActionMessage)
       }
       newState.gameStatus = afoot
@@ -37,10 +42,10 @@ const stateMachine = (currentState, action) => {
       newState.rightHiding = false
       break
     case actionNames.shoot:
-      if (currentState.gameStatus !== afoot) {
+      if (gameStatus !== afoot) {
         throw new Error(impossibleActionMessage)
       }
-      if (noPlayersHiding(currentState.leftHiding, currentState.rightHiding)) {
+      if (!leftHiding && !rightHiding) {
         Object.assign(
           newState,
           {
@@ -54,10 +59,6 @@ const stateMachine = (currentState, action) => {
       break
   }
   return newState
-}
-
-const noPlayersHiding = (leftHiding, rightHiding) => {
-  return !leftHiding && !rightHiding
 }
 
 module.exports = stateMachine
