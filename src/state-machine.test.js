@@ -119,7 +119,7 @@ const testsForActionName = {
 for (const name in testsForActionName) {
   const tests = testsForActionName[name]
   tests.forEach(({currentState, expectedState, payload}, index) => {
-    test(`action ${name} with state index ${index}: ${stringFromObject(currentState)} ${payload ? ' payload:' + stringFromObject(payload) : ''}`, t => {
+    test(`action ${name} test ${index}; state: ${stringFromObject(currentState)}; payload: ${stringFromObject(payload)}`, t => {
       const actual = stateMachine(currentState, Object.assign({ [actionNameKey]: name }, payload))
       t.deepEqual(actual, expectedState)
     })
