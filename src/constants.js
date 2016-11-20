@@ -10,8 +10,10 @@ const constants = {
     rightHide: 'RIGHT_HIDE',
     leftUnhide: 'LEFT_UNHIDE',
     rightUnhide: 'RIGHT_UNHIDE',
-    leftShoot: 'LEFT_SHOOT',
-    rightShoot: 'RIGHT_SHOOT'
+    shoot: 'SHOOT'
+  },
+  payloadKeys: {
+    player: 'PLAYER'
   },
   players: {
     leftPlayer: 'LEFT_PLAYER',

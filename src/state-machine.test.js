@@ -16,8 +16,10 @@ const {
     rightHide,
     leftUnhide,
     rightUnhide,
-    leftShoot,
-    rightShoot
+    shoot
+  },
+  payloadKeys: {
+    player
   },
   players: {
     leftPlayer,
@@ -73,38 +75,44 @@ const testsForActionName = {
       expectedState: { rightHiding: false }
     }
   ],
-  [leftShoot]: [
+  [shoot]: [
     {
+      payload: { [player]: leftPlayer },
       currentState: { leftHiding: false, rightHiding: false, gameStatus: afoot },
       expectedState: { leftHiding: null, rightHiding: null, gameStatus: ended, winner: leftPlayer }
     },
     {
+      payload: { [player]: leftPlayer },
       currentState: { leftHiding: false, rightHiding: true, gameStatus: afoot },
       expectedState: { leftHiding: false, rightHiding: true, gameStatus: afoot }
     },
     {
+      payload: { [player]: leftPlayer },
       currentState: { leftHiding: true, rightHiding: false, gameStatus: afoot },
       expectedState: { leftHiding: true, rightHiding: false, gameStatus: afoot }
     },
     {
+      payload: { [player]: leftPlayer },
       currentState: { leftHiding: true, rightHiding: true, gameStatus: afoot },
       expectedState: { leftHiding: true, rightHiding: true, gameStatus: afoot }
-    }
-  ],
-  [rightShoot]: [
+    },
     {
+      payload: { [player]: rightPlayer },
       currentState: { leftHiding: false, rightHiding: false, gameStatus: afoot },
       expectedState: { leftHiding: null, rightHiding: null, gameStatus: ended, winner: rightPlayer }
     },
     {
+      payload: { [player]: rightPlayer },
       currentState: { leftHiding: false, rightHiding: true, gameStatus: afoot },
       expectedState: { leftHiding: false, rightHiding: true, gameStatus: afoot }
     },
     {
+      payload: { [player]: rightPlayer },
       currentState: { leftHiding: true, rightHiding: false, gameStatus: afoot },
       expectedState: { leftHiding: true, rightHiding: false, gameStatus: afoot }
     },
     {
+      payload: { [player]: rightPlayer },
       currentState: { leftHiding: true, rightHiding: true, gameStatus: afoot },
       expectedState: { leftHiding: true, rightHiding: true, gameStatus: afoot }
     }
@@ -113,9 +121,9 @@ const testsForActionName = {
 
 for (const name in testsForActionName) {
   const tests = testsForActionName[name]
-  tests.forEach(({currentState, expectedState}, index) => {
-    test(`action ${name} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}`, t => {
-      const actual = stateMachine(currentState, { [actionNameKey]: name })
+  tests.forEach(({currentState, expectedState, payload}, index) => {
+    test(`action ${name} with state index ${index}: ${stringifyObject(currentState, stringifyOptions)}${payload ? ' payload:' + stringifyObject(payload, stringifyOptions) : ''}`, t => {
+      const actual = stateMachine(currentState, Object.assign({ [actionNameKey]: name }, payload))
       t.deepEqual(actual, expectedState)
     })
   })
@@ -126,11 +134,7 @@ const impossibleStatesForActionName = {
     { gameStatus: afoot },
     { gameStatus: ended }
   ],
-  [leftShoot]: [
-    { gameStatus: idle },
-    { gameStatus: ended }
-  ],
-  [rightShoot]: [
+  [shoot]: [
     { gameStatus: idle },
     { gameStatus: ended }
   ]

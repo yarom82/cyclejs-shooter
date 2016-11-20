@@ -9,16 +9,22 @@ const {
     rightHide,
     leftUnhide,
     rightUnhide,
-    leftShoot,
-    rightShoot
+    shoot
+  },
+  payloadKeys: {
+    player
+  },
+  players: {
+    leftPlayer,
+    rightPlayer
   }
 } = require('./constants')
 const actionNameKey = require('./action').nameKey
 
 const expectedDataForEventAndKey = {
   'keypress': {
-    'z': { [actionNameKey]: leftShoot },
-    '/': { [actionNameKey]: rightShoot }
+    'z': { [actionNameKey]: shoot, [player]: leftPlayer },
+    '/': { [actionNameKey]: shoot, [player]: rightPlayer }
   },
   'keydown': {
     'a': { [actionNameKey]: leftHide },
