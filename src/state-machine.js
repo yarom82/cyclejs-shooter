@@ -5,8 +5,8 @@ const {
     afoot,
     ended
   },
-actionPayloadKeys: {
-  player
+  actionPayloadKeys: {
+    player
   },
   players: {
     leftPlayer,
