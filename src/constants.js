@@ -6,10 +6,8 @@ const constants = {
   },
   actionNames: {
     startGame: 'START_GAME',
-    leftHide: 'LEFT_HIDE',
-    rightHide: 'RIGHT_HIDE',
-    leftUnhide: 'LEFT_UNHIDE',
-    rightUnhide: 'RIGHT_UNHIDE',
+    hide: 'HIDE',
+    unhide: 'UNHIDE',
     shoot: 'SHOOT'
   },
   actionPayloadKeys: {

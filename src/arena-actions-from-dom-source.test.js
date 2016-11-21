@@ -6,10 +6,8 @@ const xstreamAdapter = require('@cycle/xstream-adapter').default
 const stringFromObject = require('../utils/single-line-string-from-object')
 const {
   actionNames: {
-    leftHide,
-    rightHide,
-    leftUnhide,
-    rightUnhide,
+    hide,
+    unhide,
     shoot
   },
   actionPayloadKeys: {
@@ -28,12 +26,12 @@ const expectedDataForEventAndKey = {
     '/': { [actionNameKey]: shoot, [player]: rightPlayer }
   },
   'keydown': {
-    'a': { [actionNameKey]: leftHide },
-    '\'': { [actionNameKey]: rightHide }
+    'a': { [actionNameKey]: hide, [player]: leftPlayer },
+    '\'': { [actionNameKey]: hide, [player]: rightPlayer }
   },
   'keyup': {
-    'a': { [actionNameKey]: leftUnhide },
-    '\'': { [actionNameKey]: rightUnhide }
+    'a': { [actionNameKey]: unhide, [player]: leftPlayer },
+    '\'': { [actionNameKey]: unhide, [player]: rightPlayer }
   }
 }
 
