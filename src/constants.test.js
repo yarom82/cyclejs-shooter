@@ -4,22 +4,22 @@ const { test } = require('ava')
 test('exported object deep equality assertion', t => {
   const expectedConstants = {
     gameStatus: {
-      idle: 'IDLE',
-      afoot: 'AFOOT',
-      ended: 'ENDED'
+      idle: Symbol.for('gameStatus.idle'),
+      afoot: Symbol.for('gameStatus.afoot'),
+      ended: Symbol.for('gameStatus.ended')
     },
     actionNames: {
-      startGame: 'START_GAME',
-      hide: 'HIDE',
-      unhide: 'UNHIDE',
-      shoot: 'SHOOT'
+      startGame: Symbol.for('actionNames.startGame'),
+      hide: Symbol.for('actionNames.hide'),
+      unhide: Symbol.for('actionNames.unhide'),
+      shoot: Symbol.for('actionNames.shoot')
     },
     actionPayloadKeys: {
-      player: 'PLAYER'
+      player: Symbol.for('actionPayloadKeys.player')
     },
     players: {
-      leftPlayer: 'LEFT_PLAYER',
-      rightPlayer: 'RIGHT_PLAYER'
+      leftPlayer: Symbol.for('players.leftPlayer'),
+      rightPlayer: Symbol.for('players.rightPlayer')
     }
   }
 
