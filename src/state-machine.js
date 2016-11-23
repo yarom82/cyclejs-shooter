@@ -1,5 +1,10 @@
 const {
-  actionNames,
+  actionNames: {
+    startGame,
+    hide,
+    unhide,
+    shoot
+  },
   gameStatus: {
     idle,
     afoot,
@@ -27,13 +32,13 @@ const stateMachine = (currentState, action) => {
     rightHiding
   } = currentState
   switch (name) {
-    case actionNames.startGame:
+    case startGame:
       if (gameStatus !== idle) {
         throw new Error(impossibleActionMessage)
       }
       newState.gameStatus = afoot
       break
-    case actionNames.hide:
+    case hide:
       switch (action[player]) {
         case leftPlayer:
           newState.leftHiding = true
@@ -43,7 +48,7 @@ const stateMachine = (currentState, action) => {
           break
       }
       break
-    case actionNames.unhide:
+    case unhide:
       switch (action[player]) {
         case leftPlayer:
           newState.leftHiding = false
@@ -53,7 +58,7 @@ const stateMachine = (currentState, action) => {
           break
       }
       break
-    case actionNames.shoot:
+    case shoot:
       if (gameStatus !== afoot) {
         throw new Error(impossibleActionMessage)
       }
