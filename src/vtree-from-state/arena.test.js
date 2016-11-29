@@ -14,7 +14,6 @@ const {
   returnSymbol: playerReturnSymbol,
   spy: playerSpy
 } = mockPathWithSpyThatReturnsSymbolHere('./player')
-// test.afterEach(() => playerSpy.reset())
 
 const {
   returnSymbol: barrierReturnSymbol,
@@ -36,6 +35,11 @@ const focusOnElmOfVnodeStub = Symbol('focusOnElmOfVnodeStub')
 mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
 
 const arena = require('./arena')
+
+const arenaArgs = [
+  Symbol('leftHiding'),
+  Symbol('rightHiding')
+]
 
 const divData = {
   attrs: {
@@ -67,16 +71,20 @@ test('vtree', t => {
 })
 
 test('`player` descendants calls args', t => {
-  const args = [
-    Symbol('leftHiding'),
-    Symbol('rightHiding')
-  ]
   const expectedPlayerCallsArgs = [
-    ['left', args[0]],
-    ['right', args[1]]
+    ['left', arenaArgs[0]],
+    ['right', arenaArgs[1]]
   ]
-  arena(...args)
+  arena(...arenaArgs)
   t.deepEqual(playerSpy.args, expectedPlayerCallsArgs)
+})
+
+test('`barrier` descendant calls without args', t => {
+  const expected = [
+    []
+  ]
+  arena(...arenaArgs)
+  t.deepEqual(barrierSpy.args, expected)
 })
 
 test('exports its unique selector', t => {
