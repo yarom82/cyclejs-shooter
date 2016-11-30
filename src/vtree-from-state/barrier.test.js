@@ -3,7 +3,7 @@ const { div } = require('@cycle/dom')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
 const {
-  returnSymbol: barrireSvgReturnSymbol,
+  returnSymbol: barrierSvgReturnSymbol,
   spy: barrierSvgSpy
 } = mockPathWithSpyThatReturnsSymbolHere('./barrier-svg')
 
@@ -23,7 +23,7 @@ test('vtree', t => {
       }
     },
     [
-      barrireSvgReturnSymbol
+      barrierSvgReturnSymbol
     ]
   )
   t.deepEqual(barrier(), expected)
