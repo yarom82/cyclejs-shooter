@@ -1,6 +1,5 @@
 const { test } = require('ava')
 const { div } = require('@cycle/dom')
-const barrier = require('./barrier')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
 const {
@@ -11,6 +10,8 @@ const {
 test.beforeEach(() => {
   barrierSvgSpy.reset()
 })
+
+const barrier = require('./barrier')
 
 test('vtree', t => {
   const expected = div(
@@ -29,7 +30,9 @@ test('vtree', t => {
 })
 
 test('`barrierSvg` descendant calls without args', t => {
-  const expected = []
+  const expected = [
+    []
+  ]
   barrier()
   t.deepEqual(barrierSvgSpy.args, expected)
 })
