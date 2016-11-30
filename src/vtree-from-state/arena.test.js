@@ -1,6 +1,6 @@
 const { test } = require('ava')
 const mock = require('mock-require')
-const { div, span } = require('@cycle/dom')
+const { div } = require('@cycle/dom')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
@@ -9,15 +9,21 @@ const cuidStubReturn = cuid()
 const cuidStub = () => cuidStubReturn
 const cuidSpy = spy(cuidStub)
 mock('cuid', cuidSpy)
+
 const {
   returnSymbol: playerReturnSymbol,
   spy: playerSpy
 } = mockPathWithSpyThatReturnsSymbolHere('./player')
-test.afterEach(() => playerSpy.reset())
+
+const {
+  returnSymbol: barrierReturnSymbol,
+  spy: barrierSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./barrier')
 
 ;[
   cuidSpy,
-  playerSpy
+  playerSpy,
+  barrierSpy
 ]
   .forEach(spy => {
     test.afterEach(() => {
@@ -30,13 +36,19 @@ mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
 
 const arena = require('./arena')
 
+const arenaArgs = [
+  Symbol('leftHiding'),
+  Symbol('rightHiding')
+]
+
 const divData = {
   attrs: {
     'data-id': cuidStubReturn,
     tabindex: 0
   },
   style: {
-    position: 'relative',
+    display: 'flex',
+    justifyContent: 'space-between',
     minHeight: '60px'
   },
   hook: {
@@ -49,16 +61,7 @@ test('vtree', t => {
     divData,
     [
       playerReturnSymbol,
-      span(
-        {
-          style: {
-            fontSize: '40px',
-            position: 'absolute',
-            bottom: '0'
-          }
-        },
-        '|'
-      ),
+      barrierReturnSymbol,
       playerReturnSymbol
     ]
   )
@@ -68,16 +71,20 @@ test('vtree', t => {
 })
 
 test('`player` descendants calls args', t => {
-  const args = [
-    Symbol('leftHiding'),
-    Symbol('rightHiding')
-  ]
   const expectedPlayerCallsArgs = [
-    ['left', args[0]],
-    ['right', args[1]]
+    ['left', arenaArgs[0]],
+    ['right', arenaArgs[1]]
   ]
-  arena(...args)
+  arena(...arenaArgs)
   t.deepEqual(playerSpy.args, expectedPlayerCallsArgs)
+})
+
+test('`barrier` descendant calls without args', t => {
+  const expected = [
+    []
+  ]
+  arena(...arenaArgs)
+  t.deepEqual(barrierSpy.args, expected)
 })
 
 test('exports its unique selector', t => {

@@ -17,6 +17,7 @@ possibleCallArgs.forEach(([hiding, displayNone]) => {
   test(`vtree when hiding: ${hiding}, displayNone: ${displayNone}`, t => {
     const expected = img({
       style: {
+        width: '100%',
         display: displayNone ? 'none' : 'unset'
       },
       attrs: {
