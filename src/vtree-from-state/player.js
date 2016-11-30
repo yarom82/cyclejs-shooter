@@ -10,9 +10,9 @@ const player = (side, hiding) => {
   return div(
     {
       style: {
-        position: 'absolute',
-        bottom: '0',
-        [side]: '0',
+        flexBasis: '15%',
+        display: 'flex',
+        alignItems: 'flex-end',
         transform: side === 'right' ? 'scale(-1,1)' : null
       }
     },

@@ -1,6 +1,7 @@
-const { div, span } = require('@cycle/dom')
+const { div } = require('@cycle/dom')
 const R = require('ramda')
 const player = require('./player')
+const barrier = require('./barrier')
 const focusOnElmOfVnode = require('./focus-on-elm-of-vnode')
 const cuid = require('cuid')
 const selectorFromId = require('./selector-from-id')
@@ -19,7 +20,8 @@ const arena = (leftHiding, rightHiding) => {
         tabindex: 0
       },
       style: {
-        position: 'relative',
+        display: 'flex',
+        justifyContent: 'space-between',
         minHeight: '60px'
       },
       hook: {
@@ -28,16 +30,7 @@ const arena = (leftHiding, rightHiding) => {
     },
     [
       leftPlayer(leftHiding),
-      span(
-        {
-          style: {
-            fontSize: '40px',
-            position: 'absolute',
-            bottom: '0'
-          }
-        },
-        '|'
-      ),
+      barrier(),
       rightPlayer(rightHiding)
     ]
   )

@@ -7,6 +7,7 @@ const hidingUri = urify(path.join(__dirname, 'player-hiding.png'))
 const playerImg = (hiding, displayNone) => {
   return img({
     style: {
+      width: '100%',
       display: displayNone ? 'none' : 'unset'
     },
     attrs: {
