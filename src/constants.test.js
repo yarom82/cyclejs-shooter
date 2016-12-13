@@ -1,29 +1,35 @@
 const constants = require('./constants')
 const { test } = require('ava')
+const isRegalia = require('is-regalia')
+const equalsRegalia = require('equals-regalia')
 
-test('exported object deep equality assertion', t => {
-  const expectedConstants = {
-    gameStatus: {
-      idle: Symbol.for('gameStatus.idle'),
-      afoot: Symbol.for('gameStatus.afoot'),
-      ended: Symbol.for('gameStatus.ended')
-    },
-    actionNames: {
-      startGame: Symbol.for('actionNames.startGame'),
-      hide: Symbol.for('actionNames.hide'),
-      unhide: Symbol.for('actionNames.unhide'),
-      shoot: Symbol.for('actionNames.shoot')
-    },
-    actionPayloadKeys: {
-      player: Symbol.for('actionPayloadKeys.player')
-    },
-    players: {
-      leftPlayer: Symbol.for('players.leftPlayer'),
-      rightPlayer: Symbol.for('players.rightPlayer')
-    }
+test('exports a regalia tree', t => {
+  t.true(isRegalia(constants))
+})
+
+test('tree deep equality', t => {
+  const definition = {
+    gameStatus: [
+      'idle',
+      'afoot',
+      'ended'
+    ],
+    actionNames: [
+      'startGame',
+      'hide',
+      'unhide',
+      'shoot'
+    ],
+    actionPayloadKeys: [
+      'player'
+    ],
+    players: [
+      'leftPlayer',
+      'rightPlayer'
+    ]
   }
 
-  t.deepEqual(constants, expectedConstants)
+  t.true(equalsRegalia(constants, definition))
 })
 
 test('exported object is frozen', t => {
