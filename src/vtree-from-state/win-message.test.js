@@ -16,7 +16,7 @@ const possibleArgs = [
 const withPossibleArg = arg => {
   const winner = arg === leftPlayer ? 'Left' : 'Right'
   const expected = `${winner} won!`
-  test(`given '${Symbol.keyFor(arg)}' returns '${expected}'`, t => {
+  test(`given \`${String(arg)}\` returns '${expected}'`, t => {
     const actual = winMessage(arg)
     t.is(actual, expected)
   })

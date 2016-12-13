@@ -121,7 +121,7 @@ const testsForActionName = {
 Object.getOwnPropertySymbols(testsForActionName).forEach(name => {
   const tests = testsForActionName[name]
   tests.forEach(({currentState, expectedState, payload}, index) => {
-    test(`action ${Symbol.keyFor(name)} test ${index}; state: ${stringFromObject(currentState)}; payload: ${stringFromObject(payload)}`, t => {
+    test(`\`${String(name)}\` test ${index}; state: ${stringFromObject(currentState)}; payload: ${stringFromObject(payload)}`, t => {
       const actual = stateMachine(currentState, Object.assign({ [actionNameKey]: name }, payload))
       t.deepEqual(actual, expectedState)
     })
@@ -142,7 +142,7 @@ const impossibleStatesForActionName = {
 Object.getOwnPropertySymbols(impossibleStatesForActionName).forEach(name => {
   const states = impossibleStatesForActionName[name]
   states.forEach(state => {
-    test(`${Symbol.keyFor(name)} throws on impossible state ${stringFromObject(state)}`, t => {
+    test(`\`${String(name)}\` throws on impossible state ${stringFromObject(state)}`, t => {
       t.throws(
         () => { stateMachine(state, { [actionNameKey]: name }) },
         'Impossible action at current state')
