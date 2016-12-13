@@ -1,6 +1,7 @@
-const { div, br } = require('@cycle/dom')
+const h = require('./h')
+const { br } = require('@cycle/dom')
 
-const beforeWin = div(
+const beforeWin = h('instructions',
   [
     'Left: hold A to hide; press Z to shoot.',
     br(),
@@ -8,7 +9,7 @@ const beforeWin = div(
   ]
 )
 
-const afterWin = div(
+const afterWin = h('instructions',
   'Reload page to play again.'
 )
 

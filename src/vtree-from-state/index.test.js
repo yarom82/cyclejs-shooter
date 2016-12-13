@@ -1,6 +1,6 @@
 const { test } = require('ava')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
-const { div } = require('@cycle/dom')
+const h = require('./h')
 
 const {
   returnSymbol: startGameButtonReturnSymbol,
@@ -42,14 +42,16 @@ const {
 
 const vtreeFromState = require('.')
 
-const divData = {
+const data = {
   style: {textAlign: 'center'}
 }
 
+const elmName = 'index'
+
 const expectedValuesForGameStatus = {
   [idle]: {
-    vtree: div(
-      divData,
+    vtree: h(elmName,
+      data,
       [
         startGameButtonReturnSymbol,
         instructionsReturnSymbol
@@ -58,8 +60,8 @@ const expectedValuesForGameStatus = {
     instructionsCallArg: 'BEFORE_WIN'
   },
   [afoot]: {
-    vtree: div(
-      divData,
+    vtree: h(elmName,
+      data,
       [
         arenaReturnSymbol,
         instructionsReturnSymbol
@@ -68,8 +70,8 @@ const expectedValuesForGameStatus = {
     instructionsCallArg: 'BEFORE_WIN'
   },
   [ended]: {
-    vtree: div(
-      divData,
+    vtree: h(elmName,
+      data,
       [
         winMessageReturnSymbol,
         instructionsReturnSymbol

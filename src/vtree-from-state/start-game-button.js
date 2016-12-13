@@ -1,10 +1,11 @@
+const h = require('./h')
 const { button } = require('@cycle/dom')
 const cuid = require('cuid')
 const selectorFromId = require('./selector-from-id')
 
 const id = cuid()
 
-const vnode = button(
+const vnode = h('start-game-button',
   {
     attrs: {
       'data-id': id
@@ -13,7 +14,9 @@ const vnode = button(
       textTransform: 'uppercase'
     }
   },
-  'Start the game'
+  [
+    button('Start the game')
+  ]
 )
 
 const startGameButton = () => vnode

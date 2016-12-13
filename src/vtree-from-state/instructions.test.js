@@ -1,16 +1,19 @@
 const { test } = require('ava')
 const instructions = require('./instructions')
-const { div, br } = require('@cycle/dom')
+const { br } = require('@cycle/dom')
+const h = require('./h')
+
+const elmName = 'instructions'
 
 const expectedVtreeForArg = {
-  'BEFORE_WIN': div(
+  'BEFORE_WIN': h(elmName,
     [
       'Left: hold A to hide; press Z to shoot.',
       br(),
       'Right: hold " to hide; press / to shoot.'
     ]
   ),
-  'AFTER_WIN': div(
+  'AFTER_WIN': h(elmName,
     'Reload page to play again.'
   )
 }

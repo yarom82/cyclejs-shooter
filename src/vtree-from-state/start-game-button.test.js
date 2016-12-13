@@ -1,5 +1,6 @@
 const { test } = require('ava')
 const { button } = require('@cycle/dom')
+const h = require('./h')
 const { spy } = require('simple-spy')
 const mock = require('mock-require')
 const requireNew = require('require-new')
@@ -18,7 +19,7 @@ const modulePath = './start-game-button'
 const startGameButton = require(modulePath)
 
 test('vtree', t => {
-  const expected = button(
+  const expected = h('start-game-button',
     {
       attrs: {
         'data-id': cuidStubReturn
@@ -27,7 +28,9 @@ test('vtree', t => {
         textTransform: 'uppercase'
       }
     },
-    'Start the game'
+    [
+      button('Start the game')
+    ]
   )
 
   t.deepEqual(startGameButton(), expected)
