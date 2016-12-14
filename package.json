@@ -57,7 +57,7 @@
     "mock-require": "^2.0.0",
     "npm-run-all": "^3.1.1",
     "nyc": "^10.0.0",
-    "require-new": "^1.1.0",
+    "require-uncached": "^1.0.3",
     "simple-spy": "^2.0.4",
     "standard": "^8.4.0",
     "stringify-object": "^3.0.0",
