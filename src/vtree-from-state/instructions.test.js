@@ -5,8 +5,15 @@ const h = require('./h')
 
 const elmName = 'instructions'
 
+const divData = {
+  style: {
+    textAlign: 'center'
+  }
+}
+
 const expectedVtreeForArg = {
   'BEFORE_WIN': h(elmName,
+    divData,
     [
       'Left: hold A to hide; press Z to shoot.',
       br(),
@@ -14,6 +21,7 @@ const expectedVtreeForArg = {
     ]
   ),
   'AFTER_WIN': h(elmName,
+    divData,
     'Reload page to play again.'
   )
 }

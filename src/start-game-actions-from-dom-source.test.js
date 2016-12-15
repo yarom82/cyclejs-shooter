@@ -10,7 +10,7 @@ const {
 } = require('./constants')
 const actionNameKey = require('./action').nameKey
 
-test(`emits '${startGame}' for clicks on \`startGameButton\`’s exported selector`, t => {
+test(`emits \`${String(startGame)}\` for clicks on \`startGameButton\`’s exported selector`, t => {
   t.plan(1)
 
   const { selector } = require('./vtree-from-state/start-game-button')

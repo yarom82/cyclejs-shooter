@@ -1,5 +1,6 @@
 const { test } = require('ava')
 const winMessage = require('./win-message')
+const { div } = require('@cycle/dom')
 
 const {
   players: {
@@ -15,10 +16,17 @@ const possibleArgs = [
 
 const withPossibleArg = arg => {
   const winner = arg === leftPlayer ? 'Left' : 'Right'
-  const expected = `${winner} won!`
-  test(`given '${arg}' returns '${expected}'`, t => {
+  const expected = div(
+    {
+      style: {
+        textAlign: 'center'
+      }
+    },
+    `${winner} won!`
+  )
+  test(`given \`${String(arg)}\` returns '${expected}'`, t => {
     const actual = winMessage(arg)
-    t.is(actual, expected)
+    t.deepEqual(actual, expected)
   })
 }
 

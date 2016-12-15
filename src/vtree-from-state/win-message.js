@@ -1,9 +1,16 @@
 const { players } = require('../constants')
+const { div } = require('@cycle/dom')
 
 const winMessage = winner => {
   const winPlayer = winner === players.leftPlayer ? 'Left' : 'Right'
-  const message = `${winPlayer} won!`
-  return message
+  return div(
+    {
+      style: {
+        textAlign: 'center'
+      }
+    },
+    `${winPlayer} won!`
+  )
 }
 
 module.exports = winMessage
