@@ -25,11 +25,12 @@ test('vtree', t => {
         'data-id': cuidStubReturn
       },
       style: {
-        textTransform: 'uppercase'
+        display: 'flex',
+        justifyContent: 'center'
       }
     },
     [
-      button('Start the game')
+      button('START THE GAME')
     ]
   )
 
