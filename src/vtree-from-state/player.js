@@ -1,4 +1,4 @@
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const playerImg = require('./player-img')
 const R = require('ramda')
 
@@ -7,7 +7,7 @@ const standingPlayerImg = curriedPlayerImg(false)
 const hidingPlayerImg = curriedPlayerImg(true)
 
 const player = (side, hiding) => {
-  return div(
+  return h('player',
     {
       style: {
         flexBasis: '15%',

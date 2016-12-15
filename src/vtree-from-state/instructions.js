@@ -1,4 +1,5 @@
-const { div, br } = require('@cycle/dom')
+const h = require('./h')
+const { br } = require('@cycle/dom')
 
 const beforeWin = [
   'Left: hold A to hide; press Z to shoot.',
@@ -9,7 +10,7 @@ const beforeWin = [
 const afterWin = 'Reload page to play again.'
 
 const instructions = state => {
-  return div(
+  return h('instructions',
     {
       style: {
         textAlign: 'center'

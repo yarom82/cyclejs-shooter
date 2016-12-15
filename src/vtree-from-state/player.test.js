@@ -1,5 +1,5 @@
 const { test } = require('ava')
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
 const {
@@ -24,7 +24,7 @@ const testWithCallArgs = ([side, hiding]) => {
   const testCondition = `when side: ${side}, hiding: ${hiding}`
 
   test(`vtree ${testCondition}`, t => {
-    const expected = div(
+    const expected = h('player',
       {
         style: {
           flexBasis: '15%',

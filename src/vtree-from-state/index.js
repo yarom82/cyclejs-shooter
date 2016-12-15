@@ -1,4 +1,4 @@
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const startGameButton = require('./start-game-button')
 const arena = require('./arena')
 const winMessage = require('./win-message')
@@ -25,7 +25,7 @@ const vtreeFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
       break
   }
 
-  return div(
+  return h('index',
     {
       style: {
         display: 'flex',

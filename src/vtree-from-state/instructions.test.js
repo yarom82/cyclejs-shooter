@@ -1,6 +1,9 @@
 const { test } = require('ava')
 const instructions = require('./instructions')
-const { div, br } = require('@cycle/dom')
+const { br } = require('@cycle/dom')
+const h = require('./h')
+
+const elmName = 'instructions'
 
 const divData = {
   style: {
@@ -9,7 +12,7 @@ const divData = {
 }
 
 const expectedVtreeForArg = {
-  'BEFORE_WIN': div(
+  'BEFORE_WIN': h(elmName,
     divData,
     [
       'Left: hold A to hide; press Z to shoot.',
@@ -17,7 +20,7 @@ const expectedVtreeForArg = {
       'Right: hold " to hide; press / to shoot.'
     ]
   ),
-  'AFTER_WIN': div(
+  'AFTER_WIN': h(elmName,
     divData,
     'Reload page to play again.'
   )
