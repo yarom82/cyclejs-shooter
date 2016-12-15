@@ -21,11 +21,9 @@ const {
 const actionNameKey = require('./action').nameKey
 
 const expectedDataForEventAndKey = {
-  'keypress': {
-    'z': { [actionNameKey]: shoot, [player]: leftPlayer },
-    '/': { [actionNameKey]: shoot, [player]: rightPlayer }
-  },
   'keydown': {
+    'z': { [actionNameKey]: shoot, [player]: leftPlayer },
+    '/': { [actionNameKey]: shoot, [player]: rightPlayer },
     'a': { [actionNameKey]: hide, [player]: leftPlayer },
     '\'': { [actionNameKey]: hide, [player]: rightPlayer }
   },

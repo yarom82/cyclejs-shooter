@@ -26,19 +26,18 @@ const { selector } = require('./vtree-from-state/arena')
 
 const arenaActionsFromDOMSource = DOMSource => {
   const arenaDOMSource = DOMSource.select(selector)
-  const keypressEvents = arenaDOMSource
-    .events('keypress')
-    .map(keyFromEvent)
-  const leftShootActions = keypressEvents
-    .filter(key => key === 'z')
-    .mapTo(leftShootAction)
-  const rightShootActions = keypressEvents
-    .filter(key => key === '/')
-    .mapTo(rightShootAction)
 
   const keydownEvents = arenaDOMSource
     .events('keydown')
     .map(keyFromEvent)
+
+  const leftShootActions = keydownEvents
+    .filter(key => key === 'z')
+    .mapTo(leftShootAction)
+  const rightShootActions = keydownEvents
+    .filter(key => key === '/')
+    .mapTo(rightShootAction)
+
   const leftHideActions = keydownEvents
     .filter(key => key === 'a')
     .mapTo(leftHideAction)
