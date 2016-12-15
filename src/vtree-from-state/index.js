@@ -27,7 +27,10 @@ const vtreeFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
 
   return div(
     {
-      style: {textAlign: 'center'}
+      style: {
+        display: 'flex',
+        flexDirection: 'column'
+      }
     },
     [
       firstChild,

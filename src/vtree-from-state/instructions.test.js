@@ -2,8 +2,15 @@ const { test } = require('ava')
 const instructions = require('./instructions')
 const { div, br } = require('@cycle/dom')
 
+const divData = {
+  style: {
+    textAlign: 'center'
+  }
+}
+
 const expectedVtreeForArg = {
   'BEFORE_WIN': div(
+    divData,
     [
       'Left: hold A to hide; press Z to shoot.',
       br(),
@@ -11,6 +18,7 @@ const expectedVtreeForArg = {
     ]
   ),
   'AFTER_WIN': div(
+    divData,
     'Reload page to play again.'
   )
 }
