@@ -11,6 +11,11 @@ const afterWin = 'Reload page to play again.'
 const instructions = state => {
   return div(
     {
+      style: {
+        textAlign: 'center'
+      }
+    },
+    {
       'BEFORE_WIN': beforeWin,
       'AFTER_WIN': afterWin
     }[state]

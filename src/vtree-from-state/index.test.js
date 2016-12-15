@@ -43,7 +43,10 @@ const {
 const vtreeFromState = require('.')
 
 const divData = {
-  style: {textAlign: 'center'}
+  style: {
+    display: 'flex',
+    flexDirection: 'column'
+  }
 }
 
 const expectedValuesForGameStatus = {
