@@ -11,11 +11,12 @@ const vnode = h('start-game-button',
       'data-id': id
     },
     style: {
-      textTransform: 'uppercase'
+      display: 'flex',
+      justifyContent: 'center'
     }
   },
   [
-    button('Start the game')
+    button('START THE GAME')
   ]
 )
 
