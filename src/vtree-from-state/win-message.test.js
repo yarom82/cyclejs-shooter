@@ -24,7 +24,7 @@ const withPossibleArg = arg => {
     },
     `${winner} won!`
   )
-  test(`given '${arg}' returns '${expected}'`, t => {
+  test(`given \`${String(arg)}\` returns '${expected}'`, t => {
     const actual = winMessage(arg)
     t.deepEqual(actual, expected)
   })

@@ -1,23 +1,25 @@
-const constants = {
-  gameStatus: {
-    idle: 'IDLE',
-    afoot: 'AFOOT',
-    ended: 'ENDED'
-  },
-  actionNames: {
-    startGame: 'START_GAME',
-    hide: 'HIDE',
-    unhide: 'UNHIDE',
-    shoot: 'SHOOT'
-  },
-  actionPayloadKeys: {
-    player: 'PLAYER'
-  },
-  players: {
-    leftPlayer: 'LEFT_PLAYER',
-    rightPlayer: 'RIGHT_PLAYER'
-  }
-}
+const regalia = require('regalia')
+
+const constants = regalia({
+  gameStatus: [
+    'idle',
+    'afoot',
+    'ended'
+  ],
+  actionNames: [
+    'startGame',
+    'hide',
+    'unhide',
+    'shoot'
+  ],
+  actionPayloadKeys: [
+    'player'
+  ],
+  players: [
+    'leftPlayer',
+    'rightPlayer'
+  ]
+})
 
 Object.freeze(constants)
 module.exports = constants
