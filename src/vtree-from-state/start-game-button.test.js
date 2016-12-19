@@ -2,7 +2,7 @@ const { test } = require('ava')
 const { button } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 const mock = require('mock-require')
-const requireNew = require('require-new')
+const requireUncached = require('require-uncached')
 const cuid = require('cuid')
 
 const cuidStubReturn = cuid()
@@ -34,7 +34,7 @@ test('vtree', t => {
 })
 
 test('`cuid` called once with no args', t => {
-  requireNew(modulePath)
+  requireUncached(modulePath)
   t.deepEqual(cuidSpy.args, [[]])
 })
 
