@@ -1,14 +1,14 @@
 const { test } = require('ava')
 const { spy } = require('simple-spy')
 const mock = require('mock-require')
-const requireNew = require('require-new')
+const requireUncached = require('require-uncached')
 
 const hReturn = Symbol('h')
 
 test.beforeEach(t => {
   t.context.hSpy = spy((sel, data, children) => hReturn)
   mock('@cycle/dom', { h: t.context.hSpy })
-  t.context.h = requireNew('./h')
+  t.context.h = requireUncached('./h')
 })
 
 test('exports function of arity 2', t => {
