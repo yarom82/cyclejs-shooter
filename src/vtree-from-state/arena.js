@@ -1,4 +1,4 @@
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const R = require('ramda')
 const player = require('./player')
 const barrier = require('./barrier')
@@ -13,7 +13,7 @@ const rightPlayer = curriedPlayer('right')
 const id = cuid()
 
 const arena = (leftHiding, rightHiding) => {
-  return div(
+  return h('arena',
     {
       attrs: {
         'data-id': id,

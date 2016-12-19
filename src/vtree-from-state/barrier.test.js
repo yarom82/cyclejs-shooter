@@ -1,5 +1,5 @@
 const { test } = require('ava')
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
 const {
@@ -14,7 +14,7 @@ test.beforeEach(() => {
 const barrier = require('./barrier')
 
 test('vtree', t => {
-  const expected = div(
+  const expected = h('barrier',
     {
       style: {
         flexBasis: '1%',

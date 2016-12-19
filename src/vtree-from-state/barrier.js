@@ -1,8 +1,8 @@
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const barrierSvg = require('./barrier-svg')
 
 const barrier = () => {
-  return div(
+  return h('barrier',
     {
       style: {
         flexBasis: '1%',

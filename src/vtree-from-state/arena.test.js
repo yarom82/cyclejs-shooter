@@ -1,6 +1,6 @@
 const { test } = require('ava')
 const mock = require('mock-require')
-const { div } = require('@cycle/dom')
+const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
@@ -41,7 +41,7 @@ const arenaArgs = [
   Symbol('rightHiding')
 ]
 
-const divData = {
+const data = {
   attrs: {
     'data-id': cuidStubReturn,
     tabindex: 0
@@ -57,8 +57,8 @@ const divData = {
 }
 
 test('vtree', t => {
-  const expectedVtree = div(
-    divData,
+  const expectedVtree = h('arena',
+    data,
     [
       playerReturnSymbol,
       barrierReturnSymbol,
