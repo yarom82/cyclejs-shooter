@@ -84,19 +84,19 @@ const expectedValuesForGameStatus = {
   }
 }
 
-for (const gameStatus in expectedValuesForGameStatus) {
+Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) => {
   const {vtree, instructionsCallArg} = expectedValuesForGameStatus[gameStatus]
 
-  test(`vtree ${gameStatus}`, t => {
+  test(`vtree ${String(gameStatus)}`, t => {
     const actualVtree = vtreeFromState({gameStatus})
     t.deepEqual(actualVtree, vtree)
   })
 
-  test(`\`instructions\` call arg ${gameStatus} is '${instructionsCallArg}'`, t => {
+  test(`\`instructions\` call arg ${String(gameStatus)} is '${instructionsCallArg}'`, t => {
     vtreeFromState({gameStatus})
     t.deepEqual(instructionsSpy.args, [[instructionsCallArg]])
   })
-}
+})
 
 test('`arena` descendant calls args', t => {
   const state = {

@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "budo bootstrap.js",
-    "unit": "ava --verbose",
+    "unit": "ava",
     "coverage": "nyc npm run unit",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "test": "npm run lint && npm run coverage",
@@ -18,11 +18,7 @@
   ],
   "author": "Yarom Shoval <yarom.adi@gmail.com> (yarom82)",
   "contributors": [
-    {
-      "name": "Shahar Or (mightyiam)",
-      "email": "mightyiampresence@gmail.com",
-      "url": "https://mightyi.am"
-    }
+    "Shahar Or <mightyiampresence@gmail.com> (mightyiam)"
   ],
   "license": "ISC",
   "browserify": {
@@ -65,5 +61,13 @@
     "standard": "^8.4.0",
     "stringify-object": "^3.0.0",
     "typechecker": "^4.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yarom-and-shahar/cyclejs-shooter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yarom-and-shahar/cyclejs-shooter/issues"
+  },
+  "homepage": "https://github.com/yarom-and-shahar/cyclejs-shooter#readme"
 }
