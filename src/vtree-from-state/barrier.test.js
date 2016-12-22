@@ -1,17 +1,12 @@
 const { test } = require('ava')
 const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const requireUncached = require('require-uncached')
 
-const {
-  returnSymbol: barrierSvgReturnSymbol,
-  spy: barrierSvgSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./barrier-svg')
-
-test.beforeEach(() => {
-  barrierSvgSpy.reset()
+test.beforeEach((t) => {
+  t.context.barrierSvgMock = mockPathWithSpyThatReturnsSymbolHere('./barrier-svg')
+  t.context.subject = requireUncached('./barrier')
 })
-
-const barrier = require('./barrier')
 
 test('vtree', t => {
   const expected = h('barrier',
@@ -23,16 +18,16 @@ test('vtree', t => {
       }
     },
     [
-      barrierSvgReturnSymbol
+      t.context.barrierSvgMock.returnSymbol
     ]
   )
-  t.deepEqual(barrier(), expected)
+  t.deepEqual(t.context.subject(), expected)
 })
 
 test('`barrierSvg` descendant calls without args', t => {
   const expected = [
     []
   ]
-  barrier()
-  t.deepEqual(barrierSvgSpy.args, expected)
+  t.context.subject()
+  t.deepEqual(t.context.barrierSvgMock.spy.args, expected)
 })
