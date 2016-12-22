@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "budo bootstrap.js",
-    "unit": "ava --verbose",
+    "unit": "ava",
     "coverage": "nyc npm run unit",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "test": "npm run lint && npm run coverage",
