@@ -1,17 +1,12 @@
 const { test } = require('ava')
 const h = require('./h')
+const requireUncached = require('require-uncached')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 
-const {
-  returnSymbol: playerImgReturnSymbol,
-  spy: playerImgSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./player-img')
-
-test.beforeEach(() => {
-  playerImgSpy.reset()
+test.beforeEach((t) => {
+  t.context.playerImgMock = mockPathWithSpyThatReturnsSymbolHere('./player-img')
+  t.context.subject = requireUncached('./player')
 })
-
-const player = require('./player')
 
 const possibleCallArgs = [
   ['left', false],
@@ -34,11 +29,11 @@ const testWithCallArgs = ([side, hiding]) => {
         }
       },
       [
-        playerImgReturnSymbol,
-        playerImgReturnSymbol
+        t.context.playerImgMock.returnSymbol,
+        t.context.playerImgMock.returnSymbol
       ]
     )
-    t.deepEqual(player(side, hiding), expected)
+    t.deepEqual(t.context.subject(side, hiding), expected)
   })
 
   test(`descendant \`playerImg\` calls args ${testCondition}`, t => {
@@ -52,8 +47,8 @@ const testWithCallArgs = ([side, hiding]) => {
         !hiding
       ]
     ]
-    player(side, hiding)
-    t.deepEqual(playerImgSpy.args, expected)
+    t.context.subject(side, hiding)
+    t.deepEqual(t.context.playerImgMock.spy.args, expected)
   })
 }
 
