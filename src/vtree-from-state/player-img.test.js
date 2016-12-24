@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const { img } = require('@cycle/dom')
 const path = require('path')
 const urify = require('urify')
@@ -26,6 +27,6 @@ possibleCallArgs.forEach(([hiding, displayNone]) => {
       }
     })
 
-    t.deepEqual(playerImg(hiding, displayNone), expected)
+    t.true(isEqual(playerImg(hiding, displayNone), expected))
   })
 })

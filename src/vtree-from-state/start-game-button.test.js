@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const { button } = require('@cycle/dom')
 const { spy } = require('simple-spy')
 const mock = require('mock-require')
@@ -30,12 +31,12 @@ test('vtree', t => {
     'Start the game'
   )
 
-  t.deepEqual(startGameButton(), expected)
+  t.true(isEqual(startGameButton(), expected))
 })
 
 test('`cuid` called once with no args', t => {
   requireUncached(modulePath)
-  t.deepEqual(cuidSpy.args, [[]])
+  t.true(isEqual(cuidSpy.args, [[]]))
 })
 
 test('exports its unique selector', t => {

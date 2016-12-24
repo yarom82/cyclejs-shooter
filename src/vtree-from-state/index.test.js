@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const h = require('./h')
 
@@ -89,12 +90,12 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
 
   test(`vtree ${String(gameStatus)}`, t => {
     const actualVtree = vtreeFromState({gameStatus})
-    t.deepEqual(actualVtree, vtree)
+    t.true(isEqual(actualVtree, vtree))
   })
 
   test(`\`instructions\` call arg ${String(gameStatus)} is '${instructionsCallArg}'`, t => {
     vtreeFromState({gameStatus})
-    t.deepEqual(instructionsSpy.args, [[instructionsCallArg]])
+    t.true(isEqual(instructionsSpy.args, [[instructionsCallArg]]))
   })
 })
 
@@ -110,7 +111,7 @@ test('`arena` descendant calls args', t => {
   const expectedArenaCallsArgs = [
     [state.leftHiding, state.rightHiding]
   ]
-  t.deepEqual(arenaSpy.args, expectedArenaCallsArgs)
+  t.true(isEqual(arenaSpy.args, expectedArenaCallsArgs))
 })
 
 test('`winMessage` descendant call arg', t => {
@@ -125,5 +126,5 @@ test('`winMessage` descendant call arg', t => {
   ]
 
   vtreeFromState(winState)
-  t.deepEqual(winMessageSpy.args, expectedCallsArgs)
+  t.true(isEqual(winMessageSpy.args, expectedCallsArgs))
 })

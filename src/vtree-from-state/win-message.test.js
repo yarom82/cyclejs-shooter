@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const winMessage = require('./win-message')
 const { div } = require('@cycle/dom')
 
@@ -26,7 +27,7 @@ const withPossibleArg = arg => {
   )
   test(`given \`${String(arg)}\` returns '${expected}'`, t => {
     const actual = winMessage(arg)
-    t.deepEqual(actual, expected)
+    t.true(isEqual(actual, expected))
   })
 }
 

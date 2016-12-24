@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
@@ -67,7 +68,7 @@ test('vtree', t => {
   )
 
   const actualVtree = arena()
-  t.deepEqual(actualVtree, expectedVtree)
+  t.true(isEqual(actualVtree, expectedVtree))
 })
 
 test('`player` descendants calls args', t => {
@@ -76,7 +77,7 @@ test('`player` descendants calls args', t => {
     ['right', arenaArgs[1]]
   ]
   arena(...arenaArgs)
-  t.deepEqual(playerSpy.args, expectedPlayerCallsArgs)
+  t.true(isEqual(playerSpy.args, expectedPlayerCallsArgs))
 })
 
 test('`barrier` descendant calls without args', t => {
@@ -84,7 +85,7 @@ test('`barrier` descendant calls without args', t => {
     []
   ]
   arena(...arenaArgs)
-  t.deepEqual(barrierSpy.args, expected)
+  t.true(isEqual(barrierSpy.args, expected))
 })
 
 test('exports its unique selector', t => {

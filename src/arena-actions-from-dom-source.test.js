@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const arenaActionsFromDOMSource = require('./arena-actions-from-dom-source')
@@ -50,7 +51,7 @@ for (const event in expectedDataForEventAndKey) {
 
       arenaActionsFromDOMSource(DOMSourceMock)
         .addListener({next: action => {
-          t.deepEqual(action, expectedAction)
+          t.true(isEqual(action, expectedAction))
         }})
     })
   }

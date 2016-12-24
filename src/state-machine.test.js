@@ -1,4 +1,5 @@
 const stateMachine = require('./state-machine')
+const isEqual = require('lodash.isequal')
 const { test } = require('ava')
 const stringFromObject = require('../utils/single-line-string-from-object')
 const {
@@ -123,7 +124,7 @@ Object.getOwnPropertySymbols(testsForActionName).forEach(name => {
   tests.forEach(({currentState, expectedState, payload}, index) => {
     test(`\`${String(name)}\` test ${index}; state: ${stringFromObject(currentState)}; payload: ${stringFromObject(payload)}`, t => {
       const actual = stateMachine(currentState, Object.assign({ [actionNameKey]: name }, payload))
-      t.deepEqual(actual, expectedState)
+      t.true(isEqual(actual, expectedState))
     })
   })
 })
