@@ -1,6 +1,6 @@
 const h = require('./h')
 const startGameButton = require('./start-game-button')
-const arena = require('./arena')
+const viewport = require('./viewport')
 const winMessage = require('./win-message')
 const instructions = require('./instructions')
 const {
@@ -18,7 +18,7 @@ const vtreeFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
       firstChild = startGameButton()
       break
     case afoot:
-      firstChild = arena(leftHiding, rightHiding)
+      firstChild = viewport(leftHiding, rightHiding)
       break
     case ended:
       firstChild = winMessage(winner)
