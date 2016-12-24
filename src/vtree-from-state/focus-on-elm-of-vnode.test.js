@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const focusOnElmOfVnode = require('./focus-on-elm-of-vnode')
 const { spy } = require('simple-spy')
 
@@ -19,5 +20,5 @@ test('specifies one argument', t => {
 test('calls `focus` on provided vnode’s `elm` with no arguments', t => {
   const expectedCallsArgs = [[]]
   focusOnElmOfVnode({ elm: { focus: focusSpy } })
-  t.deepEqual(focusSpy.args, expectedCallsArgs)
+  t.true(isEqual(focusSpy.args, expectedCallsArgs))
 })

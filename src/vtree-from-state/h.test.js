@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
 const mock = require('mock-require')
 const requireUncached = require('require-uncached')
@@ -23,13 +24,13 @@ test('calls `h` once', t => {
 
 test('`h` call first arg', t => {
   t.context.h('foo')
-  t.deepEqual(t.context.hSpy.args[0][0], 'shooter-foo')
+  t.true(isEqual(t.context.hSpy.args[0][0], 'shooter-foo'))
 })
 
 test('`h` call rest of the args', t => {
   const args = [Symbol(), Symbol(), Symbol(), Symbol()]
   t.context.h('foo', ...args)
-  t.deepEqual(t.context.hSpy.args[0].slice(1), args)
+  t.true(isEqual(t.context.hSpy.args[0].slice(1), args))
 })
 
 test('returns what `h` returns', t => {

@@ -1,4 +1,5 @@
 const { test } = require('ava')
+const isEqual = require('lodash.isequal')
 const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const requireUncached = require('require-uncached')
@@ -21,7 +22,7 @@ test('vtree', t => {
       t.context.barrierSvgMock.returnSymbol
     ]
   )
-  t.deepEqual(t.context.subject(), expected)
+  t.true(isEqual(t.context.subject(), expected))
 })
 
 test('`barrierSvg` descendant calls without args', t => {
@@ -29,5 +30,5 @@ test('`barrierSvg` descendant calls without args', t => {
     []
   ]
   t.context.subject()
-  t.deepEqual(t.context.barrierSvgMock.spy.args, expected)
+  t.true(isEqual(t.context.barrierSvgMock.spy.args, expected))
 })
