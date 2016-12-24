@@ -9,9 +9,9 @@ const {
 } = mockPathWithSpyThatReturnsSymbolHere('./start-game-button')
 
 const {
-  returnSymbol: arenaReturnSymbol,
-  spy: arenaSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./arena')
+  returnSymbol: viewportReturnSymbol,
+  spy: viewportSpy
+} = mockPathWithSpyThatReturnsSymbolHere('./viewport')
 
 const {
   returnSymbol: winMessageReturnSymbol,
@@ -28,7 +28,7 @@ test.beforeEach(() => {
     startGameButtonSpy,
     instructionsSpy,
     winMessageSpy,
-    arenaSpy
+    viewportSpy
   ]
   .forEach(spy => spy.reset())
 })
@@ -67,7 +67,7 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        arenaReturnSymbol,
+        viewportReturnSymbol,
         instructionsReturnSymbol
       ]
     ),
@@ -99,7 +99,7 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
   })
 })
 
-test('`arena` descendant calls args', t => {
+test('`viewport` descendant calls args', t => {
   const state = {
     gameStatus: afoot,
     leftHiding: Symbol('leftHiding'),
@@ -108,10 +108,10 @@ test('`arena` descendant calls args', t => {
 
   vtreeFromState(state)
 
-  const expectedArenaCallsArgs = [
+  const expectedViewportCallsArgs = [
     [state.leftHiding, state.rightHiding]
   ]
-  t.true(isEqual(arenaSpy.args, expectedArenaCallsArgs))
+  t.true(isEqual(viewportSpy.args, expectedViewportCallsArgs))
 })
 
 test('`winMessage` descendant call arg', t => {
