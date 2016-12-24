@@ -40,5 +40,5 @@ test('`arena` is called once', (t) => {
 test('`arena` call args', (t) => {
   const args = [Symbol('leftHiding'), Symbol('rightHiding')]
   t.context.subject(...args)
-  t.deepEqual(t.context.arenaMock.spy.args[0], args)
+  t.true(isEqual(t.context.arenaMock.spy.args[0], args))
 })
