@@ -3,13 +3,6 @@ const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
-const { spy } = require('simple-spy')
-const cuid = require('cuid')
-
-const cuidStubReturn = cuid()
-const cuidStub = () => cuidStubReturn
-const cuidSpy = spy(cuidStub)
-mock('cuid', cuidSpy)
 
 const {
   returnSymbol: playerReturnSymbol,
@@ -22,7 +15,6 @@ const {
 } = mockPathWithSpyThatReturnsSymbolHere('./barrier')
 
 ;[
-  cuidSpy,
   playerSpy,
   barrierSpy
 ]
@@ -43,17 +35,9 @@ const arenaArgs = [
 ]
 
 const data = {
-  attrs: {
-    'data-id': cuidStubReturn,
-    tabindex: 0
-  },
   style: {
     display: 'flex',
-    justifyContent: 'space-between',
-    minHeight: '60px'
-  },
-  hook: {
-    insert: focusOnElmOfVnodeStub
+    justifyContent: 'space-between'
   }
 }
 
@@ -86,8 +70,4 @@ test('`barrier` descendant calls without args', t => {
   ]
   arena(...arenaArgs)
   t.true(isEqual(barrierSpy.args, expected))
-})
-
-test('exports its unique selector', t => {
-  t.is(arena.selector, `[data-id='${cuidStubReturn}']`)
 })

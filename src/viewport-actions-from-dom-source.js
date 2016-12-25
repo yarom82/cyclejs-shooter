@@ -22,12 +22,12 @@ const leftHideAction = action(hide, { [player]: leftPlayer })
 const rightHideAction = action(hide, { [player]: rightPlayer })
 const leftUnhideAction = action(unhide, { [player]: leftPlayer })
 const rightUnhideAction = action(unhide, { [player]: rightPlayer })
-const { selector } = require('./vtree-from-state/arena')
+const { selector } = require('./vtree-from-state/viewport')
 
-const arenaActionsFromDOMSource = DOMSource => {
-  const arenaDOMSource = DOMSource.select(selector)
+const viewportActionsFromDOMSource = DOMSource => {
+  const viewportDOMSource = DOMSource.select(selector)
 
-  const keydownEvents = arenaDOMSource
+  const keydownEvents = viewportDOMSource
     .events('keydown')
     .map(keyFromEvent)
 
@@ -45,7 +45,7 @@ const arenaActionsFromDOMSource = DOMSource => {
     .filter(key => key === '\'')
     .mapTo(rightHideAction)
 
-  const keyupEvents = arenaDOMSource
+  const keyupEvents = viewportDOMSource
     .events('keyup')
     .map(keyFromEvent)
   const leftUnhideActions = keyupEvents
@@ -65,4 +65,4 @@ const arenaActionsFromDOMSource = DOMSource => {
   )
 }
 
-module.exports = arenaActionsFromDOMSource
+module.exports = viewportActionsFromDOMSource

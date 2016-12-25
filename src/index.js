@@ -1,6 +1,6 @@
 const rootDOMSourceFromDOMSource = require('./root-dom-source-from-dom-source')
 const startGameActionsFromDOMSource = require('./start-game-actions-from-dom-source')
-const arenaActionsFromDOMSource = require('./arena-actions-from-dom-source')
+const viewportActionsFromDOMSource = require('./viewport-actions-from-dom-source')
 const vtreeFromState = require('./vtree-from-state')
 const xs = require('xstream').default
 const initialState = require('./initial-state')
@@ -10,10 +10,10 @@ const main = ({DOM: DOMSource}) => {
   const rootDOMSource = rootDOMSourceFromDOMSource(DOMSource)
 
   const startGameActions = startGameActionsFromDOMSource(rootDOMSource)
-  const arenaActions = arenaActionsFromDOMSource(rootDOMSource)
+  const viewportActions = viewportActionsFromDOMSource(rootDOMSource)
 
   const actions = xs
-    .merge(arenaActions, startGameActions)
+    .merge(viewportActions, startGameActions)
 
   const states = actions
     .fold(stateMachine, initialState)
