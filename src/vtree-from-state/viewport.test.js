@@ -1,11 +1,11 @@
 const { test } = require('ava')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 const isEqual = require('lodash.isequal')
 
 test.beforeEach((t) => {
-  t.context.arenaMock = mockPathWithSpyThatReturnsSymbolHere('./arena')
+  t.context.arenaMock = mockPathWithSpy('./arena')
   t.context.subject = requireUncached('./viewport')
 })
 
@@ -23,7 +23,7 @@ test('vtree', (t) => {
       }
     },
     [
-      t.context.arenaMock.returnSymbol
+      t.context.arenaMock.spyReturn
     ]
   )
 

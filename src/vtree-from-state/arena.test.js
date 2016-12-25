@@ -2,7 +2,7 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 
@@ -12,14 +12,14 @@ const cuidSpy = spy(cuidStub)
 mock('cuid', cuidSpy)
 
 const {
-  returnSymbol: playerReturnSymbol,
+  spyReturn: playerReturnValue,
   spy: playerSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./player')
+} = mockPathWithSpy('./player')
 
 const {
-  returnSymbol: barrierReturnSymbol,
+  spyReturn: barrierReturnValue,
   spy: barrierSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./barrier')
+} = mockPathWithSpy('./barrier')
 
 ;[
   cuidSpy,
@@ -61,9 +61,9 @@ test('vtree', t => {
   const expectedVtree = h('arena',
     data,
     [
-      playerReturnSymbol,
-      barrierReturnSymbol,
-      playerReturnSymbol
+      playerReturnValue,
+      barrierReturnValue,
+      playerReturnValue
     ]
   )
 
