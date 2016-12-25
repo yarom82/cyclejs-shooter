@@ -5,69 +5,52 @@ const h = require('./h')
 const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
+const requireUncached = require('require-uncached')
 
-const cuidStubReturn = cuid()
-const cuidStub = () => cuidStubReturn
-const cuidSpy = spy(cuidStub)
-mock('cuid', cuidSpy)
+test.beforeEach((t) => {
+  t.context.cuidMock = {}
+  t.context.cuidMock.stubReturn = cuid()
+  t.context.cuidMock.spy = spy(() => t.context.cuidMock.stubReturn)
+  mock('cuid', t.context.cuidMock.spy)
 
-const {
-  returnSymbol: playerReturnSymbol,
-  spy: playerSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./player')
+  t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
+  mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-const {
-  returnSymbol: barrierReturnSymbol,
-  spy: barrierSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./barrier')
+  t.context.playerMock = mockPathWithSpyThatReturnsSymbolHere('./player')
+  t.context.barrierMock = mockPathWithSpyThatReturnsSymbolHere('./barrier')
 
-;[
-  cuidSpy,
-  playerSpy,
-  barrierSpy
-]
-  .forEach(spy => {
-    test.afterEach(() => {
-      spy.reset()
-    })
-  })
-
-const focusOnElmOfVnodeStub = Symbol('focusOnElmOfVnodeStub')
-mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
-
-const arena = require('./arena')
+  t.context.subject = requireUncached('./arena')
+})
 
 const arenaArgs = [
   Symbol('leftHiding'),
   Symbol('rightHiding')
 ]
 
-const data = {
-  attrs: {
-    'data-id': cuidStubReturn,
-    tabindex: 0
-  },
-  style: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    minHeight: '60px'
-  },
-  hook: {
-    insert: focusOnElmOfVnodeStub
-  }
-}
-
 test('vtree', t => {
   const expectedVtree = h('arena',
-    data,
+    {
+      attrs: {
+        'data-id': t.context.cuidMock.stubReturn,
+        tabindex: 0
+      },
+      style: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        minHeight: '60px'
+      },
+      hook: {
+        insert: t.context.focusOnElmOfVnodeMock
+      }
+    },
     [
-      playerReturnSymbol,
-      barrierReturnSymbol,
-      playerReturnSymbol
+      t.context.playerMock.returnSymbol,
+      t.context.barrierMock.returnSymbol,
+      t.context.playerMock.returnSymbol
     ]
   )
 
-  const actualVtree = arena()
+  const actualVtree = t.context.subject()
   t.true(isEqual(actualVtree, expectedVtree))
 })
 
@@ -76,18 +59,18 @@ test('`player` descendants calls args', t => {
     ['left', arenaArgs[0]],
     ['right', arenaArgs[1]]
   ]
-  arena(...arenaArgs)
-  t.true(isEqual(playerSpy.args, expectedPlayerCallsArgs))
+  t.context.subject(...arenaArgs)
+  t.true(isEqual(t.context.playerMock.spy.args, expectedPlayerCallsArgs))
 })
 
 test('`barrier` descendant calls without args', t => {
   const expected = [
     []
   ]
-  arena(...arenaArgs)
-  t.true(isEqual(barrierSpy.args, expected))
+  t.context.subject(...arenaArgs)
+  t.true(isEqual(t.context.barrierMock.spy.args, expected))
 })
 
 test('exports its unique selector', t => {
-  t.is(arena.selector, `[data-id='${cuidStubReturn}']`)
+  t.is(t.context.subject.selector, `[data-id='${t.context.cuidMock.stubReturn}']`)
 })
