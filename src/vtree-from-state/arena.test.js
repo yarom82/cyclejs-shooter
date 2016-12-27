@@ -2,56 +2,46 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const { spy } = require('simple-spy')
+const cuid = require('cuid')
+const requireUncached = require('require-uncached')
 
-const {
-  returnSymbol: playerReturnSymbol,
-  spy: playerSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./player')
+test.beforeEach((t) => {
+  t.context.cuidMock = {}
+  t.context.cuidMock.spyReturn = cuid()
+  t.context.cuidMock.spy = spy(() => t.context.cuidMock.spyReturn)
+  mock('cuid', t.context.cuidMock.spy)
 
-const {
-  returnSymbol: barrierReturnSymbol,
-  spy: barrierSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./barrier')
+  t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
+  mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-;[
-  playerSpy,
-  barrierSpy
-]
-  .forEach(spy => {
-    test.afterEach(() => {
-      spy.reset()
-    })
-  })
-
-const focusOnElmOfVnodeStub = Symbol('focusOnElmOfVnodeStub')
-mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
-
-const arena = require('./arena')
+  t.context.playerMock = mockPathWithSpy('./player')
+  t.context.barrierMock = mockPathWithSpy('./barrier')
+  t.context.subject = requireUncached('./arena')
+})
 
 const arenaArgs = [
   Symbol('leftHiding'),
   Symbol('rightHiding')
 ]
 
-const data = {
-  style: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  }
-}
-
 test('vtree', t => {
   const expectedVtree = h('arena',
-    data,
+    {
+      style: {
+        display: 'flex',
+        justifyContent: 'space-between'
+      }
+    },
     [
-      playerReturnSymbol,
-      barrierReturnSymbol,
-      playerReturnSymbol
+      t.context.playerMock.spyReturn,
+      t.context.barrierMock.spyReturn,
+      t.context.playerMock.spyReturn
     ]
   )
 
-  const actualVtree = arena()
+  const actualVtree = t.context.subject()
   t.true(isEqual(actualVtree, expectedVtree))
 })
 
@@ -60,14 +50,14 @@ test('`player` descendants calls args', t => {
     ['left', arenaArgs[0]],
     ['right', arenaArgs[1]]
   ]
-  arena(...arenaArgs)
-  t.true(isEqual(playerSpy.args, expectedPlayerCallsArgs))
+  t.context.subject(...arenaArgs)
+  t.true(isEqual(t.context.playerMock.spy.args, expectedPlayerCallsArgs))
 })
 
 test('`barrier` descendant calls without args', t => {
   const expected = [
     []
   ]
-  arena(...arenaArgs)
-  t.true(isEqual(barrierSpy.args, expected))
+  t.context.subject(...arenaArgs)
+  t.true(isEqual(t.context.barrierMock.spy.args, expected))
 })

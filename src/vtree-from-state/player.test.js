@@ -2,10 +2,10 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const h = require('./h')
 const requireUncached = require('require-uncached')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 
 test.beforeEach((t) => {
-  t.context.playerImgMock = mockPathWithSpyThatReturnsSymbolHere('./player-img')
+  t.context.playerImgMock = mockPathWithSpy('./player-img')
   t.context.subject = requireUncached('./player')
 })
 
@@ -30,8 +30,8 @@ const testWithCallArgs = ([side, hiding]) => {
         }
       },
       [
-        t.context.playerImgMock.returnSymbol,
-        t.context.playerImgMock.returnSymbol
+        t.context.playerImgMock.spyReturn,
+        t.context.playerImgMock.spyReturn
       ]
     )
     t.true(isEqual(t.context.subject(side, hiding), expected))

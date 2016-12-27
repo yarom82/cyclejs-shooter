@@ -1,27 +1,27 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const h = require('./h')
 
 const {
-  returnSymbol: startGameButtonReturnSymbol,
+  spyReturn: startGameButtonReturnValue,
   spy: startGameButtonSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./start-game-button')
+} = mockPathWithSpy('./start-game-button')
 
 const {
-  returnSymbol: viewportReturnSymbol,
+  spyReturn: viewportReturnValue,
   spy: viewportSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./viewport')
+} = mockPathWithSpy('./viewport')
 
 const {
-  returnSymbol: winMessageReturnSymbol,
+  spyReturn: winMessageReturnValue,
   spy: winMessageSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./win-message')
+} = mockPathWithSpy('./win-message')
 
 const {
-  returnSymbol: instructionsReturnSymbol,
+  spyReturn: instructionsReturnValue,
   spy: instructionsSpy
-} = mockPathWithSpyThatReturnsSymbolHere('./instructions')
+} = mockPathWithSpy('./instructions')
 
 test.beforeEach(() => {
   [
@@ -57,8 +57,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        startGameButtonReturnSymbol,
-        instructionsReturnSymbol
+        startGameButtonReturnValue,
+        instructionsReturnValue
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -67,8 +67,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        viewportReturnSymbol,
-        instructionsReturnSymbol
+        viewportReturnValue,
+        instructionsReturnValue
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -77,8 +77,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        winMessageReturnSymbol,
-        instructionsReturnSymbol
+        winMessageReturnValue,
+        instructionsReturnValue
       ]
     ),
     instructionsCallArg: 'AFTER_WIN'

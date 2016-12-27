@@ -1,7 +1,7 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 const { spy } = require('simple-spy')
@@ -12,34 +12,16 @@ const cuidStub = () => cuidStubReturn
 const cuidSpy = spy(cuidStub)
 mock('cuid', cuidSpy)
 
-const focusOnElmOfVnodeStub = Symbol('focusOnElmOfVnodeStub')
-mock('./focus-on-elm-of-vnode', focusOnElmOfVnodeStub)
-
-var data = {
-  attrs: {
-    'data-id': cuidStubReturn,
-    tabindex: 0
-  },
-  style: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  hook: {
-    insert: focusOnElmOfVnodeStub
-  }
-}
-
-;[
-  cuidSpy
-]
-  .forEach(spy => {
-    test.afterEach(() => {
-      spy.reset()
-    })
-  })
-
 test.beforeEach((t) => {
-  t.context.arenaMock = mockPathWithSpyThatReturnsSymbolHere('./arena')
+  t.context.cuidMock = {}
+  t.context.cuidMock.spyReturn = cuid()
+  t.context.cuidMock.spy = spy(() => t.context.cuidMock.spyReturn)
+  mock('cuid', t.context.cuidMock.spy)
+
+  t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
+  mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
+
+  t.context.arenaMock = mockPathWithSpy('./arena')
   t.context.subject = requireUncached('./viewport')
 })
 
@@ -50,9 +32,21 @@ test('exports a function of arity 2', (t) => {
 
 test('vtree', (t) => {
   const expected = h('viewport',
-    data,
+    {
+      attrs: {
+        'data-id': t.context.cuidMock.spyReturn,
+        tabindex: 0
+      },
+      style: {
+        display: 'flex',
+        flexDirection: 'column'
+      },
+      hook: {
+        insert: t.context.focusOnElmOfVnodeMock
+      }
+    },
     [
-      t.context.arenaMock.returnSymbol
+      t.context.arenaMock.spyReturn
     ]
   )
 
@@ -73,5 +67,5 @@ test('`arena` call args', (t) => {
 })
 
 test('exports its unique selector', t => {
-  t.is(t.context.subject.selector, `[data-id='${cuidStubReturn}']`)
+  t.is(t.context.subject.selector, `[data-id='${t.context.cuidMock.spyReturn}']`)
 })

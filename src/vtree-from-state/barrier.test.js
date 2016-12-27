@@ -1,11 +1,11 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const h = require('./h')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const requireUncached = require('require-uncached')
 
 test.beforeEach((t) => {
-  t.context.barrierSvgMock = mockPathWithSpyThatReturnsSymbolHere('./barrier-svg')
+  t.context.barrierSvgMock = mockPathWithSpy('./barrier-svg')
   t.context.subject = requireUncached('./barrier')
 })
 
@@ -19,7 +19,7 @@ test('vtree', t => {
       }
     },
     [
-      t.context.barrierSvgMock.returnSymbol
+      t.context.barrierSvgMock.spyReturn
     ]
   )
   t.true(isEqual(t.context.subject(), expected))
