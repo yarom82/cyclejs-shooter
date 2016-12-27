@@ -1,16 +1,11 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const h = require('./h')
 const requireUncached = require('require-uncached')
+const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
-
-const cuidStubReturn = cuid()
-const cuidStub = () => cuidStubReturn
-const cuidSpy = spy(cuidStub)
-mock('cuid', cuidSpy)
 
 test.beforeEach((t) => {
   t.context.cuidMock = {}
