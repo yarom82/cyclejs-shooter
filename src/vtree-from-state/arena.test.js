@@ -29,17 +29,9 @@ const arenaArgs = [
 test('vtree', t => {
   const expectedVtree = h('arena',
     {
-      attrs: {
-        'data-id': t.context.cuidMock.spyReturn,
-        tabindex: 0
-      },
       style: {
         display: 'flex',
-        justifyContent: 'space-between',
-        minHeight: '60px'
-      },
-      hook: {
-        insert: t.context.focusOnElmOfVnodeMock
+        justifyContent: 'space-between'
       }
     },
     [
@@ -68,8 +60,4 @@ test('`barrier` descendant calls without args', t => {
   ]
   t.context.subject(...arenaArgs)
   t.true(isEqual(t.context.barrierMock.spy.args, expected))
-})
-
-test('exports its unique selector', t => {
-  t.is(t.context.subject.selector, `[data-id='${t.context.cuidMock.spyReturn}']`)
 })

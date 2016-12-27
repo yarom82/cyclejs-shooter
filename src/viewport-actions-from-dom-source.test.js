@@ -2,7 +2,7 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
-const arenaActionsFromDOMSource = require('./arena-actions-from-dom-source')
+const viewportActionsFromDOMSource = require('./viewport-actions-from-dom-source')
 const xstreamAdapter = require('@cycle/xstream-adapter').default
 const stringFromObject = require('../utils/single-line-string-from-object')
 const {
@@ -38,10 +38,10 @@ for (const event in expectedDataForEventAndKey) {
   const keys = expectedDataForEventAndKey[event]
   for (const key in keys) {
     const expectedAction = keys[key]
-    test(`emits ${stringFromObject(expectedAction)} for ${event} ${key} on \`arena\`’s exported selector`, t => {
+    test(`emits ${stringFromObject(expectedAction)} for ${event} ${key} on \`viewport\`’s exported selector`, t => {
       t.plan(1)
 
-      const { selector } = require('./vtree-from-state/arena')
+      const { selector } = require('./vtree-from-state/viewport')
 
       const DOMSourceMock = mockDOMSource(xstreamAdapter, {
         [selector]: {
@@ -49,7 +49,7 @@ for (const event in expectedDataForEventAndKey) {
         }
       })
 
-      arenaActionsFromDOMSource(DOMSourceMock)
+      viewportActionsFromDOMSource(DOMSourceMock)
         .addListener({next: action => {
           t.true(isEqual(action, expectedAction))
         }})

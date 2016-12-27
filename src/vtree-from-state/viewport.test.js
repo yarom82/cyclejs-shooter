@@ -1,10 +1,21 @@
 const { test } = require('ava')
+const mock = require('mock-require')
 const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 const isEqual = require('lodash.isequal')
+const { spy } = require('simple-spy')
+const cuid = require('cuid')
 
 test.beforeEach((t) => {
+  t.context.cuidMock = {}
+  t.context.cuidMock.spyReturn = cuid()
+  t.context.cuidMock.spy = spy(() => t.context.cuidMock.spyReturn)
+  mock('cuid', t.context.cuidMock.spy)
+
+  t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
+  mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
+
   t.context.arenaMock = mockPathWithSpy('./arena')
   t.context.subject = requireUncached('./viewport')
 })
@@ -17,9 +28,16 @@ test('exports a function of arity 2', (t) => {
 test('vtree', (t) => {
   const expected = h('viewport',
     {
+      attrs: {
+        'data-id': t.context.cuidMock.spyReturn,
+        tabindex: 0
+      },
       style: {
         display: 'flex',
         flexDirection: 'column'
+      },
+      hook: {
+        insert: t.context.focusOnElmOfVnodeMock
       }
     },
     [
@@ -41,4 +59,8 @@ test('`arena` call args', (t) => {
   const args = [Symbol('leftHiding'), Symbol('rightHiding')]
   t.context.subject(...args)
   t.true(isEqual(t.context.arenaMock.spy.args[0], args))
+})
+
+test('exports its unique selector', t => {
+  t.is(t.context.subject.selector, `[data-id='${t.context.cuidMock.spyReturn}']`)
 })
