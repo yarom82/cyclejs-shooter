@@ -2,23 +2,22 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
-const mockPathWithSpyThatReturnsSymbolHere = require('../../utils/mock-path-with-spy-that-returns-symbol')(__dirname)
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 const requireUncached = require('require-uncached')
 
 test.beforeEach((t) => {
   t.context.cuidMock = {}
-  t.context.cuidMock.stubReturn = cuid()
-  t.context.cuidMock.spy = spy(() => t.context.cuidMock.stubReturn)
+  t.context.cuidMock.spyReturn = cuid()
+  t.context.cuidMock.spy = spy(() => t.context.cuidMock.spyReturn)
   mock('cuid', t.context.cuidMock.spy)
 
   t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
   mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-  t.context.playerMock = mockPathWithSpyThatReturnsSymbolHere('./player')
-  t.context.barrierMock = mockPathWithSpyThatReturnsSymbolHere('./barrier')
-
+  t.context.playerMock = mockPathWithSpy('./player')
+  t.context.barrierMock = mockPathWithSpy('./barrier')
   t.context.subject = requireUncached('./arena')
 })
 
@@ -31,7 +30,7 @@ test('vtree', t => {
   const expectedVtree = h('arena',
     {
       attrs: {
-        'data-id': t.context.cuidMock.stubReturn,
+        'data-id': t.context.cuidMock.spyReturn,
         tabindex: 0
       },
       style: {
@@ -44,9 +43,9 @@ test('vtree', t => {
       }
     },
     [
-      t.context.playerMock.returnSymbol,
-      t.context.barrierMock.returnSymbol,
-      t.context.playerMock.returnSymbol
+      t.context.playerMock.spyReturn,
+      t.context.barrierMock.spyReturn,
+      t.context.playerMock.spyReturn
     ]
   )
 
@@ -72,5 +71,5 @@ test('`barrier` descendant calls without args', t => {
 })
 
 test('exports its unique selector', t => {
-  t.is(t.context.subject.selector, `[data-id='${t.context.cuidMock.stubReturn}']`)
+  t.is(t.context.subject.selector, `[data-id='${t.context.cuidMock.spyReturn}']`)
 })
