@@ -9,7 +9,7 @@ const cuidSpyReturn = cuid()
 
 test.beforeEach((t) => {
   t.context.cuidMock = mockPathWithSpy('cuid', cuidSpyReturn)
-  t.context.subject = require(modulePath)
+  t.context.subject = requireUncached(modulePath)
 })
 
 const modulePath = './start-game-button'
@@ -31,7 +31,6 @@ test('vtree', t => {
 })
 
 test('`cuid` called once with no args', t => {
-  requireUncached(modulePath)
   t.true(isEqual(t.context.cuidMock.spy.args, [[]]))
 })
 

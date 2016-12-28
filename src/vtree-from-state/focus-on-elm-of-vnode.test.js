@@ -1,9 +1,10 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
+const requireUncached = require('require-uncached')
 
 test.beforeEach((t) => {
-  t.context.subject = require('./focus-on-elm-of-vnode')
+  t.context.subject = requireUncached('./focus-on-elm-of-vnode')
   t.context.focusSpy = spy(() => {})
 })
 
