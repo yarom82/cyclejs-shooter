@@ -6,13 +6,15 @@ const {
   gameStatus: {
     idle,
     afoot,
-    ended
+    ended,
+    paused
   },
   actionNames: {
     startGame,
     hide,
     unhide,
-    shoot
+    shoot,
+    pause
   },
   actionPayloadKeys: {
     player
@@ -43,6 +45,11 @@ const testsForActionName = {
       expectedState: { leftHiding: true }
     },
     {
+      payload: { [player]: leftPlayer },
+      currentState: { leftHiding: false, gameStatus: paused },
+      expectedState: { leftHiding: false, gameStatus: paused }
+    },
+    {
       payload: { [player]: rightPlayer },
       currentState: { rightHiding: false },
       expectedState: { rightHiding: true }
@@ -51,6 +58,11 @@ const testsForActionName = {
       payload: { [player]: rightPlayer },
       currentState: { rightHiding: true },
       expectedState: { rightHiding: true }
+    },
+    {
+      payload: { [player]: rightPlayer },
+      currentState: { rightHiding: false, gameStatus: paused },
+      expectedState: { rightHiding: false, gameStatus: paused }
     }
   ],
   [unhide]: [
@@ -65,6 +77,11 @@ const testsForActionName = {
       expectedState: { leftHiding: false }
     },
     {
+      payload: { [player]: leftPlayer },
+      currentState: { leftHiding: true, gameStatus: paused },
+      expectedState: { leftHiding: true, gameStatus: paused }
+    },
+    {
       payload: { [player]: rightPlayer },
       currentState: { rightHiding: false },
       expectedState: { rightHiding: false }
@@ -73,6 +90,11 @@ const testsForActionName = {
       payload: { [player]: rightPlayer },
       currentState: { rightHiding: true },
       expectedState: { rightHiding: false }
+    },
+    {
+      payload: { [player]: rightPlayer },
+      currentState: { rightHiding: true, gameStatus: paused },
+      expectedState: { rightHiding: true, gameStatus: paused }
     }
   ],
   [shoot]: [
@@ -80,6 +102,11 @@ const testsForActionName = {
       payload: { [player]: leftPlayer },
       currentState: { leftHiding: false, rightHiding: false, gameStatus: afoot },
       expectedState: { leftHiding: null, rightHiding: null, gameStatus: ended, winner: leftPlayer }
+    },
+    {
+      payload: { [player]: leftPlayer },
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: paused },
+      expectedState: { leftHiding: false, rightHiding: false, gameStatus: paused }
     },
     {
       payload: { [player]: leftPlayer },
@@ -103,6 +130,11 @@ const testsForActionName = {
     },
     {
       payload: { [player]: rightPlayer },
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: paused },
+      expectedState: { leftHiding: false, rightHiding: false, gameStatus: paused }
+    },
+    {
+      payload: { [player]: rightPlayer },
       currentState: { leftHiding: false, rightHiding: true, gameStatus: afoot },
       expectedState: { leftHiding: false, rightHiding: true, gameStatus: afoot }
     },
@@ -114,6 +146,24 @@ const testsForActionName = {
     {
       payload: { [player]: rightPlayer },
       currentState: { leftHiding: true, rightHiding: true, gameStatus: afoot },
+      expectedState: { leftHiding: true, rightHiding: true, gameStatus: afoot }
+    }
+  ],
+  [pause]: [
+    {
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: afoot },
+      expectedState: { leftHiding: false, rightHiding: false, gameStatus: paused }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: true, gameStatus: afoot },
+      expectedState: { leftHiding: true, rightHiding: true, gameStatus: paused }
+    },
+    {
+      currentState: { leftHiding: false, rightHiding: false, gameStatus: paused },
+      expectedState: { leftHiding: false, rightHiding: false, gameStatus: afoot }
+    },
+    {
+      currentState: { leftHiding: true, rightHiding: true, gameStatus: paused },
       expectedState: { leftHiding: true, rightHiding: true, gameStatus: afoot }
     }
   ]
@@ -132,9 +182,14 @@ Object.getOwnPropertySymbols(testsForActionName).forEach(name => {
 const impossibleStatesForActionName = {
   [startGame]: [
     { gameStatus: afoot },
-    { gameStatus: ended }
+    { gameStatus: ended },
+    { gameStatus: paused }
   ],
   [shoot]: [
+    { gameStatus: idle },
+    { gameStatus: ended }
+  ],
+  [pause]: [
     { gameStatus: idle },
     { gameStatus: ended }
   ]

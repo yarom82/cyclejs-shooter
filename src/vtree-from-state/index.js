@@ -7,7 +7,8 @@ const {
   gameStatus: {
     idle,
     afoot,
-    ended
+    ended,
+    paused
   }
 } = require('../constants')
 
@@ -18,7 +19,8 @@ const vtreeFromState = ({gameStatus, leftHiding, rightHiding, winner}) => {
       firstChild = startGameButton()
       break
     case afoot:
-      firstChild = viewport(leftHiding, rightHiding)
+    case paused:
+      firstChild = viewport(leftHiding, rightHiding, gameStatus === paused)
       break
     case ended:
       firstChild = winMessage(winner)

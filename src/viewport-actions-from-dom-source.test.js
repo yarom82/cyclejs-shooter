@@ -9,7 +9,8 @@ const {
   actionNames: {
     hide,
     unhide,
-    shoot
+    shoot,
+    pause
   },
   actionPayloadKeys: {
     player
@@ -26,7 +27,8 @@ const expectedDataForEventAndKey = {
     'z': { [actionNameKey]: shoot, [player]: leftPlayer },
     '/': { [actionNameKey]: shoot, [player]: rightPlayer },
     'a': { [actionNameKey]: hide, [player]: leftPlayer },
-    '\'': { [actionNameKey]: hide, [player]: rightPlayer }
+    '\'': { [actionNameKey]: hide, [player]: rightPlayer },
+    'p': { [actionNameKey]: pause }
   },
   'keyup': {
     'a': { [actionNameKey]: unhide, [player]: leftPlayer },

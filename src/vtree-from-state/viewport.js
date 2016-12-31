@@ -1,4 +1,5 @@
 const arena = require('./arena')
+const pause = require('./pause')
 const h = require('./h')
 const focusOnElmOfVnode = require('./focus-on-elm-of-vnode')
 const cuid = require('cuid')
@@ -6,7 +7,7 @@ const selectorFromId = require('./selector-from-id')
 
 const id = cuid()
 
-const viewport = (leftHiding, rightHiding) => {
+const viewport = (leftHiding, rightHiding, paused) => {
   return h('viewport',
     {
       attrs: {
@@ -14,6 +15,7 @@ const viewport = (leftHiding, rightHiding) => {
         tabindex: 0
       },
       style: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column'
       },
@@ -22,7 +24,8 @@ const viewport = (leftHiding, rightHiding) => {
       }
     },
     [
-      arena(leftHiding, rightHiding)
+      arena(leftHiding, rightHiding),
+      paused ? pause() : undefined
     ]
   )
 }

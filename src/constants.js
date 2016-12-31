@@ -4,13 +4,15 @@ const constants = regalia({
   gameStatus: [
     'idle',
     'afoot',
-    'ended'
+    'ended',
+    'paused'
   ],
   actionNames: [
     'startGame',
     'hide',
     'unhide',
-    'shoot'
+    'shoot',
+    'pause'
   ],
   actionPayloadKeys: [
     'player'
