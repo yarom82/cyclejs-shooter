@@ -1,28 +1,24 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const { button } = require('@cycle/dom')
-const { spy } = require('simple-spy')
-const mock = require('mock-require')
 const requireUncached = require('require-uncached')
 const cuid = require('cuid')
+const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 
-const cuidStubReturn = cuid()
-const cuidStub = () => cuidStubReturn
-const cuidSpy = spy(cuidStub)
-mock('cuid', cuidSpy)
+const cuidSpyReturn = cuid()
 
-test.beforeEach(() => {
-  cuidSpy.reset()
+test.beforeEach((t) => {
+  t.context.cuidMock = mockPathWithSpy('cuid', cuidSpyReturn)
+  t.context.subject = requireUncached(modulePath)
 })
 
 const modulePath = './start-game-button'
-const startGameButton = require(modulePath)
 
 test('vtree', t => {
   const expected = button(
     {
       attrs: {
-        'data-id': cuidStubReturn
+        'data-id': cuidSpyReturn
       },
       style: {
         textTransform: 'uppercase'
@@ -31,14 +27,13 @@ test('vtree', t => {
     'Start the game'
   )
 
-  t.true(isEqual(startGameButton(), expected))
+  t.true(isEqual(t.context.subject(), expected))
 })
 
 test('`cuid` called once with no args', t => {
-  requireUncached(modulePath)
-  t.true(isEqual(cuidSpy.args, [[]]))
+  t.true(isEqual(t.context.cuidMock.spy.args, [[]]))
 })
 
 test('exports its unique selector', t => {
-  t.is(startGameButton.selector, `[data-id='${cuidStubReturn}']`)
+  t.is(t.context.subject.selector, `[data-id='${cuidSpyReturn}']`)
 })
