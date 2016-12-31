@@ -37,7 +37,8 @@ const {
   gameStatus: {
     idle,
     afoot,
-    ended
+    ended,
+    paused
   }
 } = require('../constants')
 
@@ -73,6 +74,16 @@ const expectedValuesForGameStatus = {
     ),
     instructionsCallArg: 'BEFORE_WIN'
   },
+  [paused]: {
+    vtree: h(elmName,
+      data,
+      [
+        viewportReturnValue,
+        instructionsReturnValue
+      ]
+    ),
+    instructionsCallArg: 'BEFORE_WIN'
+  },
   [ended]: {
     vtree: h(elmName,
       data,
@@ -99,19 +110,21 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
   })
 })
 
-test('`viewport` descendant calls args', t => {
-  const state = {
-    gameStatus: afoot,
-    leftHiding: Symbol('leftHiding'),
-    rightHiding: Symbol('rightHiding')
-  }
+;[afoot, paused].forEach((gameStatus) => {
+  test(`\`viewport\` descendant calls args when ${String(gameStatus)}`, t => {
+    const state = {
+      gameStatus,
+      leftHiding: Symbol('leftHiding'),
+      rightHiding: Symbol('rightHiding')
+    }
 
-  vtreeFromState(state)
+    vtreeFromState(state)
 
-  const expectedViewportCallsArgs = [
-    [state.leftHiding, state.rightHiding]
-  ]
-  t.true(isEqual(viewportSpy.args, expectedViewportCallsArgs))
+    const expectedViewportCallsArgs = [
+      [state.leftHiding, state.rightHiding, gameStatus === paused]
+    ]
+    t.true(isEqual(viewportSpy.args, expectedViewportCallsArgs))
+  })
 })
 
 test('`winMessage` descendant call arg', t => {

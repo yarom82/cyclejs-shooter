@@ -4,7 +4,8 @@ const {
   actionNames: {
     shoot,
     hide,
-    unhide
+    unhide,
+    pause
   },
   actionPayloadKeys: {
     player
@@ -22,6 +23,7 @@ const leftHideAction = action(hide, { [player]: leftPlayer })
 const rightHideAction = action(hide, { [player]: rightPlayer })
 const leftUnhideAction = action(unhide, { [player]: leftPlayer })
 const rightUnhideAction = action(unhide, { [player]: rightPlayer })
+const pauseGameAction = action(pause)
 const { selector } = require('./vtree-from-state/viewport')
 
 const viewportActionsFromDOMSource = DOMSource => {
@@ -44,6 +46,9 @@ const viewportActionsFromDOMSource = DOMSource => {
   const rightHideActions = keydownEvents
     .filter(key => key === '\'')
     .mapTo(rightHideAction)
+  const pauseGameActions = keydownEvents
+    .filter(key => key === 'p')
+    .mapTo(pauseGameAction)
 
   const keyupEvents = viewportDOMSource
     .events('keyup')
@@ -61,7 +66,8 @@ const viewportActionsFromDOMSource = DOMSource => {
     leftHideActions,
     rightHideActions,
     leftUnhideActions,
-    rightUnhideActions
+    rightUnhideActions,
+    pauseGameActions
   )
 }
 

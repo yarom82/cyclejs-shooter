@@ -12,13 +12,15 @@ test('tree deep equality', t => {
     gameStatus: [
       'idle',
       'afoot',
-      'ended'
+      'ended',
+      'paused'
     ],
     actionNames: [
       'startGame',
       'hide',
       'unhide',
-      'shoot'
+      'shoot',
+      'pause'
     ],
     actionPayloadKeys: [
       'player'

@@ -3,12 +3,14 @@ const {
     startGame,
     hide,
     unhide,
-    shoot
+    shoot,
+    pause
   },
   gameStatus: {
     idle,
     afoot,
-    ended
+    ended,
+    paused
   },
   actionPayloadKeys: {
     player
@@ -39,6 +41,7 @@ const stateMachine = (currentState, action) => {
       newState.gameStatus = afoot
       break
     case hide:
+      if (gameStatus === paused) break
       switch (action[player]) {
         case leftPlayer:
           newState.leftHiding = true
@@ -49,6 +52,7 @@ const stateMachine = (currentState, action) => {
       }
       break
     case unhide:
+      if (gameStatus === paused) break
       switch (action[player]) {
         case leftPlayer:
           newState.leftHiding = false
@@ -59,6 +63,7 @@ const stateMachine = (currentState, action) => {
       }
       break
     case shoot:
+      if (gameStatus === paused) break
       if (gameStatus !== afoot) {
         throw new Error(impossibleActionMessage)
       }
@@ -74,6 +79,17 @@ const stateMachine = (currentState, action) => {
         )
       }
       break
+    case pause:
+      switch (gameStatus) {
+        case afoot:
+          newState.gameStatus = paused
+          break
+        case paused:
+          newState.gameStatus = afoot
+          break
+        default:
+          throw new Error(impossibleActionMessage)
+      }
   }
   return newState
 }

@@ -7,6 +7,9 @@ const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 
+const arenaMockReturn = Symbol('./arena')
+const pauseMockReturn = Symbol('./pause')
+
 test.beforeEach((t) => {
   t.context.cuidMock = {}
   t.context.cuidMock.spyReturn = cuid()
@@ -16,38 +19,51 @@ test.beforeEach((t) => {
   t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
   mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-  t.context.arenaMock = mockPathWithSpy('./arena')
+  t.context.arenaMock = mockPathWithSpy('./arena', arenaMockReturn)
+  t.context.pauseMock = mockPathWithSpy('./pause', pauseMockReturn)
   t.context.subject = requireUncached('./viewport')
 })
 
-test('exports a function of arity 2', (t) => {
+test('exports a function of arity 3', (t) => {
   t.is(typeof t.context.subject, 'function')
-  t.is(t.context.subject.length, 2)
+  t.is(t.context.subject.length, 3)
 })
 
-test('vtree', (t) => {
-  const expected = h('viewport',
-    {
-      attrs: {
-        'data-id': t.context.cuidMock.spyReturn,
-        tabindex: 0
-      },
-      style: {
-        display: 'flex',
-        flexDirection: 'column'
-      },
-      hook: {
-        insert: t.context.focusOnElmOfVnodeMock
-      }
-    },
-    [
-      t.context.arenaMock.spyReturn
-    ]
-  )
+const expectedChildren = [
+  {
+    input: [null, null, false],
+    children: [ arenaMockReturn ]
+  },
+  {
+    input: [null, null, true],
+    children: [ arenaMockReturn, pauseMockReturn ]
+  }
+]
 
-  const actual = t.context.subject()
+expectedChildren.forEach(({input, children}) => {
+  test(`vtree with paused=${input[2]}`, (t) => {
+    const expected = h('viewport',
+      {
+        attrs: {
+          'data-id': t.context.cuidMock.spyReturn,
+          tabindex: 0
+        },
+        style: {
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column'
+        },
+        hook: {
+          insert: t.context.focusOnElmOfVnodeMock
+        }
+      },
+      children
+    )
 
-  t.true(isEqual(actual, expected))
+    const actual = t.context.subject(...input)
+
+    t.true(isEqual(actual, expected))
+  })
 })
 
 test('`arena` is called once', (t) => {
@@ -59,6 +75,24 @@ test('`arena` call args', (t) => {
   const args = [Symbol('leftHiding'), Symbol('rightHiding')]
   t.context.subject(...args)
   t.true(isEqual(t.context.arenaMock.spy.args[0], args))
+})
+
+const expectedCallTimes = [
+  {
+    input: [null, null, false],
+    times: 0
+  },
+  {
+    input: [null, null, true],
+    times: 1
+  }
+]
+
+expectedCallTimes.forEach(({input, times}) => {
+  test(`\`pause\` is called ${times} times when paused=${input[2]}`, (t) => {
+    t.context.subject(...input)
+    t.is(t.context.pauseMock.spy.args.length, times)
+  })
 })
 
 test('exports its unique selector', t => {
