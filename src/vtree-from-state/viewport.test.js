@@ -77,7 +77,7 @@ test('`arena` call args', (t) => {
   t.true(isEqual(t.context.arenaMock.spy.args[0], args))
 })
 
-const expectedCallTimes = [
+const expectedPauseCallTimes = [
   {
     input: [null, null, false],
     times: 0
@@ -88,7 +88,7 @@ const expectedCallTimes = [
   }
 ]
 
-expectedCallTimes.forEach(({input, times}) => {
+expectedPauseCallTimes.forEach(({input, times}) => {
   test(`\`pause\` is called ${times} times when paused=${input[2]}`, (t) => {
     t.context.subject(...input)
     t.is(t.context.pauseMock.spy.args.length, times)
