@@ -2,35 +2,23 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
 const h = require('./h')
+const requireUncached = require('require-uncached')
 
-const {
-  spyReturn: startGameButtonReturnValue,
-  spy: startGameButtonSpy
-} = mockPathWithSpy('./start-game-button')
+const startGameButtonPath = './start-game-button'
+const startGameButtonSpyReturn = Symbol(startGameButtonPath)
+const viewportPath = './viewport'
+const viewportSpyReturn = Symbol(viewportPath)
+const winMessagePath = './win-message'
+const winMessageSpyReturn = Symbol(winMessagePath)
+const instructionsPath = './instructions'
+const instructionsSpyReturn = Symbol(instructionsPath)
 
-const {
-  spyReturn: viewportReturnValue,
-  spy: viewportSpy
-} = mockPathWithSpy('./viewport')
-
-const {
-  spyReturn: winMessageReturnValue,
-  spy: winMessageSpy
-} = mockPathWithSpy('./win-message')
-
-const {
-  spyReturn: instructionsReturnValue,
-  spy: instructionsSpy
-} = mockPathWithSpy('./instructions')
-
-test.beforeEach(() => {
-  [
-    startGameButtonSpy,
-    instructionsSpy,
-    winMessageSpy,
-    viewportSpy
-  ]
-  .forEach(spy => spy.reset())
+test.beforeEach((t) => {
+  t.context.startGameButtonMock = mockPathWithSpy(startGameButtonPath, startGameButtonSpyReturn)
+  t.context.viewportMock = mockPathWithSpy(viewportPath, viewportSpyReturn)
+  t.context.winMessageMock = mockPathWithSpy(winMessagePath, winMessageSpyReturn)
+  t.context.instructionsMock = mockPathWithSpy(instructionsPath, instructionsSpyReturn)
+  t.context.subject = requireUncached('.')
 })
 
 const {
@@ -40,8 +28,6 @@ const {
     ended
   }
 } = require('../constants')
-
-const vtreeFromState = require('.')
 
 const data = {
   style: {
@@ -57,8 +43,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        startGameButtonReturnValue,
-        instructionsReturnValue
+        startGameButtonSpyReturn,
+        instructionsSpyReturn
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -67,8 +53,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        viewportReturnValue,
-        instructionsReturnValue
+        viewportSpyReturn,
+        instructionsSpyReturn
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -77,8 +63,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        winMessageReturnValue,
-        instructionsReturnValue
+        winMessageSpyReturn,
+        instructionsSpyReturn
       ]
     ),
     instructionsCallArg: 'AFTER_WIN'
@@ -89,13 +75,13 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
   const {vtree, instructionsCallArg} = expectedValuesForGameStatus[gameStatus]
 
   test(`vtree ${String(gameStatus)}`, t => {
-    const actualVtree = vtreeFromState({gameStatus})
+    const actualVtree = t.context.subject({gameStatus})
     t.true(isEqual(actualVtree, vtree))
   })
 
   test(`\`instructions\` call arg ${String(gameStatus)} is '${instructionsCallArg}'`, t => {
-    vtreeFromState({gameStatus})
-    t.true(isEqual(instructionsSpy.args, [[instructionsCallArg]]))
+    t.context.subject({gameStatus})
+    t.true(isEqual(t.context.instructionsMock.spy.args, [[instructionsCallArg]]))
   })
 })
 
@@ -106,12 +92,12 @@ test('`viewport` descendant calls args', t => {
     rightHiding: Symbol('rightHiding')
   }
 
-  vtreeFromState(state)
+  t.context.subject(state)
 
   const expectedViewportCallsArgs = [
     [state.leftHiding, state.rightHiding]
   ]
-  t.true(isEqual(viewportSpy.args, expectedViewportCallsArgs))
+  t.true(isEqual(t.context.viewportMock.spy.args, expectedViewportCallsArgs))
 })
 
 test('`winMessage` descendant call arg', t => {
@@ -125,6 +111,6 @@ test('`winMessage` descendant call arg', t => {
     [ winState.winner ]
   ]
 
-  vtreeFromState(winState)
-  t.true(isEqual(winMessageSpy.args, expectedCallsArgs))
+  t.context.subject(winState)
+  t.true(isEqual(t.context.winMessageMock.spy.args, expectedCallsArgs))
 })
