@@ -1,11 +1,12 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const h = require('./h')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const requireUncached = require('require-uncached')
 
 test.beforeEach((t) => {
-  t.context.barrierSvgMock = mockPathWithSpy('./barrier-svg')
+  const barrierSvgMocks = mockPathWithSimpleSpy('./barrier-svg')
+  t.context.barrierSvgMock = barrierSvgMocks.next().value
   t.context.subject = requireUncached('./barrier')
 })
 

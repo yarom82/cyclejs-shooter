@@ -1,6 +1,6 @@
 const { test } = require('ava')
 const mock = require('mock-require')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 const isEqual = require('lodash.isequal')
@@ -19,8 +19,11 @@ test.beforeEach((t) => {
   t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
   mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-  t.context.arenaMock = mockPathWithSpy('./arena', arenaMockReturn)
-  t.context.pauseMock = mockPathWithSpy('./pause', pauseMockReturn)
+  const arenaMocks = mockPathWithSimpleSpy('./arena', arenaMockReturn)
+  const pauseMocks = mockPathWithSimpleSpy('./pause', pauseMockReturn)
+  t.context.arenaMock = arenaMocks.next().value
+  t.context.pauseMock = pauseMocks.next().value
+
   t.context.subject = requireUncached('./viewport')
 })
 

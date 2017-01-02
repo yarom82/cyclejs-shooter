@@ -1,23 +1,23 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 
 const startGameButtonPath = './start-game-button'
-const startGameButtonSpyReturn = Symbol(startGameButtonPath)
 const viewportPath = './viewport'
-const viewportSpyReturn = Symbol(viewportPath)
 const winMessagePath = './win-message'
-const winMessageSpyReturn = Symbol(winMessagePath)
 const instructionsPath = './instructions'
-const instructionsSpyReturn = Symbol(instructionsPath)
 
 test.beforeEach((t) => {
-  t.context.startGameButtonMock = mockPathWithSpy(startGameButtonPath, startGameButtonSpyReturn)
-  t.context.viewportMock = mockPathWithSpy(viewportPath, viewportSpyReturn)
-  t.context.winMessageMock = mockPathWithSpy(winMessagePath, winMessageSpyReturn)
-  t.context.instructionsMock = mockPathWithSpy(instructionsPath, instructionsSpyReturn)
+  const startGameButtonMocks = mockPathWithSimpleSpy(startGameButtonPath, startGameButtonPath)
+  const viewportMocks = mockPathWithSimpleSpy(viewportPath, viewportPath)
+  const winMessageMocks = mockPathWithSimpleSpy(winMessagePath, winMessagePath)
+  const instructionsMocks = mockPathWithSimpleSpy(instructionsPath, instructionsPath)
+  t.context.startGameButtonMock = startGameButtonMocks.next().value
+  t.context.viewportMock = viewportMocks.next().value
+  t.context.winMessageMock = winMessageMocks.next().value
+  t.context.instructionsMock = instructionsMocks.next().value
   t.context.subject = requireUncached('.')
 })
 
@@ -44,8 +44,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        startGameButtonSpyReturn,
-        instructionsSpyReturn
+        startGameButtonPath,
+        instructionsPath
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -54,8 +54,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        viewportSpyReturn,
-        instructionsSpyReturn
+        viewportPath,
+        instructionsPath
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -64,8 +64,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        viewportSpyReturn,
-        instructionsSpyReturn
+        viewportPath,
+        instructionsPath
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -74,8 +74,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        winMessageSpyReturn,
-        instructionsSpyReturn
+        winMessagePath,
+        instructionsPath
       ]
     ),
     instructionsCallArg: 'AFTER_WIN'

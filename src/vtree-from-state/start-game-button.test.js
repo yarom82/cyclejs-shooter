@@ -3,12 +3,13 @@ const isEqual = require('lodash.isequal')
 const { button } = require('@cycle/dom')
 const requireUncached = require('require-uncached')
 const cuid = require('cuid')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 
 const cuidSpyReturn = cuid()
 
 test.beforeEach((t) => {
-  t.context.cuidMock = mockPathWithSpy('cuid', cuidSpyReturn)
+  const cuidMocks = mockPathWithSimpleSpy('cuid', cuidSpyReturn)
+  t.context.cuidMock = cuidMocks.next().value
   t.context.subject = requireUncached(modulePath)
 })
 

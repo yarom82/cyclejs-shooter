@@ -2,10 +2,11 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const h = require('./h')
 const requireUncached = require('require-uncached')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 
 test.beforeEach((t) => {
-  t.context.pauseImgMock = mockPathWithSpy('./pause-img')
+  const pauseImgMocks = mockPathWithSimpleSpy('./pause-img')
+  t.context.pauseImgMock = pauseImgMocks.next().value
   t.context.subject = requireUncached('./pause')
 })
 
