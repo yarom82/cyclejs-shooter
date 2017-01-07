@@ -1,23 +1,19 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 
-const startGameButtonPath = './start-game-button'
-const startGameButtonSpyReturn = Symbol(startGameButtonPath)
-const viewportPath = './viewport'
-const viewportSpyReturn = Symbol(viewportPath)
-const winMessagePath = './win-message'
-const winMessageSpyReturn = Symbol(winMessagePath)
-const instructionsPath = './instructions'
-const instructionsSpyReturn = Symbol(instructionsPath)
+const startGameButtonMocks = mockPathWithSimpleSpy('./start-game-button')
+const viewportMocks = mockPathWithSimpleSpy('./viewport')
+const winMessageMocks = mockPathWithSimpleSpy('./win-message')
+const instructionsMocks = mockPathWithSimpleSpy('./instructions')
 
 test.beforeEach((t) => {
-  t.context.startGameButtonMock = mockPathWithSpy(startGameButtonPath, startGameButtonSpyReturn)
-  t.context.viewportMock = mockPathWithSpy(viewportPath, viewportSpyReturn)
-  t.context.winMessageMock = mockPathWithSpy(winMessagePath, winMessageSpyReturn)
-  t.context.instructionsMock = mockPathWithSpy(instructionsPath, instructionsSpyReturn)
+  t.context.startGameButtonMock = startGameButtonMocks.next().value
+  t.context.viewportMock = viewportMocks.next().value
+  t.context.winMessageMock = winMessageMocks.next().value
+  t.context.instructionsMock = instructionsMocks.next().value
   t.context.subject = requireUncached('.')
 })
 
@@ -44,8 +40,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        startGameButtonSpyReturn,
-        instructionsSpyReturn
+        startGameButtonMocks.spyReturn,
+        instructionsMocks.spyReturn
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -54,8 +50,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        viewportSpyReturn,
-        instructionsSpyReturn
+        viewportMocks.spyReturn,
+        instructionsMocks.spyReturn
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -64,8 +60,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        viewportSpyReturn,
-        instructionsSpyReturn
+        viewportMocks.spyReturn,
+        instructionsMocks.spyReturn
       ]
     ),
     instructionsCallArg: 'BEFORE_WIN'
@@ -74,8 +70,8 @@ const expectedValuesForGameStatus = {
     vtree: h(elmName,
       data,
       [
-        winMessageSpyReturn,
-        instructionsSpyReturn
+        winMessageMocks.spyReturn,
+        instructionsMocks.spyReturn
       ]
     ),
     instructionsCallArg: 'AFTER_WIN'
@@ -92,7 +88,7 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
 
   test(`\`instructions\` call arg ${String(gameStatus)} is '${instructionsCallArg}'`, t => {
     t.context.subject({gameStatus})
-    t.true(isEqual(t.context.instructionsMock.spy.args, [[instructionsCallArg]]))
+    t.true(isEqual(t.context.instructionsMock.args, [[instructionsCallArg]]))
   })
 })
 
@@ -109,7 +105,7 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
     const expectedViewportCallsArgs = [
       [state.leftHiding, state.rightHiding, gameStatus === paused]
     ]
-    t.true(isEqual(t.context.viewportMock.spy.args, expectedViewportCallsArgs))
+    t.true(isEqual(t.context.viewportMock.args, expectedViewportCallsArgs))
   })
 })
 
@@ -125,5 +121,5 @@ test('`winMessage` descendant call arg', t => {
   ]
 
   t.context.subject(winState)
-  t.true(isEqual(t.context.winMessageMock.spy.args, expectedCallsArgs))
+  t.true(isEqual(t.context.winMessageMock.args, expectedCallsArgs))
 })

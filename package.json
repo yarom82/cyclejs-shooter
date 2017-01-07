@@ -54,7 +54,7 @@
     "is-regalia": "^1.0.1",
     "is-subset": "^0.1.1",
     "lodash": "https://api.github.com/repos/lodash/lodash/tarball/ec74813be6f3b4005e6e85c3aec9d02028a3b039",
-    "mock-path-with-spy-that-returns-x": "^1.0.0",
+    "mock-path-with-simple-spy": "^4.0.0",
     "mock-require": "^2.0.0",
     "npm-run-all": "^3.1.1",
     "nyc": "^10.0.0",

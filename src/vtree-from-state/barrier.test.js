@@ -1,11 +1,13 @@
 const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const h = require('./h')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const requireUncached = require('require-uncached')
 
+const barrierSvgMocks = mockPathWithSimpleSpy('./barrier-svg')
+
 test.beforeEach((t) => {
-  t.context.barrierSvgMock = mockPathWithSpy('./barrier-svg')
+  t.context.barrierSvgMock = barrierSvgMocks.next().value
   t.context.subject = requireUncached('./barrier')
 })
 
@@ -19,7 +21,7 @@ test('vtree', t => {
       }
     },
     [
-      t.context.barrierSvgMock.spyReturn
+      barrierSvgMocks.spyReturn
     ]
   )
   t.true(isEqual(t.context.subject(), expected))
@@ -30,5 +32,5 @@ test('`barrierSvg` descendant calls without args', t => {
     []
   ]
   t.context.subject()
-  t.true(isEqual(t.context.barrierSvgMock.spy.args, expected))
+  t.true(isEqual(t.context.barrierSvgMock.args, expected))
 })

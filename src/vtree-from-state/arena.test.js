@@ -2,10 +2,13 @@ const { test } = require('ava')
 const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 const requireUncached = require('require-uncached')
+
+const playerMocks = mockPathWithSimpleSpy('./player')
+const barrierMocks = mockPathWithSimpleSpy('./barrier')
 
 test.beforeEach((t) => {
   t.context.cuidMock = {}
@@ -16,8 +19,9 @@ test.beforeEach((t) => {
   t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
   mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-  t.context.playerMock = mockPathWithSpy('./player')
-  t.context.barrierMock = mockPathWithSpy('./barrier')
+  t.context.playerMock = playerMocks.next().value
+  t.context.barrierMock = barrierMocks.next().value
+
   t.context.subject = requireUncached('./arena')
 })
 
@@ -35,9 +39,9 @@ test('vtree', t => {
       }
     },
     [
-      t.context.playerMock.spyReturn,
-      t.context.barrierMock.spyReturn,
-      t.context.playerMock.spyReturn
+      playerMocks.spyReturn,
+      barrierMocks.spyReturn,
+      playerMocks.spyReturn
     ]
   )
 
@@ -51,7 +55,7 @@ test('`player` descendants calls args', t => {
     ['right', arenaArgs[1]]
   ]
   t.context.subject(...arenaArgs)
-  t.true(isEqual(t.context.playerMock.spy.args, expectedPlayerCallsArgs))
+  t.true(isEqual(t.context.playerMock.args, expectedPlayerCallsArgs))
 })
 
 test('`barrier` descendant calls without args', t => {
@@ -59,5 +63,5 @@ test('`barrier` descendant calls without args', t => {
     []
   ]
   t.context.subject(...arenaArgs)
-  t.true(isEqual(t.context.barrierMock.spy.args, expected))
+  t.true(isEqual(t.context.barrierMock.args, expected))
 })

@@ -3,12 +3,13 @@ const isEqual = require('lodash.isequal')
 const { button } = require('@cycle/dom')
 const requireUncached = require('require-uncached')
 const cuid = require('cuid')
-const mockPathWithSpy = require('mock-path-with-spy-that-returns-x')
+const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 
 const cuidSpyReturn = cuid()
+const cuidMocks = mockPathWithSimpleSpy('cuid', cuidSpyReturn)
 
 test.beforeEach((t) => {
-  t.context.cuidMock = mockPathWithSpy('cuid', cuidSpyReturn)
+  t.context.cuidMock = cuidMocks.next().value
   t.context.subject = requireUncached(modulePath)
 })
 
@@ -31,7 +32,7 @@ test('vtree', t => {
 })
 
 test('`cuid` called once with no args', t => {
-  t.true(isEqual(t.context.cuidMock.spy.args, [[]]))
+  t.true(isEqual(t.context.cuidMock.args, [[]]))
 })
 
 test('exports its unique selector', t => {
