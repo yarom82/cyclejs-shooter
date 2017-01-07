@@ -4,8 +4,9 @@ const h = require('./h')
 const requireUncached = require('require-uncached')
 const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 
+const pauseImgMocks = mockPathWithSimpleSpy('./pause-img')
+
 test.beforeEach((t) => {
-  const pauseImgMocks = mockPathWithSimpleSpy('./pause-img')
   t.context.pauseImgMock = pauseImgMocks.next().value
   t.context.subject = requireUncached('./pause')
 })
@@ -31,7 +32,7 @@ test('vtree', t => {
           }
         },
         [
-          t.context.pauseImgMock.spyReturn
+          pauseImgMocks.spyReturn
         ]
       )
     ]
@@ -44,5 +45,5 @@ test('descendant `pauseImg` calls no args', t => {
     []
   ]
   t.context.subject()
-  t.deepEqual(t.context.pauseImgMock.spy.args, expected)
+  t.deepEqual(t.context.pauseImgMock.args, expected)
 })

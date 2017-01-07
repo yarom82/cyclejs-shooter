@@ -7,8 +7,8 @@ const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 
-const arenaMockReturn = Symbol('./arena')
-const pauseMockReturn = Symbol('./pause')
+const arenaMocks = mockPathWithSimpleSpy('./arena')
+const pauseMocks = mockPathWithSimpleSpy('./pause')
 
 test.beforeEach((t) => {
   t.context.cuidMock = {}
@@ -19,8 +19,6 @@ test.beforeEach((t) => {
   t.context.focusOnElmOfVnodeMock = Symbol('./focus-on-elm-of-vnode')
   mock('./focus-on-elm-of-vnode', t.context.focusOnElmOfVnodeMock)
 
-  const arenaMocks = mockPathWithSimpleSpy('./arena', arenaMockReturn)
-  const pauseMocks = mockPathWithSimpleSpy('./pause', pauseMockReturn)
   t.context.arenaMock = arenaMocks.next().value
   t.context.pauseMock = pauseMocks.next().value
 
@@ -35,11 +33,11 @@ test('exports a function of arity 3', (t) => {
 const expectedChildren = [
   {
     input: [null, null, false],
-    children: [ arenaMockReturn ]
+    children: [ arenaMocks.spyReturn ]
   },
   {
     input: [null, null, true],
-    children: [ arenaMockReturn, pauseMockReturn ]
+    children: [ arenaMocks.spyReturn, pauseMocks.spyReturn ]
   }
 ]
 
@@ -71,13 +69,13 @@ expectedChildren.forEach(({input, children}) => {
 
 test('`arena` is called once', (t) => {
   t.context.subject()
-  t.is(t.context.arenaMock.spy.args.length, 1)
+  t.is(t.context.arenaMock.args.length, 1)
 })
 
 test('`arena` call args', (t) => {
   const args = [Symbol('leftHiding'), Symbol('rightHiding')]
   t.context.subject(...args)
-  t.true(isEqual(t.context.arenaMock.spy.args[0], args))
+  t.true(isEqual(t.context.arenaMock.args[0], args))
 })
 
 const expectedPauseCallTimes = [
@@ -94,7 +92,7 @@ const expectedPauseCallTimes = [
 expectedPauseCallTimes.forEach(({input, times}) => {
   test(`\`pause\` is called ${times} times when paused=${input[2]}`, (t) => {
     t.context.subject(...input)
-    t.is(t.context.pauseMock.spy.args.length, times)
+    t.is(t.context.pauseMock.args.length, times)
   })
 })
 
