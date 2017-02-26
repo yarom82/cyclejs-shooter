@@ -33,7 +33,7 @@ test('exports a function of arity 3', (t) => {
 const expectedChildren = [
   {
     input: [null, null, false],
-    children: [ arenaMocks.spyReturn ]
+    children: [ arenaMocks.spyReturn, undefined ]
   },
   {
     input: [null, null, true],

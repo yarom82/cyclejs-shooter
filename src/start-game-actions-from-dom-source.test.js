@@ -3,7 +3,6 @@ const isEqual = require('lodash.isequal')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const startGameActionsFromDOMSource = require('./start-game-actions-from-dom-source')
-const xstreamAdapter = require('@cycle/xstream-adapter').default
 const {
   actionNames: {
     startGame
@@ -16,7 +15,7 @@ test(`emits \`${String(startGame)}\` for clicks on \`startGameButton\`’s expor
 
   const { selector } = require('./vtree-from-state/start-game-button')
 
-  const DOMSourceMock = mockDOMSource(xstreamAdapter, {
+  const DOMSourceMock = mockDOMSource({
     [selector]: {
       'click': xs.of(null)
     }

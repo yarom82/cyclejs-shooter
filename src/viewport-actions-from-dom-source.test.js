@@ -3,7 +3,6 @@ const isEqual = require('lodash.isequal')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const viewportActionsFromDOMSource = require('./viewport-actions-from-dom-source')
-const xstreamAdapter = require('@cycle/xstream-adapter').default
 const stringFromObject = require('../utils/single-line-string-from-object')
 const {
   actionNames: {
@@ -45,7 +44,7 @@ for (const event in expectedDataForEventAndKey) {
 
       const { selector } = require('./vtree-from-state/viewport')
 
-      const DOMSourceMock = mockDOMSource(xstreamAdapter, {
+      const DOMSourceMock = mockDOMSource({
         [selector]: {
           [event]: xs.of({key})
         }

@@ -1,4 +1,4 @@
-const {run} = require('@cycle/xstream-run')
+const {run} = require('@cycle/run')
 const {makeDOMDriver} = require('@cycle/dom')
 const shooter = require('.')
 
