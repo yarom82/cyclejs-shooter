@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const startGameActionsFromDOMSource = require('./start-game-actions-from-dom-source')
@@ -23,6 +22,6 @@ test(`emits \`${String(startGame)}\` for clicks on \`startGameButton\`’s expor
 
   startGameActionsFromDOMSource(DOMSourceMock)
     .addListener({next: value => {
-      t.true(isEqual(value, { [actionNameKey]: startGame }))
+      t.deepEqual(value, { [actionNameKey]: startGame })
     }})
 })

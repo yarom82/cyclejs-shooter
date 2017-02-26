@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const { mockDOMSource } = require('@cycle/dom')
 const xs = require('xstream').default
 const viewportActionsFromDOMSource = require('./viewport-actions-from-dom-source')
@@ -52,7 +51,7 @@ for (const event in expectedDataForEventAndKey) {
 
       viewportActionsFromDOMSource(DOMSourceMock)
         .addListener({next: action => {
-          t.true(isEqual(action, expectedAction))
+          t.deepEqual(action, expectedAction)
         }})
     })
   }

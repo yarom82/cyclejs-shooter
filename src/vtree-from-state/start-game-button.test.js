@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const { button } = require('@cycle/dom')
 const requireUncached = require('require-uncached')
 const cuid = require('cuid')
@@ -28,11 +27,11 @@ test('vtree', t => {
     'Start the game'
   )
 
-  t.true(isEqual(t.context.subject(), expected))
+  t.deepEqual(t.context.subject(), expected)
 })
 
 test('`cuid` called once with no args', t => {
-  t.true(isEqual(t.context.cuidMock.args, [[]]))
+  t.deepEqual(t.context.cuidMock.args, [[]])
 })
 
 test('exports its unique selector', t => {

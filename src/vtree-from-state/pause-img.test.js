@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const { img } = require('@cycle/dom')
 const path = require('path')
 const urify = require('urify')
@@ -18,5 +17,5 @@ test('vtree', t => {
       }
     }
   )
-  t.true(isEqual(pauseImg(), expected))
+  t.deepEqual(pauseImg(), expected)
 })

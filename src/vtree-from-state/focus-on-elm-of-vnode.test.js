@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
 const requireUncached = require('require-uncached')
 
@@ -19,5 +18,5 @@ test('specifies one argument', t => {
 test('calls `focus` on provided vnode’s `elm` with no arguments', t => {
   const expectedCallsArgs = [[]]
   t.context.subject({ elm: { focus: t.context.focusSpy } })
-  t.true(isEqual(t.context.focusSpy.args, expectedCallsArgs))
+  t.deepEqual(t.context.focusSpy.args, expectedCallsArgs)
 })
