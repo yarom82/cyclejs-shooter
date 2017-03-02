@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
@@ -36,7 +35,8 @@ const testWithCallArgs = ([side, hiding]) => {
         playerImgMocks.spyReturn
       ]
     )
-    t.true(isEqual(t.context.subject(side, hiding), expected))
+    const actual = t.context.subject(side, hiding)
+    t.deepEqual(actual, expected)
   })
 
   test(`descendant \`playerImg\` calls args ${testCondition}`, t => {

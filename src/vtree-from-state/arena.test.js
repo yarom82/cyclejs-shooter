@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const mock = require('mock-require')
 const h = require('./h')
 const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
@@ -46,7 +45,7 @@ test('vtree', t => {
   )
 
   const actualVtree = t.context.subject()
-  t.true(isEqual(actualVtree, expectedVtree))
+  t.deepEqual(actualVtree, expectedVtree)
 })
 
 test('`player` descendants calls args', t => {
@@ -55,7 +54,7 @@ test('`player` descendants calls args', t => {
     ['right', arenaArgs[1]]
   ]
   t.context.subject(...arenaArgs)
-  t.true(isEqual(t.context.playerMock.args, expectedPlayerCallsArgs))
+  t.deepEqual(t.context.playerMock.args, expectedPlayerCallsArgs)
 })
 
 test('`barrier` descendant calls without args', t => {
@@ -63,5 +62,5 @@ test('`barrier` descendant calls without args', t => {
     []
   ]
   t.context.subject(...arenaArgs)
-  t.true(isEqual(t.context.barrierMock.args, expected))
+  t.deepEqual(t.context.barrierMock.args, expected)
 })

@@ -1,5 +1,4 @@
 const initialState = require('./initial-state')
-const isEqual = require('lodash.isequal')
 const { test } = require('ava')
 
 const {
@@ -16,7 +15,7 @@ test('exported object deep equality assertion', t => {
     winner: null
   }
 
-  t.true(isEqual(initialState, expected))
+  t.deepEqual(initialState, expected)
 })
 
 test('exported object is frozen', t => {

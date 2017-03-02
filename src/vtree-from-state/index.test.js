@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const h = require('./h')
 const requireUncached = require('require-uncached')
@@ -83,12 +82,12 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
 
   test(`vtree ${String(gameStatus)}`, t => {
     const actualVtree = t.context.subject({gameStatus})
-    t.true(isEqual(actualVtree, vtree))
+    t.deepEqual(actualVtree, vtree)
   })
 
   test(`\`instructions\` call arg ${String(gameStatus)} is '${instructionsCallArg}'`, t => {
     t.context.subject({gameStatus})
-    t.true(isEqual(t.context.instructionsMock.args, [[instructionsCallArg]]))
+    t.deepEqual(t.context.instructionsMock.args, [[instructionsCallArg]])
   })
 })
 
@@ -105,7 +104,7 @@ Object.getOwnPropertySymbols(expectedValuesForGameStatus).forEach((gameStatus) =
     const expectedViewportCallsArgs = [
       [state.leftHiding, state.rightHiding, gameStatus === paused]
     ]
-    t.true(isEqual(t.context.viewportMock.args, expectedViewportCallsArgs))
+    t.deepEqual(t.context.viewportMock.args, expectedViewportCallsArgs)
   })
 })
 
@@ -121,5 +120,5 @@ test('`winMessage` descendant call arg', t => {
   ]
 
   t.context.subject(winState)
-  t.true(isEqual(t.context.winMessageMock.args, expectedCallsArgs))
+  t.deepEqual(t.context.winMessageMock.args, expectedCallsArgs)
 })

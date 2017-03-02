@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const instructions = require('./instructions')
 const { br } = require('@cycle/dom')
 const h = require('./h')
@@ -31,6 +30,6 @@ for (const arg in expectedVtreeForArg) {
   test(`vtree given '${arg}'`, t => {
     const expected = expectedVtreeForArg[arg]
     const actual = instructions(arg)
-    t.true(isEqual(actual, expected))
+    t.deepEqual(actual, expected)
   })
 }

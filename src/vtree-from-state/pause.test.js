@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const h = require('./h')
 const requireUncached = require('require-uncached')
 const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
@@ -37,7 +36,7 @@ test('vtree', t => {
       )
     ]
   )
-  t.true(isEqual(t.context.subject(), expected))
+  t.deepEqual(t.context.subject(), expected)
 })
 
 test('descendant `pauseImg` calls no args', t => {

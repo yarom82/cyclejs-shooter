@@ -3,7 +3,6 @@ const mock = require('mock-require')
 const mockPathWithSimpleSpy = require('mock-path-with-simple-spy')
 const h = require('./h')
 const requireUncached = require('require-uncached')
-const isEqual = require('lodash.isequal')
 const { spy } = require('simple-spy')
 const cuid = require('cuid')
 
@@ -63,7 +62,7 @@ expectedChildren.forEach(({input, children}) => {
 
     const actual = t.context.subject(...input)
 
-    t.true(isEqual(actual, expected))
+    t.deepEqual(actual, expected)
   })
 })
 
@@ -75,7 +74,7 @@ test('`arena` is called once', (t) => {
 test('`arena` call args', (t) => {
   const args = [Symbol('leftHiding'), Symbol('rightHiding')]
   t.context.subject(...args)
-  t.true(isEqual(t.context.arenaMock.args[0], args))
+  t.deepEqual(t.context.arenaMock.args[0], args)
 })
 
 const expectedPauseCallTimes = [

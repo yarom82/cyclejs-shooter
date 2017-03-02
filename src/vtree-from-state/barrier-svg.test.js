@@ -1,5 +1,4 @@
 const { test } = require('ava')
-const isEqual = require('lodash.isequal')
 const { svg, h } = require('@cycle/dom')
 const barrierSvg = require('./barrier-svg')
 
@@ -22,5 +21,5 @@ test('vtree', t => {
       )
     ]
   )
-  t.true(isEqual(barrierSvg(), expected))
+  t.deepEqual(barrierSvg(), expected)
 })
