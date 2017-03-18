@@ -5,7 +5,7 @@ const xs = require('xstream').default
 
 test('selects the root DOM', t => {
   t.plan(1)
-  const rootDOMStub = Symbol()
+  const rootDOMStub = Symbol('rootDOMStub')
   const DOMSourceMock = mockDOMSource({
     ':root': {
       elements: xs.of(rootDOMStub)

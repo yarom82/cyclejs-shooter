@@ -113,7 +113,7 @@ test('`winMessage` descendant call arg', t => {
     gameStatus: ended,
     leftHiding: false,
     rightHiding: false,
-    winner: Symbol()
+    winner: Symbol('winState.winner')
   }
   const expectedCallsArgs = [
     [ winState.winner ]
