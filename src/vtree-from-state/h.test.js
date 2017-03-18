@@ -27,7 +27,7 @@ test('`h` call first arg', t => {
 })
 
 test('`h` call rest of the args', t => {
-  const args = [Symbol(), Symbol(), Symbol(), Symbol()]
+  const args = [Symbol('arg0'), Symbol('arg1'), Symbol('arg2'), Symbol('arg3')]
   t.context.h('foo', ...args)
   t.deepEqual(t.context.hSpy.args[0].slice(1), args)
 })
