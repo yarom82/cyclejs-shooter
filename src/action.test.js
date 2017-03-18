@@ -32,13 +32,13 @@ test('`nameKey` property is a symbol', t => {
 })
 
 test('returned object’s name is the provided `name`', t => {
-  const name = Symbol()
+  const name = Symbol('name')
   const actual = action(name)
   t.is(actual[action.nameKey], name)
 })
 
 test('returned object is superset of payload', t => {
-  const payload = { [Symbol()]: undefined }
+  const payload = { [Symbol('key')]: undefined }
   const actual = action(undefined, payload)
   t.true(isSubset(actual, payload))
 })
